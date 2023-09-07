@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Ini halaman awal</h1>
-    <a href="login/login.php">Masuk</a>
+    <a href="login/login.php">Masuk</a><br>
     <a href="register/register.php">Daftar</a>
 </body>
 </html>

@@ -1,10 +1,10 @@
 <?php
-require "functions.php";
-if(isset($_POST['register'])) {
-    if(checkUsernameAndPassword($_POST) > 0) {
-        jumpTo("register2.php");
-    }
-}
+// require "functions.php";
+// if(isset($_POST['register'])) {
+//     if(checkUsernameAndPassword($_POST) > 0) {
+//         jumpTo("register2.php");
+//     }
+// }
 ?>
 
 <!DOCTYPE html>
