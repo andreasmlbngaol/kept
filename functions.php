@@ -94,7 +94,7 @@ function register($post) {
     }
 
     // memasukkan data ke database
-    $query = "INSERT INTO account_list VALUES(NULL, '$username', '$name', '$nickname', '$password', '$email', '$birthday', '$quest', '$ans', '$clue', 1, 0)"
+    $query = "INSERT INTO account_list VALUES(NULL, '$username', '$name', '$nickname', '$password', '$email', '$birthday', '$quest', '$ans', '$clue', 1, 0)";
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
