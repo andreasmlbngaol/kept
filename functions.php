@@ -77,13 +77,13 @@ function register($post) {
     global $conn;
     $username = $_SESSION['username'];
     $password = $_SESSION['password'];
-    $name = $_POST['name'];
-    $nickname = $_POST['nickname'];
-    $email = $_POST['email'];
-    $birthday = $_POST['birthday'];
-    $quest = $_POST['quest'];
-    $ans = $_POST['ans'];
-    $clue = $_POST['clue'];
+    $name = $post['name'];
+    $nickname = $post['nickname'];
+    $email = $post['email'];
+    $birthday = $post['birthday'];
+    $quest = $post['quest'];
+    $ans = $post['ans'];
+    $clue = $post['clue'];
 
     // mengecek email
     $query = "SELECT username FROM account_list WHERE email = '$email'";
