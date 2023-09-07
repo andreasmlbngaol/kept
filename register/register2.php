@@ -47,7 +47,7 @@
             <label for="clue">Petunjuk</label>
             <input type="date" name="clue" id="clue" required>
         </div>
-        <button type="submit">Daftar</button>
+        <button type="submit" name="submit">Daftar</button>
     </form>
 </body>
 </html>

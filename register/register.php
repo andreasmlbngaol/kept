@@ -30,7 +30,7 @@ if(isset($_POST['register'])) {
             <label for="confirmPassword">Konfirmasi Password</label>
             <input type="text" name="confirmPassword" id="confirmPassword" required>
         </div>
-        <button type="submit">Selanjutnya</button>
+        <button type="submit" name="submit">Selanjutnya</button>
     </form>
 </body>
 </html>
