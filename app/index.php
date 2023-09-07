@@ -6,9 +6,8 @@ if(isset($_SESSION['username'])) {
 } else {
     jumpTo("../login/login.php");
 }
-$query = "SELECT name FROM account_list WHERE username = '$username'";
-$result = mysqli_fetch_assoc(mysqli_query($conn, $query));
-$name = $result['name'];
+fetchUserData($username);
+$name = $_SESSION['name'];
 ?>
 
 <!DOCTYPE html>

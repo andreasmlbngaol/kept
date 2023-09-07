@@ -103,7 +103,7 @@ function register($post) {
 
 function login($post) {
     global $conn;
-    $username = $post['username'];
+    $username = strtolower($post['username']);
     $password = $post['password'];
 
     $query = "SELECT password FROM account_list WHERE username = '$username'";
@@ -121,6 +121,22 @@ function login($post) {
     session_start();
     $_SESSION['username'] = $username;
     return true;
+}
+
+function fetchUserData($username) {
+    global $conn;
+    $query = "SELECT * FROM account_list WHERE username = '$username'";
+    $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
+    $_SESSION['id'] == $result['id'];
+    $_SESSION['name'] = $result['name'];
+    $_SESSION['nickname'] = $result['nickname'];
+    $_SESSION['password'] = $result['password'];
+    $_SESSION['birthday'] = $result['birthday'];
+    $_SESSION['quest'] = $result['quest'];
+    $_SESSION['ans'] = $result['ans'];
+    $_SESSION['clue'] = $result['clue'];
+    $_SESSION['isnew'] = $result['isnew'];
+    $_SESSION['ispremium'] = $result['ispremium'];
 }
 
 ?>
