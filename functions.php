@@ -75,14 +75,15 @@ function checkUsernameAndPassword($post) {
 
 function register($post) {
     global $conn;
+    session_start();
     $username = $_SESSION['username'];
     $password = $_SESSION['password'];
     $name = $post['name'];
     $nickname = $post['nickname'];
-    $email = $post['email'];
+    $email = strtolower($post['email']);
     $birthday = $post['birthday'];
     $quest = $post['quest'];
-    $ans = $post['ans'];
+    $ans = strtolower($post['ans']);
     $clue = $post['clue'];
 
     // mengecek email
@@ -98,6 +99,28 @@ function register($post) {
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
+}
+
+function login($post) {
+    global $conn;
+    $username = $post['username'];
+    $password = $post['password'];
+
+    $query = "SELECT password FROM account_list WHERE username = '$username'";
+    $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
+    if(!$result) {
+        alert("username tidak tersedia");
+        return false;
+    }
+
+    $confirmPassword = $result['password'];
+    if($password !== $confirmPassword) {
+        alert('Password salah sayang');
+        return false;
+    }
+    session_start();
+    $_SESSION['username'] = $username;
+    return true;
 }
 
 ?>

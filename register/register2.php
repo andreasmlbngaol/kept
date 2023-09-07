@@ -1,8 +1,12 @@
 <?php
-    require "functions.php";
+    require "../functions.php";
+    if(!isset($_SESSION['username'])){
+        jumpTo('register.php');
+    }
     if(isset($_POST['submit'])) {
         if(register($_POST) > 0) {
             alert("Berhasil. Balik ke menu awal");
+            session_destroy();
             jumpTo("../index.php");
         }
     }
@@ -20,32 +24,32 @@
     <h1>Ini halaman register 2</h1>
     <form action="" method="post">
         <div>
-            <label for="name">Nama Lengkap</label>
-            <input type="text" name="name" id="name" required>
+            <label for="name">Nama Lengkap</label><br>
+            <input type="text" name="name" id="name" autocomplete="off" required>
         </div>
         <div>
-            <label for="nickname">Nama Panggilan</label>
-            <input type="text" name="nickname" id="nickname" required>
+            <label for="nickname">Nama Panggilan</label><br>
+            <input type="text" name="nickname" id="nickname" autocomplete="off" required>
         </div>
         <div>
-            <label for="email">Email</label>
-            <input type="text" name="email" id="email" required>
+            <label for="email">Email</label><br>
+            <input type="text" name="email" id="email" autocomplete="off" required>
         </div>
         <div>
-            <label for="birthday">Tanggal Lahir</label>
-            <input type="date" name="birthday" id="birthday" required>
+            <label for="birthday">Tanggal Lahir</label><br>
+            <input type="date" name="birthday" id="birthday" autocomplete="off" required>
         </div>
         <div>
-            <label for="quest">Pertanyaan Konfirmasi Lupa Password</label>
-            <input type="date" name="quest" id="quest" required>
+            <label for="quest">Pertanyaan Konfirmasi Lupa Password</label><br>
+            <input type="text" name="quest" id="quest" autocomplete="off" required>
         </div>
         <div>
-            <label for="ans">Jawaban</label>
-            <input type="date" name="ans" id="ans" required>
+            <label for="ans">Jawaban</label><br>
+            <input type="text" name="ans" id="ans" autocomplete="off" required>
         </div>
         <div>
-            <label for="clue">Petunjuk</label>
-            <input type="date" name="clue" id="clue" required>
+            <label for="clue">Petunjuk</label><br>
+            <input type="text" name="clue" id="clue" autocomplete="off" required>
         </div>
         <button type="submit" name="submit">Daftar</button>
     </form>
