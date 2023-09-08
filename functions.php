@@ -1,7 +1,13 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+require 'vendor/autoload.php';
 date_default_timezone_set('Asia/Jakarta');
+
 $conn = mysqli_connect("sql209.infinityfree.com", "if0_34962067", "PMLbfabCfgyBhf", "if0_34962067_keptdb");
 
+//Load Composer's autoloader
 // function for making script
 function script($script) {
     echo "
@@ -137,6 +143,37 @@ function fetchUserData($username) {
     $_SESSION['clue'] = $result['clue'];
     $_SESSION['isnew'] = $result['isnew'];
     $_SESSION['ispremium'] = $result['ispremium'];
+}
+
+function sendEmail($code, $to) {
+//Create an instance; passing `true` enables exceptions
+$mail = new PHPMailer(true);
+    //Server settings
+$mail->isSMTP();                                            //Send using SMTP
+$mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+$mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+$mail->Username   = 'lgandre45@gmail.com';                     //SMTP username
+$mail->Password   = 'hbdlnsvugxgvruhm';                               //SMTP password
+$mail->SMTPSecure = 'tls';            //Enable implicit TLS encryption
+$mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+//Recipients
+$mail->setFrom('keptflow@gmail.com', 'kept');
+$mail->addAddress("$to");               //Name is optional
+$mail->addReplyTo('keptflow@gmail.com', 'kept');
+
+//Attachments
+// $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+// $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+
+//Content
+$mail->isHTML(true);                                  //Set email format to HTML
+$mail->Subject = 'Kode Verifikasi';
+$mail->Body    = "Kode Verifikasi Anda adalah <b>$code</b>";
+$mail->AltBody = "TKode Verifikasi Anda adalah $code";
+
+$mail->send();
+return true;
 }
 
 ?>

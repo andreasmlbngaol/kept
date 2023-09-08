@@ -1,16 +1,21 @@
 <?php
-    require "../functions.php";
-    session_start();
-    if(!isset($_SESSION['username'])){
-        jumpTo('register.php');
+require "../functions.php";
+session_start();
+if(!isset($_SESSION['username'])){
+    jumpTo('register.php');
+}
+if(isset($_POST['submit'])) {
+    $code = strval(100000,999999);
+    if(sendEmail("$code", "andreaspremium006@gmail.com") == true) {
+        alert('Sukses');
+        jumpTo('../index.php');
     }
-    if(isset($_POST['submit'])) {
-        if(register($_POST) > 0) {
-            alert("Berhasil. Balik ke menu awal");
-            session_destroy();
-            jumpTo("../index.php");
-        }
+    if(register($_POST) > 0) {
+        alert("Berhasil. Balik ke menu awal");
+        session_destroy();
+        jumpTo("../index.php");
     }
+}
 ?>
 
 <!DOCTYPE html>
