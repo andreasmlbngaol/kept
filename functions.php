@@ -172,8 +172,10 @@ $mail->Subject = 'Kode Verifikasi';
 $mail->Body    = "Kode Verifikasi Anda adalah <b>$code</b>";
 $mail->AltBody = "TKode Verifikasi Anda adalah $code";
 
-$mail->send();
-return true;
+if($mail->send() == true) {
+    return true;
+}
+return false;
 }
 
 ?>
