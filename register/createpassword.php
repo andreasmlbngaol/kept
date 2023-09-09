@@ -23,11 +23,11 @@ if(isset($_POST['submit'])) {
     <form action="" method="post">
         <div>
             <label for="password">Buat Password</label>
-            <input type="text" name="password" id="password" autocomplete="off" required>
+            <input type="password" name="password" id="password" autocomplete="off" required>
         </div>
         <div>
             <label for="confirmPassword">Ulangin Password</label>
-            <input type="text" name="confirmPassword" id="confirmPassword" autocomplete="off" required>
+            <input type="password" name="confirmPassword" id="confirmPassword" autocomplete="off" required>
         </div>
         <button type="submit" name="submit" id="submit">Daftar</button>
     </form>

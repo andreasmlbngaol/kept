@@ -68,7 +68,7 @@ function checkUsername($post) {
     $username = strtolower(stripslashes($post['username']));
     $_SESSION['username'] = $username;
     
-    $query = "SELECT username FROM account_list WHERE username = '$username'";
+    $query = "SELECT username FROM account WHERE username = '$username'";
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
 
     if($result) {
@@ -85,7 +85,7 @@ function checkEmail($post) {
     $email = strtolower($post['email']);
     $_SESSION['email'] = $email;
     
-    $query = "SELECT username FROM account_list WHERE email = '$email'";
+    $query = "SELECT username FROM account WHERE email = '$email'";
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
     
     if($result) {
@@ -186,6 +186,28 @@ function register($session) {
         return false;
     }
 
+    // mengirim data lengkap nya ke email
+    sendEmail($email, "Username: <br>
+    $username
+    
+    Email: <br>
+    $email
+    
+    Password: <br>
+    $password
+    
+    No. HP: <br>
+    $hpnum
+    
+    Nama Lengkap: <br>
+    $name
+    
+    Nama Panggilan: <br>
+    $nickname
+    
+    Tanggal lahir: <br>
+    $birthday");
+
     // menghapus semua variabel session
     session_unset();
 
@@ -201,7 +223,7 @@ function login($post) {
     $username = strtolower($post['username']);
     $password = $post['password'];
 
-    $query = "SELECT password FROM account_list WHERE username = '$username'";
+    $query = "SELECT password FROM account WHERE username = '$username'";
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
     if(!$result) {
         alert("username tidak tersedia");
@@ -220,7 +242,7 @@ function login($post) {
 
 function fetchUserData($username) {
     global $conn;
-    $query = "SELECT * FROM account_list WHERE username = '$username'";
+    $query = "SELECT * FROM account WHERE username = '$username'";
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
     $_SESSION['id'] == $result['id'];
     $_SESSION['name'] = $result['name'];
