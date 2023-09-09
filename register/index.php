@@ -7,6 +7,7 @@ if(isset($_POST['submit'])) {
     $_SESSION['nickname'] = $_POST['nickname'];
     $_SESSION['hpnum'] = $_POST['hpnum'];
     $_SESSION['birthday'] = $_POST['birthday'];
+    jumpTo('createusername.php');
 }
 ?>
 <!DOCTYPE html>

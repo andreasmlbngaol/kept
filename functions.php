@@ -87,57 +87,9 @@ function checkEmail($post) {
     
     $query = "SELECT username FROM account_list WHERE email = '$email'";
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
-
+    
     if($result) {
         alert("Email nya dah kepake. Lupa password aja kalau gak ingat yang kemarin");
-        return false;
-    }
-    return true;
-}
-
-// function untuk menyamakan code
-function checkCode($post) {
-    session_start();
-    $code = $_SESSION['code'];
-    $confirmCode = $post['confirmCode'];
-    if($code != $confirmCode) {
-        alert("Kodenya salah. Padahal tinggal copas lo");
-        return false;
-    }
-    return true;
-}
-
-// function untuk menyamakan password
-function checkPassword($post) {
-    session_start();
-    $password = $post['password'];
-    $_SESSION['password'] = $password;
-    $confirmPassword = $post['confirmPassword'];
-    if($password !== $confirmPassword) {
-        alert('Kata sandinya gak sama. Ulangin deh');
-        return false;
-    }
-    return true;
-}
-
-// function untuk menambahkan seluruh data ke database
-function register($session) {
-    global $conn;
-    session_start();
-    $username = $session['username'];
-    $email = $session['email'];
-    $password = $session['password'];
-    $hpnum = $session['hpnum'];
-    $name = $session['name'];
-    $nickname = $session['nickname'];
-    $birthday = $session['birthday'];
-
-    // memasukkan data ke database
-    $query = "INSERT INTO account_list VALUES(NULL, '$username', '$email', '$password', '$hpnum', '$name', '$nickname', '$birthday', 1, 0)";
-    mysqli_query($conn, $query);
-
-    if(mysqli_affected_rows($conn) <= 0) {
-        alert('Gagal wkwkwk');
         return false;
     }
     return true;
@@ -187,6 +139,61 @@ function sendEmail($to, $textHTML, $textNotHTML = "") {
     }
     return false;
 }
+
+// function untuk menyamakan code
+function checkCode($post) {
+    session_start();
+    $code = $_SESSION['code'];
+    $confirmCode = $post['confirmCode'];
+    if($code != $confirmCode) {
+        alert("Kodenya salah. Padahal tinggal copas lo");
+        return false;
+    }
+    return true;
+}
+
+// function untuk menyamakan password
+function checkPassword($post) {
+    session_start();
+    $password = $post['password'];
+    $_SESSION['password'] = $password;
+    $confirmPassword = $post['confirmPassword'];
+    if($password !== $confirmPassword) {
+        alert('Kata sandinya gak sama. Ulangin deh');
+        return false;
+    }
+    return true;
+}
+
+// function untuk menambahkan seluruh data ke database
+function register($session) {
+    global $conn;
+    session_start();
+    $username = $session['username'];
+    $email = $session['email'];
+    $password = $session['password'];
+    $hpnum = $session['hpnum'];
+    $name = $session['name'];
+    $nickname = $session['nickname'];
+    $birthday = $session['birthday'];
+
+    // memasukkan data ke database
+    $query = "INSERT INTO account VALUES(NULL, '$username', '$email', '$password', '$hpnum', '$name', '$nickname', '$birthday', 1, 0)";
+    mysqli_query($conn, $query);
+
+    if(mysqli_affected_rows($conn) <= 0) {
+        alert('Gagal wkwkwk');
+        return false;
+    }
+
+    // menghapus semua variabel session
+    session_unset();
+
+    // menghentikan session
+    session_destroy();
+    return true;
+}
+
 
 
 function login($post) {
