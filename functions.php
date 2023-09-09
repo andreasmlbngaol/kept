@@ -188,25 +188,25 @@ function register($session) {
 
     // mengirim data lengkap nya ke email
     sendEmail($email, "Informasi Akun", "Username: <br>
-    $username
-    
+    $username <br>
+    <br>
     Email: <br>
     $email <br>
-    
+    <br>
     Password: <br>
     $password <br>
-    
+    <br>
     No. HP: <br>
     $hpnum <br>
-    
+    <br>
     Nama Lengkap: <br>
     $name <br>
-    
+    <br>
     Nama Panggilan: <br>
     $nickname <br>
-    
+    <br>
     Tanggal lahir: <br>
-    $birthday <br>");
+    $birthday");
 
     // menghapus semua variabel session
     session_unset();
