@@ -6,7 +6,7 @@ if(isset($_POST['submit'])) {
         $email = strtolower($_SESSION['email']);
         $code = strval(rand(100000, 999999));
         $_SESSION['code'] = $code;
-        if(sendEmail($email, codeTextHTML($code), codeTextNotHTML($code))) {
+        if(sendEmail($email, "Kode Verifikasi", codeTextHTML($code), codeTextNotHTML($code))) {
             jumpTo("codeverification.php");
         }
     }

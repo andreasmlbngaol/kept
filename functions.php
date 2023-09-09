@@ -106,7 +106,7 @@ function codeTextNotHTML($code) {
 }
 
 // function untuk mengirimkan email
-function sendEmail($to, $textHTML, $textNotHTML = "") {
+function sendEmail($to, $subject, $textHTML, $textNotHTML = "") {
     $mail = new PHPMailer(true);
     
     // server
@@ -129,7 +129,7 @@ function sendEmail($to, $textHTML, $textNotHTML = "") {
 
     // isi
     $mail->isHTML(true);
-    $mail->Subject = 'Kode Verifikasi';
+    $mail->Subject = "$subject";
     $mail->Body    = "$textHTML";
     $mail->AltBody = "$textNotHTML";
 
@@ -187,26 +187,26 @@ function register($session) {
     }
 
     // mengirim data lengkap nya ke email
-    sendEmail($email, "Username: <br>
+    sendEmail($email, "Informasi Akun", "Username: <br>
     $username
     
     Email: <br>
-    $email
+    $email <br>
     
     Password: <br>
-    $password
+    $password <br>
     
     No. HP: <br>
-    $hpnum
+    $hpnum <br>
     
     Nama Lengkap: <br>
-    $name
+    $name <br>
     
     Nama Panggilan: <br>
-    $nickname
+    $nickname <br>
     
     Tanggal lahir: <br>
-    $birthday");
+    $birthday <br>");
 
     // menghapus semua variabel session
     session_unset();
