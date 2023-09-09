@@ -35,7 +35,7 @@ if(isset($_POST['submit'])) {
         </div>
         <div>
             <label for="birthday">Tanggal Lahir</label><br>
-            <input type="text" id="birthday" name="birthday" autocomplete="off" required>
+            <input type="date" id="birthday" name="birthday" autocomplete="off" required>
         </div>
         <button type="submit" name="submit" id="submit">Lanjut</button>
     </form>
