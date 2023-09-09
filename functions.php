@@ -1,14 +1,17 @@
 <?php
+//digunakan untuk mengirim email
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php';
+
+//membuat zona waktu jadi WIB
 date_default_timezone_set('Asia/Jakarta');
 
+// connect dengan sql server
 $conn = mysqli_connect("sql209.infinityfree.com", "if0_34962067", "PMLbfabCfgyBhf", "if0_34962067_keptdb");
 
-//Load Composer's autoloader
-// function for making script
+// function untuk membuat script dengan cepat
 function script($script) {
     echo "
 <script>
@@ -17,11 +20,12 @@ function script($script) {
     ";
 }
 
+// function untuk redirect ke halaman lain
 function jumpTo($destination) {
     script('window.location.href = "'.$destination.'";');
 }
 
-// function for showing alert
+// function untuk menampilkan alert
 function alert($alert) {
     echo "
 <script>
@@ -29,7 +33,7 @@ function alert($alert) {
 </script>
 ";}
 
-// function for query
+// function mengambil data
 function query($query) {
     global $conn;
     $result = mysqli_query($conn, $query);
@@ -40,72 +44,150 @@ function query($query) {
     return $rows;
 }
 
+// function untuk menampilkan tanggal dalam Tahun-bulan-hari
 function showDate() {
     echo date('Y-m-d');
 }
 
+
+// function untuk menampilkan tanggal dan waktu
 function showDateTime() {
     echo date('Y-m-d H:i:s');
 }
 
+
+// function untuk menampilkan  waktu
 function showTime() {
     echo date('H:i:s');
 }
 
-function checkUsernameAndPassword($post) {
+// function untuk mengecek ketersediaan username
+function checkUsername($post) {
     session_start();
     global $conn;
-    # stripslashes mencegah garis miring
     $username = strtolower(stripslashes($post['username']));
     $_SESSION['username'] = $username;
-    $password = $post['password'];
-    $_SESSION['password'] = $password;
-    $confirmPassword = $post['confirmPassword'];
-
-    // cek username 
+    
     $query = "SELECT username FROM account_list WHERE username = '$username'";
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
+
     if($result) {
-        alert("Username tidak tersedia");
+        alert("Usernamenya dah kepake. Ayo dong cari yang lain yang kreatif");
         return false;
     }
-    
-    // cek konfirmasi password
-    if($password !== $confirmPassword) {
-        alert("Password tidak sesuai");
-        return false;
-    }    
-
     return true;
 }
 
-function register($post) {
-    global $conn;
+// function untuk mengecek ketersediaan email
+function checkEmail($post) {
     session_start();
-    $username = $_SESSION['username'];
-    $password = $_SESSION['password'];
-    $name = $post['name'];
-    $nickname = $post['nickname'];
+    global $conn;
     $email = strtolower($post['email']);
-    $birthday = $post['birthday'];
-    $quest = $post['quest'];
-    $ans = strtolower($post['ans']);
-    $clue = $post['clue'];
-
-    // mengecek email
+    $_SESSION['email'] = $email;
+    
     $query = "SELECT username FROM account_list WHERE email = '$email'";
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
+
     if($result) {
-        alert("Email udah kepake");
+        alert("Email nya dah kepake. Lupa password aja kalau gak ingat yang kemarin");
         return false;
     }
+    return true;
+}
+
+// function untuk menyamakan code
+function checkCode($post) {
+    session_start();
+    $code = $_SESSION['code'];
+    $confirmCode = $post['confirmCode'];
+    if($code != $confirmCode) {
+        alert("Kodenya salah. Padahal tinggal copas lo");
+        return false;
+    }
+    return true;
+}
+
+// function untuk menyamakan password
+function checkPassword($post) {
+    session_start();
+    $password = $post['password'];
+    $_SESSION['password'] = $password;
+    $confirmPassword = $post['confirmPassword'];
+    if($password !== $confirmPassword) {
+        alert('Kata sandinya gak sama. Ulangin deh');
+        return false;
+    }
+    return true;
+}
+
+// function untuk menambahkan seluruh data ke database
+function register($session) {
+    global $conn;
+    session_start();
+    $username = $session['username'];
+    $email = $session['email'];
+    $password = $session['password'];
+    $hpnum = $session['hpnum'];
+    $name = $session['name'];
+    $nickname = $session['nickname'];
+    $birthday = $session['birthday'];
 
     // memasukkan data ke database
-    $query = "INSERT INTO account_list VALUES(NULL, '$username', '$name', '$nickname', '$password', '$email', '$birthday', '$quest', '$ans', '$clue', 1, 0)";
+    $query = "INSERT INTO account_list VALUES(NULL, '$username', '$email', '$password', '$hpnum', '$name', '$nickname', '$birthday', 1, 0)";
     mysqli_query($conn, $query);
 
-    return mysqli_affected_rows($conn);
+    if(mysqli_affected_rows($conn) <= 0) {
+        alert('Gagal wkwkwk');
+        return false;
+    }
+    return true;
 }
+
+// function template pesan kode verifikasi dalam HTML
+function codeTextHTML($code) {
+    return "Kode Verifikasinya ini ya:<br><b>$code</b>";
+}
+
+// function template pesan kode verifikasi non HTML
+function codeTextNotHTML($code) {
+    return "Kode verifikasinnya ini ya: $code";
+}
+
+// function untuk mengirimkan email
+function sendEmail($to, $textHTML, $textNotHTML = "") {
+    $mail = new PHPMailer(true);
+    
+    // server
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.gmail.com';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = 'keptflow@gmail.com';
+    $mail->Password   = 'ukgaqxlmcmdvyloa';
+    $mail->SMTPSecure = 'tls';
+    $mail->Port       = 587;
+
+    // penerima
+    $mail->setFrom('keptflow@gmail.com', 'kept');
+    $mail->addAddress("$to");
+    $mail->addReplyTo('keptflow@gmail.com', 'kept');
+
+    // lampiran
+    // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+    // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+
+    // isi
+    $mail->isHTML(true);
+    $mail->Subject = 'Kode Verifikasi';
+    $mail->Body    = "$textHTML";
+    $mail->AltBody = "$textNotHTML";
+
+    // kirim
+    if($mail->send() == true) {
+        return true;
+    }
+    return false;
+}
+
 
 function login($post) {
     global $conn;
@@ -144,38 +226,4 @@ function fetchUserData($username) {
     $_SESSION['isnew'] = $result['isnew'];
     $_SESSION['ispremium'] = $result['ispremium'];
 }
-
-function sendEmail($code, $to) {
-//Create an instance; passing `true` enables exceptions
-$mail = new PHPMailer(true);
-    //Server settings
-$mail->isSMTP();                                            //Send using SMTP
-$mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-$mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-$mail->Username   = 'keptflow@gmail.com';                     //SMTP username
-$mail->Password   = 'ukgaqxlmcmdvyloa';                               //SMTP password
-$mail->SMTPSecure = 'tls';            //Enable implicit TLS encryption
-$mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
-//Recipients
-$mail->setFrom('keptflow@gmail.com', 'kept');
-$mail->addAddress("$to");               //Name is optional
-$mail->addReplyTo('keptflow@gmail.com', 'kept');
-
-//Attachments
-// $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-// $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
-
-//Content
-$mail->isHTML(true);                                  //Set email format to HTML
-$mail->Subject = 'Kode Verifikasi';
-$mail->Body    = "Kode Verifikasi Anda adalah <b>$code</b>";
-$mail->AltBody = "TKode Verifikasi Anda adalah $code";
-
-if($mail->send() == true) {
-    return true;
-}
-return false;
-}
-
 ?>

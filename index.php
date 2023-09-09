@@ -22,6 +22,6 @@
     <h1>Welcome to kept</h1>
     <h2>Smartly Kept, Wisely Flowed</h2>
     <a href="login/login.php">Masuk</a><br><br>
-    <a href="register/register.php">Daftar</a>
+    <a href="register/index.php">Daftar</a>
 </body>
 </html>
