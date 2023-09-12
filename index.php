@@ -1,3 +1,11 @@
+<?php
+require "functions.php";
+session_start();
+if(isset($_SESSION['usernamelogin'])) {
+    jumpTo("app/");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>

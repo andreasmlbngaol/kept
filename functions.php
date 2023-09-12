@@ -112,8 +112,8 @@ function checkEmail($post) {
     $email = strtolower($post['email']);
 
     // mengecek ada gak '@' di email
-    if(stristr($email, '@')) {
-        alert('Email gadungan');
+    if(stristr($email, '@') === false) {
+        alert(stristr($email, '@'));
         $_SESSION['email'] = NULL;
         return false;
     }
@@ -207,7 +207,7 @@ function register($session) {
     session_start();
     $username = $session['username'];
     $email = $session['email'];
-    $password = $session['password'];
+    $password = password_hash($session['password'], PASSWORD_DEFAULT);
     $hpnum = $session['hpnum'];
     $name = $session['name'];
     $nickname = $session['nickname'];
@@ -262,17 +262,19 @@ function login($post) {
 
     $query = "SELECT password, username FROM account WHERE username = '$temp' OR hpnum = '$temp' OR email = '$temp'";
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
+    session_unset();
     if(!$result) {
         alert("Akun ghoib. Dah daftar belum?");
         return false;
     }
 
     $confirmPassword = $result['password'];
-    if($password !== $confirmPassword) {
+    if(!password_verify($password, $confirmPassword)) {
         alert('Password salah sayang :v');
         return false;
     }
-    $_SESSION['username'] = $result['username'];
+    session_start();
+    $_SESSION['usernamelogin'] = $result['username'];
     $_SESSION['temp'] = NULL;
     return true;
 }
@@ -301,11 +303,15 @@ function fetch($request, $username = false) {
     global $conn;
     if ($username === false) {
         session_start();
-        $username = $_SESSION['username'];
+        $username = $_SESSION['usernamelogin'];
     }
-    $query = "SELECT `$request` FROM account WHERE username = '$username'";
+    $query = "SELECT $request FROM account WHERE username = '$username'";
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
     $result = $result["$request"];
     return $result;
+}
+
+function logout() {
+    session_unset();
 }
 ?>
