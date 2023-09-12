@@ -9,7 +9,7 @@ require 'vendor/autoload.php';
 date_default_timezone_set('Asia/Jakarta');
 
 // connect dengan sql server
-$conn = mysqli_connect("sql209.infinityfree.com", "if0_34962067", "PMLbfabCfgyBhf", "if0_34962067_keptdb");
+$conn = mysqli_connect("sql209.infinityfree.com", "if0_34962067", "aITkeptflow3", "if0_34962067_keptdb");
 
 // function untuk membuat script dengan cepat
 function script($script) {
