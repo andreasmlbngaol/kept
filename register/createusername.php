@@ -1,8 +1,16 @@
 <?php
 require "../functions.php";
+session_start();
+$_SESSION['username'] = NULL;
+$_SESSION['email'] = NULL;
 if(isset($_POST['submit'])) {
-    if(checkUsername($_POST)) {
-        jumpTo("insertemail.php");
+    if(checkUsername($_POST) && checkEmail($_POST) && checkPassword($_POST)) {
+        $email = $_SESSION['email'];
+        $code = strval(rand(100000, 999999));
+        $_SESSION['code'] = $code;
+        if(sendEmail($email, "Kode Verifikasi", codeTextHTML($code), codeTextNotHTML($code))) {
+            jumpTo("codeverification.php");
+        }
     }
 }
 ?>
@@ -19,7 +27,19 @@ if(isset($_POST['submit'])) {
     <form action="" method="post">
         <div>
             <label for="username">Buat username</label>
-            <input type="text" name="username" id="username" autocomplete="off" required>
+            <input type="text" name="username" id="username" autocomplete="off" value="<?php echo $_SESSION['username'] ?>" required>
+        </div>
+        <div>
+            <label for="email">Masukin email</label>
+            <input type="text" name="email" id="email" autocomplete="off" value="<?php echo $_SESSION['email'] ?>" required>
+        </div>
+        <div>
+            <label for="password">Buat Password</label>
+            <input type="password" name="password" id="password" autocomplete="off" required>
+        </div>
+        <div>
+            <label for="confirmPassword">Ulangin Password</label>
+            <input type="password" name="confirmPassword" id="confirmPassword" autocomplete="off" required>
         </div>
         <button type="submit" name="submit" id="submit">Lanjut</button>
     </form>

@@ -3,7 +3,10 @@ require "../functions.php";
 session_start();
 if(isset($_POST['submit'])) {
     if(checkCode($_POST)) {
-        jumpTo('createpassword.php');
+        if(register($_SESSION)) {
+            alert('Oke Sip. Akun mu dah dibuat. Detailnya dikirim ke email ya. Sekarang ke home dulu');
+            jumpTo('../index.php');
+        }
     }
 }
 ?>
