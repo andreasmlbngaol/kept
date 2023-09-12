@@ -4,7 +4,7 @@ session_start();
 if(isset($_POST['submit'])) {
     if(forgetPassword($_POST)) {
         alert("Dah dikirim tuh ke email. Jangan terlalu banyak pikiran ya. wkwk");
-        jumpTo('../login/index.php');
+        jumpTo('../login/');
     }
 }   
 ?>

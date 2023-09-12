@@ -4,7 +4,7 @@ session_start();
 $_SESSION['temp'] = NULL;
 if(isset($_POST['submit'])) {
     if(login($_POST) == true) {
-        jumpTo("../app/index.php");
+        jumpTo("../app/");
     }
 }
 ?>
@@ -29,7 +29,7 @@ if(isset($_POST['submit'])) {
             <input type="password" name="password" id="password" autocomplete="off" required>
         </div>
         <div>
-            <a href="../forgetpassword/index.php">Anda Pikun? Lupa Password aja...</a>
+            <a href="../forgetpassword/">Anda Pikun? Lupa Password aja...</a>
         </div>
         <button type="submit" name="submit">Masuk</button>
     </form>
