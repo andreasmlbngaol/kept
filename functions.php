@@ -110,6 +110,14 @@ function checkEmail($post) {
     session_start();
     global $conn;
     $email = strtolower($post['email']);
+
+    // mengecek ada gak '@' di email
+    if(stristr($email, '@')) {
+        alert('Email gadungan');
+        $_SESSION['email'] = NULL;
+        return false;
+    }
+
     $_SESSION['email'] = $email;
     
     $query = "SELECT username FROM account WHERE email = '$email'";
@@ -244,43 +252,60 @@ function register($session) {
     return true;
 }
 
-
-
+// function untuk login
 function login($post) {
+    session_start();
     global $conn;
-    $username = strtolower($post['username']);
+    $temp = strtolower($post['username']);
+    $_SESSION['temp'] = $temp;
     $password = $post['password'];
 
-    $query = "SELECT password FROM account WHERE username = '$username'";
+    $query = "SELECT password, username FROM account WHERE username = '$temp' OR hpnum = '$temp' OR email = '$temp'";
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
     if(!$result) {
-        alert("username tidak tersedia");
+        alert("Akun ghoib. Dah daftar belum?");
         return false;
     }
 
     $confirmPassword = $result['password'];
     if($password !== $confirmPassword) {
-        alert('Password salah sayang');
+        alert('Password salah sayang :v');
         return false;
     }
-    session_start();
-    $_SESSION['username'] = $username;
+    $_SESSION['username'] = $result['username'];
+    $_SESSION['temp'] = NULL;
     return true;
 }
 
-function fetchUserData($username) {
+// function untuk lupa password
+function forgetPassword($post) {
     global $conn;
-    $query = "SELECT * FROM account WHERE username = '$username'";
+    $temp = $post['username'];
+
+    $query = "SELECT password, email FROM account WHERE username = '$temp' OR hpnum = '$temp' OR email = '$temp'";
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
-    $_SESSION['id'] == $result['id'];
-    $_SESSION['name'] = $result['name'];
-    $_SESSION['nickname'] = $result['nickname'];
-    $_SESSION['password'] = $result['password'];
-    $_SESSION['birthday'] = $result['birthday'];
-    $_SESSION['quest'] = $result['quest'];
-    $_SESSION['ans'] = $result['ans'];
-    $_SESSION['clue'] = $result['clue'];
-    $_SESSION['isnew'] = $result['isnew'];
-    $_SESSION['ispremium'] = $result['ispremium'];
+    if(!$result) {
+        alert("Gak ada akun kek gitu");
+        return false;
+    }
+    $email = $result['email'];
+    $password = $result['password'];
+
+    if(sendEmail($email, "Lupa Password", "Passwordnya <b>$password</b>. Langsung ganti biar lebih aman.") == true) {
+        return true;
+    }
+}
+
+// function untuk mengambil data dari database
+function fetch($request, $username = false) {
+    global $conn;
+    if ($username === false) {
+        session_start();
+        $username = $_SESSION['username'];
+    }
+    $query = "SELECT `$request` FROM account WHERE username = '$username'";
+    $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
+    $result = $result["$request"];
+    return $result;
 }
 ?>

@@ -4,10 +4,9 @@ session_start();
 if(isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
 } else {
-    jumpTo("../login/login.php");
+    jumpTo("../index.php");
 }
-fetchUserData($username);
-$name = $_SESSION['name'];
+$name = fetch('nickname');
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +18,7 @@ $name = $_SESSION['name'];
     <title>Home</title>
 </head>
 <body>
-    <h1>Selamat datang, <?php echo "$name" ?></h1>
+    <h1>Welkam tu kept, <?php echo "$name" ?></h1>
 
 </body>
 </html>
