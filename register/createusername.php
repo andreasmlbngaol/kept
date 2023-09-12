@@ -4,6 +4,8 @@ session_start();
 $_SESSION['username'] = NULL;
 $_SESSION['email'] = NULL;
 if(isset($_POST['submit'])) {
+    $_SESSION['username'] = $_POST['username'];
+    $_SESSION['email'] = $_POST['email'];
     if(checkUsername($_POST) && checkEmail($_POST) && checkPassword($_POST)) {
         $email = $_SESSION['email'];
         $code = strval(rand(100000, 999999));

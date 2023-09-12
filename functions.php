@@ -61,6 +61,32 @@ function showTime() {
     echo date('H:i:s');
 }
 
+// function untuk mengecek nomor HP
+function checkHpNum($post) {
+    session_start();
+    global $conn;
+    $hpnum = $post['hpnum'];
+    $len = strlen($hpnum);
+    $_SESSION['hpnum'] = $hpnum;
+    
+    if($hpnum[0] != '0' || $len < 10 || $len > 13) {
+        alert("Nomor HP nya gak rill cuy");
+        $_SESSION['hpnum'] = NULL;
+        return false;
+    }
+    
+    $query = "SELECT username FROM account WHERE hpnum = '$hpnum'";
+    $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
+    
+    if($result) {
+        alert("Nomornya dah kepake. Buat Lupa Password aja di Menu Login");
+        $_SESSION['hpnum'] = NULL;
+        return false;
+    }
+
+    return true;
+}
+
 // function untuk mengecek ketersediaan username
 function checkUsername($post) {
     session_start();
@@ -73,6 +99,7 @@ function checkUsername($post) {
 
     if($result) {
         alert("Usernamenya dah kepake. Ayo dong cari yang lain yang kreatif");
+        $_SESSION['username'] = NULL;
         return false;
     }
     return true;
@@ -90,6 +117,7 @@ function checkEmail($post) {
     
     if($result) {
         alert("Email nya dah kepake. Lupa password aja kalau gak ingat yang kemarin");
+        $_SESSION['email'] = NULL;
         return false;
     }
     return true;
