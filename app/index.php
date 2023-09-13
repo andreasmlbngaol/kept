@@ -1,13 +1,15 @@
 <?php
 require "../functions.php";
 session_start();
-if(isset($_SESSION['username'])) {
-    $username = $_SESSION['username'];
-} else {
-    jumpTo("../login/login.php");
+if(!isset($_SESSION['usernamelogin'])) {
+    jumpTo("../");
 }
+<<<<<<< HEAD
 fetchUserData($username);
 $name = $_SESSION['nickname'];
+=======
+$name = fetch('nickname');
+>>>>>>> 5839cf3b384f36bce9f8608dddd8de7e91e96df3
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +21,7 @@ $name = $_SESSION['nickname'];
     <title>Home</title>
 </head>
 <body>
-    <h1>Selamat datang, <?php echo "$name" ?></h1>
-
+    <h1>Welkam tu kept, <?php echo "$name" ?></h1>
+    <a href="logout.php">Keluar</a>
 </body>
 </html>
