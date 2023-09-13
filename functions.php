@@ -185,6 +185,7 @@ function checkCode($post) {
         alert("Kodenya salah. Padahal tinggal copas lo");
         return false;
     }
+    $_SESSION['emailrenew'] = $_SESSION['email'];
     return true;
 }
 
@@ -198,6 +199,25 @@ function checkPassword($post) {
         alert('Kata sandinya gak sama. Ulangin deh');
         return false;
     }
+    return true;
+}
+
+// function untuk memperbarui password
+function renewPassword($post) {
+    session_start();
+    global $conn;
+    $password = $post['password'];
+    $password = password_hash($password, PASSWORD_DEFAULT);
+    $email = $_SESSION['emailrenew'];
+    $query = "UPDATE account SET password = '$password' WHERE email = '$email'";
+    mysqli_query($conn, $query);
+
+    if(mysqli_affected_rows($conn) <= 0) {
+        alert('Gagal wkwkwk');
+        return false;
+    }
+
+    session_unset();
     return true;
 }
 
@@ -228,9 +248,6 @@ function register($session) {
     <br>
     Email: <br>
     $email <br>
-    <br>
-    Password: <br>
-    $password <br>
     <br>
     No. HP: <br>
     $hpnum <br>
@@ -281,6 +298,7 @@ function login($post) {
 
 // function untuk lupa password
 function forgetPassword($post) {
+    session_start();
     global $conn;
     $temp = $post['username'];
 
@@ -292,8 +310,18 @@ function forgetPassword($post) {
     }
     $email = $result['email'];
     $password = $result['password'];
+    $code = strval(rand(100000,999999));
+    $_SESSION['code'] = $code;
+    $_SESSION['email'] = $email;
+    $emailDomain = stristr($email, '@');
+    $usernameLen = strlen($email) - strlen($emailDomain);
+    $censoredEmail = "";
+    for ($i = 0; $i < $usernameLen - 2; $i++) {
+        $censoredEmail .= "*";
+    }
+    $_SESSION['privateEmail'] = $email[0].$email[1].$censoredEmail.stristr($email, '@');
 
-    if(sendEmail($email, "Lupa Password", "Passwordnya <b>$password</b>. Langsung ganti biar lebih aman.") == true) {
+    if(sendEmail($email, "Kode Lupa Password", "Kodenya <b>$code</b>. Gaskeun.") == true) {
         return true;
     }
 }

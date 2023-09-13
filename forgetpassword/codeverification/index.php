@@ -1,12 +1,9 @@
 <?php
-require "../functions.php";
+require "../../functions.php";
 session_start();
 if(isset($_POST['submit'])) {
     if(checkCode($_POST)) {
-        if(register($_SESSION)) {
-            alert('Oke Sip. Akun mu dah dibuat. Detailnya dikirim ke email ya. Sekarang ke home dulu');
-            jumpTo('../');
-        }
+        jumpTo("../renewpassword/");
     }
 }
 ?>
@@ -19,7 +16,7 @@ if(isset($_POST['submit'])) {
     <title>Verifikasi Kode</title>
 </head>
 <body>
-    <h1>Ini Halaman Daftar 4</h1>
+    <h1>Ini Halaman Lupa Password 2</h1>
     <form action="" method="post">
         <div>
             <label for="confirmCode">Masukin kode verifikasi yang udah dikirim ke emailmu</label>

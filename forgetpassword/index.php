@@ -3,8 +3,8 @@ require "../functions.php";
 session_start();
 if(isset($_POST['submit'])) {
     if(forgetPassword($_POST)) {
-        alert("Dah dikirim tuh ke email. Jangan terlalu banyak pikiran ya. wkwk");
-        jumpTo('../login/');
+        alert("Dah dikirim tuh ke email {$_SESSION['privateEmail']} kodenya");
+        jumpTo('codeverification/');
     }
 }   
 ?>

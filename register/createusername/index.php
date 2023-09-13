@@ -1,5 +1,5 @@
 <?php
-require "../functions.php";
+require "../../functions.php";
 session_start();
 $_SESSION['username'] = NULL;
 $_SESSION['email'] = NULL;
@@ -11,7 +11,7 @@ if(isset($_POST['submit'])) {
         $code = strval(rand(100000, 999999));
         $_SESSION['code'] = $code;
         if(sendEmail($email, "Kode Verifikasi", codeTextHTML($code), codeTextNotHTML($code))) {
-            jumpTo("codeverification.php");
+            jumpTo("../codeverification/");
         }
     }
 }

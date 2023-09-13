@@ -11,7 +11,7 @@ if(isset($_POST['submit'])) {
     $_SESSION['nickname'] = $_POST['nickname'];
     $_SESSION['birthday'] = $_POST['birthday'];
     if(checkHpNum($_POST)) {
-        jumpTo('createusername.php');
+        jumpTo('createusername/');
     }
 }
 ?>
