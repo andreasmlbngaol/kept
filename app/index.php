@@ -4,12 +4,7 @@ session_start();
 if(!isset($_SESSION['usernamelogin'])) {
     jumpTo("../");
 }
-<<<<<<< HEAD
-fetchUserData($username);
-$name = $_SESSION['nickname'];
-=======
 $name = fetch('nickname');
->>>>>>> 5839cf3b384f36bce9f8608dddd8de7e91e96df3
 ?>
 
 <!DOCTYPE html>
