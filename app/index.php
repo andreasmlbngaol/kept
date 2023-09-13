@@ -7,7 +7,7 @@ if(isset($_SESSION['username'])) {
     jumpTo("../login/login.php");
 }
 fetchUserData($username);
-$name = $_SESSION['name'];
+$name = $_SESSION['nickname'];
 ?>
 
 <!DOCTYPE html>
