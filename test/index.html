@@ -1,11 +1,3 @@
-<?php
-require "functions.php";
-session_start();
-if(isset($_SESSION['usernamelogin'])) {
-    jumpTo("app/");
-}
-?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -17,7 +9,7 @@ if(isset($_SESSION['usernamelogin'])) {
 </head>
 <body id="home">
     <nav id="home-header">
-        <a href="" class="home-header-list" id="home-header-logo">LOGO</a>
+        <a href="" class="home-header-list"><img src="logo.png" alt=""  id="home-header-logo"></a>
         <a href="login/" class="home-header-list">SIGN IN</a>
         <a href="" class="home-header-list">FAQ'S</a>
         <a href="" class="home-header-list">PRODUCT</a>
