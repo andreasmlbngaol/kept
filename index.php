@@ -17,7 +17,7 @@ if(isset($_SESSION['usernamelogin'])) {
 </head>
 <body id="home">
     <nav id="home-header">
-        <a href="" class="home-header-list" id="home-header-logo">LOGO</a>
+        <a href="" class="home-header-list" id="home-header-logo-container"><img src="../img/logo.png" alt=""  id="home-header-logo"></a>
         <a href="login/" class="home-header-list">SIGN IN</a>
         <a href="" class="home-header-list">FAQ'S</a>
         <a href="" class="home-header-list">PRODUCT</a>
@@ -30,7 +30,7 @@ if(isset($_SESSION['usernamelogin'])) {
             <p class="home-menu-item">You will have the best experience with thousands of smart individuals worldwide in managing their finances</p>
         </div>
         <div id="home-menu-img">
-            <img src="" alt="Ini Gambar" id="home-img" class="home-menu-item">
+            <img src="../img/logo.png" alt="Ini Gambar" id="home-img" class="home-menu-item">
         </div>
     </div>
     <a href="register/" id="home-register"><span id="home-register-text">GET STARTED</span></a>
