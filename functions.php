@@ -261,6 +261,20 @@ function register($session) {
     Tanggal lahir: <br>
     $birthday");
 
+    // membuat tabel log untuk user
+    $query = "CREATE TABLE {$username}_flow ( 
+        `id` INT NULL DEFAULT NULL AUTO_INCREMENT , 
+        `date` DATE NULL DEFAULT NULL , 
+        `isincome` BOOLEAN NULL DEFAULT NULL , 
+        `category` VARCHAR(64) NULL DEFAULT NULL , 
+        `detail` VARCHAR(256) NULL DEFAULT NULL , 
+        `value` INT NULL DEFAULT NULL , 
+        `daily` BOOLEAN NULL DEFAULT NULL , 
+        PRIMARY KEY (`id`))";
+    if(!mysqli_query($conn, $query)) {
+        alert("error cuy");
+    }
+
     // menghapus semua variabel session
     session_unset();
 
