@@ -43,6 +43,7 @@ if(isset($_POST['submit'])) {
             <label for="confirmPassword">Ulangin Password</label>
             <input type="password" name="confirmPassword" id="confirmPassword" autocomplete="off" required>
         </div>
+        <button>Akready have an account? <a href="../login/">Sign in</a></button>
         <button type="submit" name="submit" id="submit">Lanjut</button>
     </form>
 </body>
