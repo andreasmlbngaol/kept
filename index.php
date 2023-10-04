@@ -26,7 +26,7 @@ if(isset($_SESSION['usernamelogin'])) {
     <div id="home-menu-container">
         <div id="home-menu-text">
             <h2 class="home-menu-item"><span id="home-menu-text-motto">Smartly Kept, Wisely Flowed</span></h2>
-            <h1 class="home-menu-item">LET'S TAKE YOUR <br>FLOW TO THE <br>NEXT LEVEL</h1>
+            <h1 class="home-menu-item">LET'S TAKE YOUR <br>FLOW TO THE<br> NEXT LEVEL</h1>
             <p class="home-menu-item">You will have the best experience with thousands of smart individuals worldwide in managing their finances</p>
         </div>
         <div id="home-menu-img">
