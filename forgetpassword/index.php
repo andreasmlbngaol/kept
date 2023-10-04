@@ -15,16 +15,15 @@ if(isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ini Menu Lupa Password</title>
+    <title>FORGET PASSWORD</title>
 </head>
 <body>
-    <h1>Ini Halaman Lupa Password</h1>
+    <h1>FORGET PASSWORD</h1>
     <form action="" method="post">
         <div>
-            <label for="username">Username/Email/No.HP</label><br>
-            <input type="text" name="username" id="username" autocomplete="off" required>
+            <input type="text" name="username" id="username" autocomplete="off" placeholder="Email/Username/Phone" required>
         </div>
-        <button type="submit" name="submit">Masuk</button>
+        <button type="submit" name="submit">NEXT</button>
     </form>
 </body>
 </html>

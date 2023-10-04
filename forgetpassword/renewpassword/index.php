@@ -20,20 +20,18 @@ if(isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buat Password</title>
+    <title>RENEW PASSWORD</title>
 </head>
 <body>
-    <h1>Ini Halaman Memperbarui Password</h1>
+    <h1>RENEW PASSWORD</h1>
     <form action="" method="post">
         <div>
-            <label for="password">Buat Password</label>
-            <input type="password" name="password" id="password" autocomplete="off" required>
+            <input type="password" name="password" id="password" autocomplete="off" placeholder="Create New Password" required>
         </div>
         <div>
-            <label for="confirmPassword">Ulangin Password</label>
-            <input type="password" name="confirmPassword" id="confirmPassword" autocomplete="off" required>
+            <input type="password" name="confirmPassword" id="confirmPassword" autocomplete="off" placeholder="Confirm New Password" required>
         </div>
-        <button type="submit" name="submit" id="submit">Lanjut</button>
+        <button type="submit" name="submit" id="submit">RENEW</button>
     </form>
 </body>
 </html>

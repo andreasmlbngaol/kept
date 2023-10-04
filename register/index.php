@@ -22,29 +22,31 @@ if(isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buat username</title>
+    <link rel="shortcut icon" href="../src/img/logo kept 7.png" type="image/x-icon">
+    <title>SIGN UP</title>
 </head>
 <body>
-    <h1>Ini Halaman Daftar 2</h1>
+    <nav id="home-header">
+        <a href="" class="home-header-list" id="home-header-logo-container"><img src="../src/img/logo.png" alt=""  id="home-header-logo"></a>
+        <a href="" class="home-header-list">FAQ'S</a>
+        <a href="" class="home-header-list">PRODUCT</a>
+    </nav>
+    <h1>SIGN UP</h1>
     <form action="" method="post">
         <div>
-            <label for="username">Buat username</label>
-            <input type="text" name="username" id="username" autocomplete="off" value="<?php echo $_SESSION['username'] ?>" required>
+            <input type="text" name="email" id="email" autocomplete="off" value="<?php echo $_SESSION['email'] ?>" placeholder="Email" required>
         </div>
         <div>
-            <label for="email">Masukin email</label>
-            <input type="text" name="email" id="email" autocomplete="off" value="<?php echo $_SESSION['email'] ?>" required>
+            <input type="text" name="username" id="username" autocomplete="off" value="<?php echo $_SESSION['username'] ?>" placeholder="Username" required>
         </div>
         <div>
-            <label for="password">Buat Password</label>
-            <input type="password" name="password" id="password" autocomplete="off" required>
+            <input type="password" name="password" id="password" autocomplete="off" placeholder="Password" required>
         </div>
         <div>
-            <label for="confirmPassword">Ulangin Password</label>
-            <input type="password" name="confirmPassword" id="confirmPassword" autocomplete="off" required>
+            <input type="password" name="confirmPassword" id="confirmPassword" autocomplete="off" placeholder="Repeat Password" required>
         </div>
-        <button>Akready have an account? <a href="../login/">Sign in</a></button>
-        <button type="submit" name="submit" id="submit">Lanjut</button>
+        <p>Already have an account? <a href="../login/">Sign in</a></p>
+        <button type="submit" name="submit" id="submit">NEXT</button>
     </form>
 </body>
 </html>

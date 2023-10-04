@@ -16,8 +16,8 @@ $name = fetch('nickname');
     <title>Home</title>
 </head>
 <body>
-    <h1>Welkam tu kept, <?php echo "$name" ?></h1>
+    <h1>Welcome tu kept, <?php echo "$name" ?></h1>
     <a href="logout.php">Keluar</a>
-    <a href="insertflow/">Masukin Pengeluaran/Pemasukan</a>
+    <a href="keep/">Masukin Pengeluaran/Pemasukan</a>
 </body>
 </html>

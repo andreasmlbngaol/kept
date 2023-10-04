@@ -11,6 +11,17 @@ date_default_timezone_set('Asia/Jakarta');
 // connect dengan sql server
 $conn = mysqli_connect("sql209.infinityfree.com", "if0_34962067", "aITkeptflow3", "if0_34962067_keptdb");
 
+function keepConn() {
+    global $conn;
+    $conn = mysqli_connect("sql209.infinityfree.com", "if0_34962067", "aITkeptflow3", "if0_34962067_keepdb");
+}
+
+function keptConn() {
+    global $conn;
+    $conn = mysqli_connect("sql209.infinityfree.com", "if0_34962067", "aITkeptflow3", "if0_34962067_keptdb");
+
+}
+
 // function untuk membuat script dengan cepat
 function script($script) {
     echo "
@@ -113,7 +124,7 @@ function checkEmail($post) {
 
     // mengecek ada gak '@' di email
     if(stristr($email, '@') === false) {
-        alert(stristr($email, '@'));
+        alert("Email salah");
         $_SESSION['email'] = NULL;
         return false;
     }
@@ -261,8 +272,10 @@ function register($session) {
     Tanggal lahir: <br>
     $birthday");
 
+    keepConn();
+
     // membuat tabel log untuk user
-    $query = "CREATE TABLE {$username}_flow ( 
+    $query = "CREATE TABLE {$username}_keep ( 
         `id` INT NULL DEFAULT NULL AUTO_INCREMENT , 
         `date` DATE NULL DEFAULT NULL , 
         `isincome` BOOLEAN NULL DEFAULT NULL , 
@@ -274,6 +287,8 @@ function register($session) {
     if(!mysqli_query($conn, $query)) {
         alert("error cuy");
     }
+
+    keptConn();
 
     // menghapus semua variabel session
     session_unset();

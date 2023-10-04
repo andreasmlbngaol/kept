@@ -15,23 +15,25 @@ if(isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ini Menu Login</title>
+    <title>SIGN IN</title>
 </head>
 <body>
-    <h1>Ini Halaman Login</h1>
+    <nav id="home-header">
+        <a href="" class="home-header-list" id="home-header-logo-container"><img src="../src/img/logo.png" alt=""  id="home-header-logo"></a>
+        <a href="" class="home-header-list">FAQ'S</a>
+        <a href="" class="home-header-list">PRODUCT</a>
+    </nav>
+    <h1>SIGN IN</h1>
     <form action="" method="post">
         <div>
-            <label for="username">Username/Email/No.HP</label><br>
-            <input type="text" name="username" id="username" autocomplete="off" value="<?php echo $_SESSION['temp'] ?>" required>
+            <input type="text" name="username" id="username" autocomplete="off" value="<?php echo $_SESSION['temp'] ?>" placeholder="Email/Username" required>
         </div>
         <div>
-            <label for="password">Password</label><br>
-            <input type="password" name="password" id="password" autocomplete="off" required>
+            <input type="password" name="password" id="password" autocomplete="off" placeholder="Password" required>
         </div>
-        <div>
-            <a href="../forgetpassword/">Anda Pikun? Lupa Password aja...</a>
-        </div>
-        <button type="submit" name="submit">Masuk</button>
+        <p>Are you new here? <a href="../register/">Sign Up</a></p>
+        <p>Can't Remember Your Password? <a href="../forgetpassword/">Forget Password</a></p>
+        <button type="submit" name="submit">SIGN IN</button>
     </form>
 </body>
 </html>
