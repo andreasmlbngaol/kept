@@ -314,7 +314,7 @@ function login($post) {
         alert('Your username is not in our database. Please sign up first.');
         return false;
     }
-    alert("Test");
+    
     $confirmPassword = $result['password'];
     if(!password_verify($password, $confirmPassword)) {
         alert('Incorrect Password. Forget password if you forget :)');
