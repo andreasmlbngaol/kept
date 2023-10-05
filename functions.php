@@ -81,7 +81,7 @@ function checkHpNum($post) {
     $_SESSION['hpnum'] = $hpnum;
     
     if($hpnum[0] != '0' || $len < 10 || $len > 13) {
-        alert("Nomor HP nya gak rill cuy");
+        alert("Phone number invalid. Start with \"08\"");
         $_SESSION['hpnum'] = NULL;
         return false;
     }
@@ -90,7 +90,7 @@ function checkHpNum($post) {
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
     
     if($result) {
-        alert("Nomornya dah kepake. Buat Lupa Password aja di Menu Login");
+        alert("Phone number is used. Maybe you can try forget account.");
         $_SESSION['hpnum'] = NULL;
         return false;
     }
@@ -109,7 +109,7 @@ function checkUsername($post) {
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
 
     if($result) {
-        alert("Usernamenya dah kepake. Ayo dong cari yang lain yang kreatif");
+        alert("Username is not available. Be more creative!");
         $_SESSION['username'] = NULL;
         return false;
     }
@@ -124,7 +124,7 @@ function checkEmail($post) {
 
     // mengecek ada gak '@' di email
     if(stristr($email, '@') === false) {
-        alert("Email salah");
+        alert("Email invalid");
         $_SESSION['email'] = NULL;
         return false;
     }
@@ -135,7 +135,7 @@ function checkEmail($post) {
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
     
     if($result) {
-        alert("Email nya dah kepake. Lupa password aja kalau gak ingat yang kemarin");
+        alert("Email is already used. Maybe you can try forget password");
         $_SESSION['email'] = NULL;
         return false;
     }
@@ -144,12 +144,12 @@ function checkEmail($post) {
 
 // function template pesan kode verifikasi dalam HTML
 function codeTextHTML($code) {
-    return "Kode Verifikasinya ini ya:<br><b>$code</b>";
+    return "Verification Code:<br><b>$code</b><br>Keep it secret from anyone besides you to avoid issues.";
 }
 
 // function template pesan kode verifikasi non HTML
 function codeTextNotHTML($code) {
-    return "Kode verifikasinnya ini ya: $code";
+    return "Verification Code: $code . Keep it secret from anyone besides you to avoid issues.";
 }
 
 // function untuk mengirimkan email
@@ -193,7 +193,7 @@ function checkCode($post) {
     $code = $_SESSION['code'];
     $confirmCode = $post['confirmCode'];
     if($code != $confirmCode) {
-        alert("Kodenya salah. Padahal tinggal copas lo");
+        alert("The Code is wrong.");
         return false;
     }
     $_SESSION['emailrenew'] = $_SESSION['email'];
@@ -207,7 +207,7 @@ function checkPassword($post) {
     $_SESSION['password'] = $password;
     $confirmPassword = $post['confirmPassword'];
     if($password !== $confirmPassword) {
-        alert('Kata sandinya gak sama. Ulangin deh');
+        alert('The password doesn\'t match. Try again!');
         return false;
     }
     return true;
@@ -224,7 +224,7 @@ function renewPassword($post) {
     mysqli_query($conn, $query);
 
     if(mysqli_affected_rows($conn) <= 0) {
-        alert('Gagal wkwkwk');
+        alert('We\'re sorry, we have some error. We really appreciate it if you are willing to report this bug');
         return false;
     }
 
@@ -249,27 +249,27 @@ function register($session) {
     mysqli_query($conn, $query);
 
     if(mysqli_affected_rows($conn) <= 0) {
-        alert('Gagal wkwkwk');
+        alert('We\'re sorry, we have some error. We really appreciate it if you are willing to report this bug');
         return false;
     }
 
     // mengirim data lengkap nya ke email
-    sendEmail($email, "Informasi Akun", "Username: <br>
+    sendEmail($email, "Account Information", "Username: <br>
     $username <br>
     <br>
     Email: <br>
     $email <br>
     <br>
-    No. HP: <br>
+    Phone Number: <br>
     $hpnum <br>
     <br>
-    Nama Lengkap: <br>
+    Full Name: <br>
     $name <br>
     <br>
-    Nama Panggilan: <br>
+    Nickname: <br>
     $nickname <br>
     <br>
-    Tanggal lahir: <br>
+    Birthday Date: <br>
     $birthday");
 
     keepConn();
@@ -311,13 +311,13 @@ function login($post) {
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
     session_unset();
     if(!$result) {
-        alert("Akun ghoib. Dah daftar belum?");
+        alert('Your username is not in our database. Please sign up first.');
         return false;
     }
-
+    alert("Test");
     $confirmPassword = $result['password'];
     if(!password_verify($password, $confirmPassword)) {
-        alert('Password salah sayang :v');
+        alert('Incorrect Password. Forget password if you forget :)');
         return false;
     }
     session_start();
@@ -335,7 +335,7 @@ function forgetPassword($post) {
     $query = "SELECT password, email FROM account WHERE username = '$temp' OR hpnum = '$temp' OR email = '$temp'";
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
     if(!$result) {
-        alert("Gak ada akun kek gitu");
+        alert("Your username is not in our database. Please sign up first.");
         return false;
     }
     $email = $result['email'];
@@ -351,7 +351,7 @@ function forgetPassword($post) {
     }
     $_SESSION['privateEmail'] = $email[0].$email[1].$censoredEmail.stristr($email, '@');
 
-    if(sendEmail($email, "Kode Lupa Password", "Kodenya <b>$code</b>. Gaskeun.") == true) {
+    if(sendEmail($email, "Forget Password Code", "The Code: <b>$code</b>. We suggest you to write your new password somewhere this time.") == true) {
         return true;
     }
 }

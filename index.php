@@ -7,13 +7,13 @@ if(isset($_SESSION['usernamelogin'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1024">
     <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="src/img/logo kept 7.png" type="image/x-icon">
+    <link rel="shortcut icon" href="src/img/icon.png" type="image/x-icon">
     <title>kept</title>
 </head>
 <body id="home">
@@ -31,7 +31,7 @@ if(isset($_SESSION['usernamelogin'])) {
             <p class="home-menu-item">You will have the best experience with thousands of smart individuals worldwide in managing their finances</p>
         </div>
         <div id="home-menu-img">
-            <img src="src/img/logo.png" alt="Ini Gambar" id="home-img" class="home-menu-item">
+            <img src="src/img/home-mascot.png" alt="Ini Gambar" id="home-img" class="home-menu-item">
         </div>
     </div>
     <a href="register/" id="home-register"><span id="home-register-text">GET STARTED</span></a>

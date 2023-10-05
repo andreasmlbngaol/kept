@@ -29,11 +29,13 @@ if(isset($_POST['submit'])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../src/img/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../style.css">
     <title>keep</title>
     <style>
         .input {
@@ -42,7 +44,13 @@ if(isset($_POST['submit'])) {
     </style>
 </head>
 <body>
-    <form action="" method="post" style="display: flex">
+    <nav id="app-header">
+        <a href="../../" class="app-header-list" id="app-header-logo-container"><img src="../../src/img/logo.png" alt="logo.png"  id="app-header-logo"></a>
+        <a href="" class="app-header-list">KEEP</a>
+        <a href="../logout.php" class="app-header-list">LOGOUT</a>
+    </nav>
+
+    <form action="" method="post">
         <div class="input" id="input-date">
             <label for="date">Date:</label><br>
             <input type="date" name="date" id="date" value="<?php dateNow()?>" required>
@@ -71,7 +79,7 @@ if(isset($_POST['submit'])) {
         
         <div class="input" id="input-desc">
             <label for="desc">Description:</label><br>
-            <input type="text" name="desc" id="desc" required>
+            <input type="text" name="desc" id="desc" autocomplete="off" required>
         </div>
         <button type="submit" id="submit" name="submit">INSERT</button>
     </form>

@@ -12,21 +12,28 @@ if(isset($_POST['submit'])) {
     $_SESSION['birthday'] = $_POST['birthday'];
     if(checkHpNum($_POST)) {
         if(register($_SESSION)) {
-            alert('Oke Sip. Akun mu dah dibuat. Detailnya dikirim ke email ya. Sekarang ke home dulu');
+            alert('Done. Your account has been made. The detail is sent to your email. Back to Home.');
             jumpTo('../../');
         }
     }
 }
 ?>
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../src/img/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../style.css">
     <title>PERSONAL DATA</title>
 </head>
 <body>
+    <nav id="home-header">
+        <a href="../../" class="home-header-list" id="home-header-logo-container"><img src="../../src/img/logo.png" alt="logo.png"  id="home-header-logo"></a>
+        <a href="" class="home-header-list">FAQ'S</a>
+        <a href="" class="home-header-list">PRODUCT</a>
+    </nav>
     <h1>PERSONAL DATA</h1>
     <form action="" method="post">
         <div>

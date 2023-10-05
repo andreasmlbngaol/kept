@@ -1,21 +1,11 @@
-<?php
-require "../functions.php";
-session_start();
-if(!isset($_SESSION['usernamelogin'])) {
-    jumpTo("../");
-}
-$name = fetch('nickname');
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../src/img/icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="../style.css">
-    <title>Home</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="icon.png" type="image/x-icon">
+    <title>DOCUMENT</title>
 </head>
 <body>
     <nav id="app-header">
@@ -23,6 +13,7 @@ $name = fetch('nickname');
         <a href="keep/" class="app-header-list">KEEP</a>
         <a href="logout.php" class="app-header-list">LOGOUT</a>
     </nav>
-    <h1>Welcome tu kept, <?php echo "$name" ?></h1>
+
+    
 </body>
 </html>

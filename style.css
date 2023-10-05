@@ -3,7 +3,7 @@
     src: url(src/font/Maison\ Neue\ Extended\ Extra\ Bold.woff);
   }
 
-* {
+  * {
     margin: 0;
     padding: 0;
     font-family: gojek;
@@ -20,6 +20,9 @@ body {
     color: white;
 }
 
+a {
+    color: #E5C3A6;
+}
 
 #home-header {
     width: 50vw;
@@ -40,7 +43,7 @@ body {
     padding-right: 1vw;
     color: #E5C3A6;
     text-decoration: none;
-    font-size: 1.5vw;
+    font-size: 1vw;
 }
 
 #home-header-logo {
@@ -67,7 +70,7 @@ body {
 
 
 #home-menu-text-motto {
-    font-size: 2vw;
+    font-size: 1vw;
     background-color: #E5C3A6;
     border-radius: 20px;
     color: #15253f;
@@ -77,15 +80,15 @@ body {
 }
 
 h1.home-menu-item {
-    font-size: 5vw;
+    font-size: 2.5vw;
 }
 
 p.home-menu-item {
-    font-size: 1.5vw;
+    font-size: 0.75vw;
 }
 
 #home-img {
-    height: 50vh;;
+    height: 200px;;
 }
 
 #home-register {
@@ -102,10 +105,37 @@ p.home-menu-item {
     padding: 10pt;
     text-align: center;
     font-weight: bold;
-    font-size: 2vw;
+    font-size: 1vw;
 }
 
 #home-img {
     margin-top: 70pt;
     height: 200px;
+}
+
+#app-header {
+    width: 50vw;
+    display: inline-block;
+}
+
+#app-header-logo {
+    width: 8vw;
+    vertical-align:middle;
+}
+
+#app-header-logo-container {
+    padding: 0;
+}
+
+.app-header-list {
+    padding-left: 1vw;
+    padding-right: 1vw;
+    color: #E5C3A6;
+    text-decoration: none;
+    font-size: 1vw;
+}
+
+#app-header-logo {
+    background-color: #E5C3A6;
+    color: #15253f;
 }
