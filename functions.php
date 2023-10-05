@@ -56,7 +56,7 @@ function query($query) {
 }
 
 // function untuk menampilkan tanggal dalam Tahun-bulan-hari
-function showDate() {
+function dateNow() {
     echo date('Y-m-d');
 }
 
@@ -278,11 +278,12 @@ function register($session) {
     $query = "CREATE TABLE {$username}_keep ( 
         `id` INT NULL DEFAULT NULL AUTO_INCREMENT , 
         `date` DATE NULL DEFAULT NULL , 
-        `isincome` BOOLEAN NULL DEFAULT NULL , 
-        `category` VARCHAR(64) NULL DEFAULT NULL , 
+        `class` VARCHAR(31) NULL DEFAULT NULL , 
+        `category` VARCHAR(31) NULL DEFAULT NULL , 
+        `username` VARCHAR(31) NULL DEFAULT NULL , 
+        `name` VARCHAR(64) NULL DEFAULT NULL , 
         `detail` VARCHAR(256) NULL DEFAULT NULL , 
         `value` INT NULL DEFAULT NULL , 
-        `daily` BOOLEAN NULL DEFAULT NULL , 
         PRIMARY KEY (`id`))";
     if(!mysqli_query($conn, $query)) {
         alert("error cuy");
@@ -371,4 +372,5 @@ function fetch($request, $username = false) {
 function logout() {
     session_unset();
 }
+
 ?>

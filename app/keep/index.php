@@ -1,7 +1,31 @@
 <?php
 require "../../functions.php";
 if(isset($_POST['submit'])) {
-    script("console.log(".$_POST['nominal'].");");
+    $date = $_POST['date'];
+    if($_POST['input-isincome'] == 'true'){
+        $class = "income";
+    } else {
+        $class = "spending";
+    }
+    $username = $_POST['input-class'];
+    $query = "SELECT category, name FROM flow WHERE username = '$username'";
+    $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
+    $category = $result['category'];
+    $nominal = (int) $_POST['nominal'];
+    $name = $result['name'];
+    $desc = $_POST['desc'];
+    session_start();
+    $usernameLogin = $_SESSION['usernamelogin'];
+    keepConn();
+    
+    $query = "INSERT INTO {$usernameLogin}_keep VALUES(NULL, '$date', '$class', '$category', '$username', '$name', '$desc', $nominal)";
+    mysqli_query($conn, $query);
+    if(mysqli_affected_rows($conn) <= 0) {
+        alert('Failed');
+    } else {
+        alert('Success');
+    }
+    keptConn();
 }
 ?>
 <!DOCTYPE html>
@@ -10,7 +34,7 @@ if(isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman Untuk Memasuk-masukkan</title>
+    <title>keep</title>
     <style>
         .input {
             width: 200px;
@@ -19,19 +43,24 @@ if(isset($_POST['submit'])) {
 </head>
 <body>
     <form action="" method="post" style="display: flex">
+        <div class="input" id="input-date">
+            <label for="date">Date:</label><br>
+            <input type="date" name="date" id="date" value="<?php dateNow()?>" required>
+        </div>
+
         <div class="input">
-            <label for="input-isincome">Masukin apa Ngeluarin?:</label><br>
+            <label for="input-isincome">Type:</label><br>
             <select name="input-isincome" id="input-isincome" required>
-                <option value="" selected>Pilih</option>
-                <option value="true">Pemasukan</option>
-                <option value="false">Pengeluaran</option>
+                <option value="" selected>Choose</option>
+                <option value="true">Income</option>
+                <option value="false">Spending</option>
             </select>
         </div>
 
         <div class="input">
-            <label for="input-class">Kategori:</label><br>
+            <label for="input-class">Category:</label><br>
             <select name="input-class" id="input-class" required>
-                <option value="" selected>Pilih</option>
+                <option value="" selected>Choose</option>
             </select>
         </div>
 
@@ -39,7 +68,12 @@ if(isset($_POST['submit'])) {
             <label for="nominal">Nominal:</label><br>
             <input type="number" name="nominal" id="nominal" required>
         </div>
-        <button type="submit" id="submit" name="submit">Masukin Mas!</button>
+        
+        <div class="input" id="input-desc">
+            <label for="desc">Description:</label><br>
+            <input type="text" name="desc" id="desc" required>
+        </div>
+        <button type="submit" id="submit" name="submit">INSERT</button>
     </form>
     <script src="script.js"></script>
 </body>

@@ -1,3 +1,4 @@
+document.getElementById('date').valueAsDate = new Date();
 var isincome = document.getElementById('input-isincome');
 var category = document.getElementById('input-class');
 
