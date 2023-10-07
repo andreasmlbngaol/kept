@@ -45,8 +45,9 @@ if(isset($_POST['submit'])) {
 </head>
 <body>
     <nav id="app-header">
-        <a href="../../" class="app-header-list" id="app-header-logo-container"><img src="../../src/img/logo.png" alt="logo.png"  id="app-header-logo"></a>
+        <a href="../" class="app-header-list" id="app-header-logo-container"><img src="../../src/img/logo.png" alt="logo.png"  id="app-header-logo"></a>
         <a href="" class="app-header-list">KEEP</a>
+        <a href="../profile/" class="app-header-list">PROFILE</a>
         <a href="../logout.php" class="app-header-list">LOGOUT</a>
     </nav>
 

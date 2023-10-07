@@ -12,7 +12,6 @@ isincome.addEventListener('change', function() {
         if(ajax.readyState == 4 && ajax.status == 200) {
             category.innerHTML = ajax.responseText;
         }
-
     }
 
     // eksekusi ajax

@@ -8,17 +8,33 @@ require 'vendor/autoload.php';
 //membuat zona waktu jadi WIB
 date_default_timezone_set('Asia/Jakarta');
 
+$keptPassword = "";
+$keptUsername = "root";
+$keptHost = "localhost";
+$keptdb = "keptdb";
+$keepdb = "keepdb";
+
 // connect dengan sql server
-$conn = mysqli_connect("sql209.infinityfree.com", "if0_34962067", "aITkeptflow3", "if0_34962067_keptdb");
+$conn = mysqli_connect($keptHost, $keptUsername, $keptPassword, $keptdb);
 
 function keepConn() {
     global $conn;
-    $conn = mysqli_connect("sql209.infinityfree.com", "if0_34962067", "aITkeptflow3", "if0_34962067_keepdb");
+    global $keptPassword;
+    global $keptUsername;
+    global $keptHost;
+    global $keptdb;
+    global $keepdb;
+    $conn = mysqli_connect($keptHost, $keptUsername, $keptPassword, $keepdb);
 }
 
 function keptConn() {
     global $conn;
-    $conn = mysqli_connect("sql209.infinityfree.com", "if0_34962067", "aITkeptflow3", "if0_34962067_keptdb");
+    global $keptPassword;
+    global $keptUsername;
+    global $keptHost;
+    global $keptdb;
+    global $keepdb;
+    $conn = mysqli_connect($keptHost, $keptUsername, $keptPassword, $keptdb);
 
 }
 
@@ -74,7 +90,6 @@ function showTime() {
 
 // function untuk mengecek nomor HP
 function checkHpNum($post) {
-    session_start();
     global $conn;
     $hpnum = $post['hpnum'];
     $len = strlen($hpnum);
@@ -90,7 +105,7 @@ function checkHpNum($post) {
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
     
     if($result) {
-        alert("Phone number is used. Maybe you can try forget account.");
+        alert("Phone number is used.");
         $_SESSION['hpnum'] = NULL;
         return false;
     }
@@ -100,7 +115,6 @@ function checkHpNum($post) {
 
 // function untuk mengecek ketersediaan username
 function checkUsername($post) {
-    session_start();
     global $conn;
     $username = strtolower(stripslashes($post['username']));
     $_SESSION['username'] = $username;
@@ -118,7 +132,6 @@ function checkUsername($post) {
 
 // function untuk mengecek ketersediaan email
 function checkEmail($post) {
-    session_start();
     global $conn;
     $email = strtolower($post['email']);
 
@@ -135,7 +148,7 @@ function checkEmail($post) {
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
     
     if($result) {
-        alert("Email is already used. Maybe you can try forget password");
+        alert("Email is already used.");
         $_SESSION['email'] = NULL;
         return false;
     }
@@ -301,7 +314,6 @@ function register($session) {
 
 // function untuk login
 function login($post) {
-    session_start();
     global $conn;
     $temp = strtolower($post['username']);
     $_SESSION['temp'] = $temp;
@@ -309,7 +321,7 @@ function login($post) {
 
     $query = "SELECT password, username FROM account WHERE username = '$temp' OR hpnum = '$temp' OR email = '$temp'";
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
-    session_unset();
+    session_abort();
     if(!$result) {
         alert('Your username is not in our database. Please sign up first.');
         return false;
@@ -320,6 +332,7 @@ function login($post) {
         alert('Incorrect Password. Forget password if you forget :)');
         return false;
     }
+    session_unset();
     session_start();
     $_SESSION['usernamelogin'] = $result['username'];
     $_SESSION['temp'] = NULL;
@@ -362,6 +375,7 @@ function fetch($request, $username = false) {
     if ($username === false) {
         session_start();
         $username = $_SESSION['usernamelogin'];
+        session_abort();
     }
     $query = "SELECT $request FROM account WHERE username = '$username'";
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
@@ -373,4 +387,48 @@ function logout() {
     session_unset();
 }
 
+function monthName($birthday) {
+    $month = $birthday[5].$birthday[6];
+    $date = $birthday[8].$birthday[9];
+    $year = $birthday[0].$birthday[1].$birthday[2].$birthday[3];
+    switch ($month) {
+        case '01':
+            $name = 'January';
+            break;
+        case '02':
+            $name = 'February';
+            break;
+        case '03':
+            $name = 'March';
+            break;
+        case '04':
+            $name = 'April';
+            break;
+        case '05':
+            $name = 'May';
+            break;
+        case '06':
+            $name = 'June';
+            break;
+        case '07':
+            $name = 'July';
+            break;
+        case '08':
+            $name = 'August';
+            break;
+        case '09':
+            $name = 'September';
+            break;
+        case '10':
+            $name = 'October';
+            break;
+        case '11':
+            $name = 'November';
+            break;
+        case '12':
+            $name = 'December';
+            break;
+    }
+    return $date.' '.$name.' '.$year;
+}
 ?>
