@@ -73,7 +73,7 @@ function query($query) {
 
 // function untuk menampilkan tanggal dalam Tahun-bulan-hari
 function dateNow() {
-    echo date('Y-m-d');
+    return date('Y-m-d');
 }
 
 
@@ -387,10 +387,12 @@ function logout() {
     session_unset();
 }
 
-function monthName($birthday) {
-    $month = $birthday[5].$birthday[6];
-    $date = $birthday[8].$birthday[9];
-    $year = $birthday[0].$birthday[1].$birthday[2].$birthday[3];
+function dateDate($date) {
+    return $date[8].$date[9];
+}
+
+function dateMonth($date) {
+    $month = $date[5].$date[6];
     switch ($month) {
         case '01':
             $name = 'January';
@@ -429,6 +431,73 @@ function monthName($birthday) {
             $name = 'December';
             break;
     }
-    return $date.' '.$name.' '.$year;
+    return $name;
+}
+
+function dateYear($date) {
+    return $date[0].$date[1].$date[2].$date[3];
+}
+
+function totalIncome($db) {
+    global $conn;
+    $query = "SELECT value FROM $db WHERE class='income'";
+    $values = query($query);
+    $total = 0;
+    foreach ($values as $value) {
+        $total += (int) $value['value'];
+    }
+    return $total;
+}
+
+function totalSpending($db) {
+    global $conn;
+    $query = "SELECT value FROM $db WHERE class='spending'";
+    $values = query($query);
+    $total = 0;
+    foreach ($values as $value) {
+        $total += (int) $value['value'];
+    }
+    return $total;
+}
+
+function additionalIncome($db) {
+    global $conn;
+    $query = "SELECT value FROM $db WHERE class='income' AND category='additional' AND username='additional'";
+    $values = query($query);
+    $total = 0;
+    foreach ($values as $value) {
+        $total += (int) $value['value'];
+    }
+    return $total;
+}
+
+function routineIncome($db) {
+    global $conn;
+    $query = "SELECT value FROM $db WHERE class='income' AND category='routine' AND username='routine'";
+    $values = query($query);
+    $total = 0;
+    foreach ($values as $value) {
+        $total += (int) $value['value'];
+    }
+    return $total;
+}
+
+function additionalIncomeToday($db) {
+    global $conn;
+    $today = dateNow();
+    $dateDate = dateDate($today);
+    $query = "SELECT * FROM $db WHERE class='income' AND category='additional' AND username='additional'";
+    $values = query($query);
+    $total = 0;
+    foreach ($values as $value) {
+        if(dateDate($value['date']) == $dateDate) {
+            $total += (int) $value['value'];
+        }
+    }
+    return $total;
+}
+
+function money($money) {
+    return number_format($money, 0, ',', '.');
 }
 ?>

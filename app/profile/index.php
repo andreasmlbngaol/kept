@@ -31,6 +31,7 @@ if(isset($_POST['submit'])) {
             if(($data != $username) && checkUsername($_SESSION)) {
                 $query = "UPDATE account SET $column = '$data' WHERE id = $id";
                 mysqli_query($conn, $query);
+                $_SESSION['usernamelogin'] = $data;
             }
         }
     session_abort();
@@ -43,9 +44,16 @@ $hpnum = fetch('hpnum');
 $name = fetch('name');
 $nickname = fetch('nickname');
 $birthday = fetch('birthday');
-$birthday = monthName($birthday);
 
+if($birthday[8] == '0') {
+    $birthdayDate = $birthday[9];
+} else {
+    $birthdayDate = $birthday[8].$birthday[9];
+}
 
+$birthdayMonth = dateMonth($birthday);
+$birthdayYear = $birthday[0].$birthday[1].$birthday[2].$birthday[3];
+$birthday = $birthdayDate.' '.$birthdayMonth.' '.$birthdayYear;
 ?>
 
 <!DOCTYPE html>

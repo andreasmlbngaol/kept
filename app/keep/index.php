@@ -54,7 +54,7 @@ if(isset($_POST['submit'])) {
     <form action="" method="post">
         <div class="input" id="input-date">
             <label for="date">Date:</label><br>
-            <input type="date" name="date" id="date" value="<?php dateNow()?>" required>
+            <input type="date" name="date" id="date" value="<?php echo dateNow()?>" required>
         </div>
 
         <div class="input">
