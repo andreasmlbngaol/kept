@@ -5,17 +5,38 @@ if(!isset($_SESSION['usernamelogin'])) {
     jumpTo("../");
 }
 session_abort();
+
 $name = fetch('nickname');
 $db = fetch('username').'_keep';
 keepConn();
+
 $totalIncome = totalIncome($db);
-$totalSpending = totalSpending($db);
-$additionalIncome = additionalIncome($db);
-$additionalIncomeToday = additionalIncomeToday($db);
 $routineIncome = routineIncome($db);
+if($totalIncome != 0) {
+    $routineIncomePercentage = number_format(($routineIncome * 100 / $totalIncome), 2, ',');
+} else {
+    $routineIncomePercentage = 0;
+}
+
+$additionalIncome = additionalIncome($db);
+if($additionalIncome != 0) {
+    $additionalIncomePercentage = number_format(($additionalIncome * 100 / $totalIncome), 2, ',');
+} else {
+    $additionalIncomePercentage = 0;
+}
+$additionalIncomeToday = additionalIncomeToday($db);
+
+$totalSpending = totalSpending($db);
 $today = dateNow();
 $dateMonth = dateMonth($today);
 $dateYear = dateYear($today);
+keptConn();
+$incomeList = listItem('class', 'income', 'category');
+$spendingList = listItem('class', 'spending', 'category');
+$wantsList = listItem('category', 'wants', 'username');
+// var_dump($incomeList);
+// var_dump($spendingList);
+// var_dump($wantsList);
 ?>
 
 <!DOCTYPE html>
@@ -32,44 +53,32 @@ $dateYear = dateYear($today);
     <nav id="app-header">
         <a href="../" class="app-header-list" id="app-header-logo-container"><img src="../src/img/logo.png" alt="logo.png"  id="app-header-logo"></a>
         <a href="keep/" class="app-header-list">KEEP</a>
+        <a href="detail/" class="app-header-list">DETAIL</a>
+        <a href="history/" class="app-header-list">HISTORY</a>
         <a href="profile/" class="app-header-list">PROFILE</a>
         <a href="logout.php" class="app-header-list">LOGOUT</a>
     </nav>
     <br><br>
-    <h1>Welcome tu kept, <?php echo "$name" ?></h1>
+    <h1>Welcome to kept, <?php echo "$name" ?></h1>
     <br>
     <div>
         <div>
             <h2>Total Income:</h2>
             <p><?php echo $dateMonth.', '.$dateYear ?></p>
             <h2>Rp. <?php echo money($totalIncome) ?></h2>
-            <a href="">Show Detail</a>
-        </div>
-        <br>
-        <div>
-            <h2>Additional Income:</h2>
-            <p>This Month</p>
-            <h2>Rp. <?php echo money($additionalIncome) ?></h2>
-            <p>Today</p>
-            <h2>Rp. <?php echo money($additionalIncomeToday) ?></h2>
-        </div>
-        <br>
-        <div>
-            <h2>Monthly Income:</h2>
-            <p><?php echo $dateMonth.', '.$dateYear ?></p>
-            <h2>Rp. <?php echo money($routineIncome) ?></h2>
+            <a href="detail/">Show Detail</a>
         </div>
         <br>
         <div>
             <h2>Total Spending:</h2>
             <p><?php echo $dateMonth.', '.$dateYear ?></p>
             <h2>Rp. <?php echo money($totalSpending) ?></h2>
-            <a href="">Show Detail</a>
+            <a href="detail/">Show Detail</a>
         </div>
         <br>
         <div>
             <h2>Your Wallet:</h2>
-            <h2><?php echo money($totalIncome - $totalSpending) ?></h2>
+            <h2>Rp. <?php echo money($totalIncome - $totalSpending) ?></h2>
         </div>
     </div>
 </body>

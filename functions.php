@@ -370,14 +370,14 @@ function forgetPassword($post) {
 }
 
 // function untuk mengambil data dari database
-function fetch($request, $username = false) {
+function fetch($request, $table = 'account', $username = false) {
     global $conn;
     if ($username === false) {
         session_start();
         $username = $_SESSION['usernamelogin'];
         session_abort();
     }
-    $query = "SELECT $request FROM account WHERE username = '$username'";
+    $query = "SELECT $request FROM $table WHERE username = '$username'";
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
     $result = $result["$request"];
     return $result;
@@ -393,6 +393,7 @@ function dateDate($date) {
 
 function dateMonth($date) {
     $month = $date[5].$date[6];
+    $name = NULL;
     switch ($month) {
         case '01':
             $name = 'January';
@@ -430,54 +431,88 @@ function dateMonth($date) {
         case '12':
             $name = 'December';
             break;
+        }
+        return $name;
     }
-    return $name;
-}
+    
+    function dateYear($date) {
+        return $date[0].$date[1].$date[2].$date[3];
+    }
 
-function dateYear($date) {
-    return $date[0].$date[1].$date[2].$date[3];
-}
+    function showDate($date) {
+        $dateDate = dateDate($date);
+        $dateMonth = dateMonth($date);
+        $dateYear = dateYear($date);
+        if($dateDate[0] == '0') {
+            $dateDate = $dateDate[1];
+        }
+        echo $dateDate.' '.$dateMonth.' '.$dateYear;
+    }
 
-function totalIncome($db) {
+    function money($money) {
+        return number_format($money, 0, ',', '.');
+    }
+
+    function percentage($percentage) {
+        return number_format($percentage, 2, ',', '.');
+    }
+    
+    function totalIncome($db) {
     global $conn;
-    $query = "SELECT value FROM $db WHERE class='income'";
+    $today = dateNow();
+    $dateMonth = dateMonth($today);
+    $query = "SELECT * FROM $db WHERE class='income'";
     $values = query($query);
     $total = 0;
     foreach ($values as $value) {
-        $total += (int) $value['value'];
+        if(dateMonth($value['date']) == $dateMonth) {
+            $total += (int) $value['value'];
+        }
     }
     return $total;
 }
 
 function totalSpending($db) {
     global $conn;
-    $query = "SELECT value FROM $db WHERE class='spending'";
+    $today = dateNow();
+    $dateMonth = dateMonth($today);
+    $query = "SELECT * FROM $db WHERE class='spending'";
     $values = query($query);
     $total = 0;
     foreach ($values as $value) {
-        $total += (int) $value['value'];
+        if(dateMonth($value['date']) == $dateMonth) {
+            $total += (int) $value['value'];
+        }
     }
     return $total;
 }
 
 function additionalIncome($db) {
     global $conn;
-    $query = "SELECT value FROM $db WHERE class='income' AND category='additional' AND username='additional'";
+    $today = dateNow();
+    $dateMonth = dateMonth($today);
+    $query = "SELECT * FROM $db WHERE class='income' AND category='additional' AND username='additional'";
     $values = query($query);
     $total = 0;
     foreach ($values as $value) {
-        $total += (int) $value['value'];
+        if(dateMonth($value['date']) == $dateMonth) {
+            $total += (int) $value['value'];
+        }
     }
     return $total;
 }
 
 function routineIncome($db) {
     global $conn;
-    $query = "SELECT value FROM $db WHERE class='income' AND category='routine' AND username='routine'";
+    $today = dateNow();
+    $dateMonth = dateMonth($today);
+    $query = "SELECT * FROM $db WHERE class='income' AND category='routine' AND username='routine'";
     $values = query($query);
     $total = 0;
     foreach ($values as $value) {
-        $total += (int) $value['value'];
+        if(dateMonth($value['date']) == $dateMonth) {
+            $total += (int) $value['value'];
+        }
     }
     return $total;
 }
@@ -486,18 +521,82 @@ function additionalIncomeToday($db) {
     global $conn;
     $today = dateNow();
     $dateDate = dateDate($today);
+    $dateMonth = dateMonth($today);
     $query = "SELECT * FROM $db WHERE class='income' AND category='additional' AND username='additional'";
     $values = query($query);
     $total = 0;
     foreach ($values as $value) {
-        if(dateDate($value['date']) == $dateDate) {
+        if((dateDate($value['date']) == $dateDate) AND (dateMonth($value['date']) == $dateMonth)) {
             $total += (int) $value['value'];
         }
     }
     return $total;
 }
 
-function money($money) {
-    return number_format($money, 0, ',', '.');
+function needsSpending($db) {
+    global $conn;
+    $today = dateNow();
+    $dateMonth = dateMonth($today);
+    $query = "SELECT * FROM $db WHERE class='spending' AND category='needs'";
+    $values = query($query);
+    $total = 0;
+    foreach ($values as $value) {
+        if(dateMonth($value['date']) == $dateMonth) {
+            $total += (int) $value['value'];
+        }
+    }
+    return $total;
+}
+
+function listSpending($list, $db) {
+    global $conn;
+    $today = dateNow();
+    $dateMonth = dateMonth($today);
+    $result = [];
+    foreach($list as $item) {
+        $query = "SELECT * FROM $db WHERE class='spending' AND username='$item'";
+        $values = query($query);
+        $total = 0;
+        foreach ($values as $value) {
+            if(dateMonth($value['date']) == $dateMonth) {
+                $total += (int) $value['value'];
+            }
+        }
+        array_push($result, $total);
+    }
+    return $result;
+}
+
+function wantsSpending($db) {
+    global $conn;
+    $today = dateNow();
+    $dateMonth = dateMonth($today);
+    $query = "SELECT * FROM $db WHERE class='spending' AND category='wants'";
+    $values = query($query);
+    $total = 0;
+    foreach ($values as $value) {
+        if(dateMonth($value['date']) == $dateMonth) {
+            $total += (int) $value['value'];
+        }
+    }
+    return $total;
+}
+
+function categoryList($identifier, $value) {
+    global $conn;
+    $query = "SELECT * FROM flow WHERE $identifier = '$value'";
+    $result = query($query);
+    return $result;
+}
+
+function listItem($identifier, $value, $info) {
+    $tempList = array();
+    $tempCategories = categoryList($identifier, $value);
+    foreach ($tempCategories as $category) {
+        if(!in_array($category[$info], $tempList)) {
+            array_push($tempList, $category[$info]);
+        }
+    }
+    return $tempList;
 }
 ?>
