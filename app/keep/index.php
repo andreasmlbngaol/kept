@@ -1,31 +1,12 @@
 <?php
 require "../../functions.php";
+if(fetch('id') == NULL) {
+    jumpTo('../../');
+}
 if(isset($_POST['submit'])) {
-    $date = $_POST['date'];
-    if($_POST['input-isincome'] == 'true'){
-        $class = "income";
-    } else {
-        $class = "spending";
-    }
-    $username = $_POST['input-class'];
-    $query = "SELECT category, name FROM flow WHERE username = '$username'";
-    $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
-    $category = $result['category'];
-    $nominal = (int) $_POST['nominal'];
-    $name = $result['name'];
-    $desc = $_POST['desc'];
-    session_start();
-    $usernameLogin = $_SESSION['usernamelogin'];
-    keepConn();
-    
-    $query = "INSERT INTO {$usernameLogin}_keep VALUES(NULL, '$date', '$class', '$category', '$username', '$name', '$desc', $nominal)";
-    mysqli_query($conn, $query);
-    if(mysqli_affected_rows($conn) <= 0) {
-        alert('Failed');
-    } else {
+    if(insertKeep($_POST)) {
         alert('Success');
     }
-    keptConn();
 }
 ?>
 <!DOCTYPE html>

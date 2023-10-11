@@ -1,59 +1,11 @@
 <?php
 require "../../functions.php";
 $id = fetch('id');
-$email = fetch('email');
+$registerDate = fetch('date');
 $username = fetch('username');
-$hpnum = fetch('hpnum');
-// $password = fetch('password');
-if(isset($_POST['submit'])) {
-    $value = $_SESSION['value'];
-    $column = $value;
-    $data = $_POST["$value"];
-    
-    if($column != 'email' && $column != 'hpnum' && $column != 'username') {
-        $query = "UPDATE account SET $column = '$data' WHERE id = $id";
-        mysqli_query($conn, $query);
-    } else {
-        if($column == 'email') {
-            $_SESSION['email'] = $data;
-            if(($data != $email) && checkEmail($_SESSION)) {
-                $query = "UPDATE account SET $column = '$data' WHERE id = $id";
-                mysqli_query($conn, $query);
-            }
-        } else if($column == 'hpnum') {
-            $_SESSION['hpnum'] = $data;
-            if(($data != $hpnum) && checkHpNum($_SESSION)) {
-                $query = "UPDATE account SET $column = '$data' WHERE id = $id";
-                mysqli_query($conn, $query);
-            }
-        } else {
-            $_SESSION['username'] = $data;
-            if(($data != $username) && checkUsername($_SESSION)) {
-                $query = "UPDATE account SET $column = '$data' WHERE id = $id";
-                mysqli_query($conn, $query);
-                $_SESSION['usernamelogin'] = $data;
-            }
-        }
-    session_abort();
-    }
-}
-
-$username = fetch('username');
-$email = fetch('email');
-$hpnum = fetch('hpnum');
+$bio = fetch('bio');
 $name = fetch('name');
-$nickname = fetch('nickname');
-$birthday = fetch('birthday');
-
-if($birthday[8] == '0') {
-    $birthdayDate = $birthday[9];
-} else {
-    $birthdayDate = $birthday[8].$birthday[9];
-}
-
-$birthdayMonth = dateMonth($birthday);
-$birthdayYear = $birthday[0].$birthday[1].$birthday[2].$birthday[3];
-$birthday = $birthdayDate.' '.$birthdayMonth.' '.$birthdayYear;
+$keptDay = totalDay(dateNow(), $registerDate);
 ?>
 
 <!DOCTYPE html>
@@ -64,6 +16,34 @@ $birthday = $birthdayDate.' '.$birthdayMonth.' '.$birthdayYear;
     <link rel="stylesheet" href="../../style.css">
     <link rel="shortcut icon" href="../../src/img/icon.png" type="image/x-icon">
     <title>PROFILE</title>
+    <style>
+        #info {
+            display: flex;
+        }
+
+        .info-item-value {
+            text-align: center;
+        }
+
+        .info-item {
+            margin: 10px;
+        }
+
+        #profile-picture {
+            height: 100px;
+        }
+
+        #bio {
+            background-color: #E5C3A6;
+            width: 500px;
+            height: 250px;
+            color: #15253f;
+        }
+
+        #account-username {
+            color: #E5C3A6;
+        }
+    </style>
 </head>
 <body>
     <nav id="app-header">
@@ -72,18 +52,26 @@ $birthday = $birthdayDate.' '.$birthdayMonth.' '.$birthdayYear;
         <a href="" class="app-header-list">PROFILE</a>
         <a href="../logout.php" class="app-header-list">LOGOUT</a>
     </nav>
-    <h2>Profile Picture</h2>
-    <img src="https://drive.google.com/uc?id=14qoFeqx54p3mdI-nkMTpMqh_-JIpVIjJ" alt="Profile Picture">
-    <div>
-        <ul>
-            <li id="profile-name">Full Name: <?php echo $name ?> <button value="name" id="button-name">Change</button></li>
-            <li id="profile-nickname">Nickname: <?php echo $nickname ?> <button value="nickname" id="button-nickname">Change</button></li>
-            <li id="profile-email">Email: <?php echo $email ?> <button value="email" id="button-email">Change</button></li>
-            <li id="profile-hpnum">Phone Number: <?php echo $hpnum ?> <button value="hpnum" id="button-hpnum">Change</button></li>
-            <li id="profile-username">Username: <?php echo $username ?> <button value="username" id="button-username">Change</button></li>
-            <li id="profile-birthday">Birthday: <?php echo $birthday ?> <button value="birthday" id="button-birthday">Change</button></li>
-        </ul>
+    <br><br>
+    <div id="info">
+        <!-- <img src="https://drive.google.com/uc?id=14qoFeqx54p3mdI-nkMTpMqh_-JIpVIjJ" alt="Profile Picture"> -->
+        <a href="../../src/img/icon.png" target="_blank"><img src="../../src/img/icon.png" alt="Profile Picture" id="profile-picture"></a>
+        <div class="info-item"  title="This means your registration order is <?php echo $id ?>">
+            <h4 class="info-item-value"><?php echo $id ?></h4>
+            <p>User ID</p>
+        </div>
+        <div class="info-item"  title="kept Day is total day from the first time you register">
+            <h4 class="info-item-value"><?php echo $keptDay ?></h4>
+            <p>kept Day</p>
+        </div>
     </div>
-    <script src="script.js"></script>
+    <div id="account">    
+        <h3 id="account-username"><?php echo $username ?></h3>
+        <h4><?php echo $name ?></h4>
+        <p id="bio"><?php echo $bio ?></p>
+    </div>
+    <form action="edit/" method="post">
+        <button id="edit-profile" name="edit">Edit Profile</button>
+    </form>
 </body>
 </html>

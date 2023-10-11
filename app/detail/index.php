@@ -1,7 +1,7 @@
 <?php
 require "../../functions.php";
 session_start();
-if(!isset($_SESSION['usernamelogin'])) {
+if(!isset($_SESSION['loginId'])) {
     jumpTo("../../");
 }
 session_abort();
@@ -138,7 +138,11 @@ $wantsDetail = listSpending($wantsUsername, $db);
                 <?php for($i = 0; $i < count($needsUsername); $i++) { ?>
                     <div>
                         <h3><?php echo $needsName[$i] ?>:</h3>
+                        <?php if($needsSpending != 0) { ?>
                         <p>Rp. <?php echo money($needsDetail[$i]).' ('.percentage($needsDetail[$i] * 100 / $needsSpending).' %)' ?></p>
+                        <?php } else {?>
+                        <p>Rp. <?php echo money($needsDetail[$i]).' (0 %)' ?></p>
+                        <?php } ?>
                     </div>
                     <?php } ?>
             </div>
@@ -148,7 +152,11 @@ $wantsDetail = listSpending($wantsUsername, $db);
                 <?php for($i = 0; $i < count($wantsUsername); $i++) { ?>
                     <div>
                         <h3><?php echo $wantsName[$i] ?>:</h3>
+                        <?php if($wantsSpending != 0) { ?>
                         <p>Rp. <?php echo money($wantsDetail[$i]).' ('.percentage($wantsDetail[$i] * 100 / $wantsSpending).' %)' ?></p>
+                        <?php } else { ?>
+                        <p>Rp. <?php echo money($wantsDetail[$i]).' (0 %)' ?></p>
+                        <?php } ?>
                     </div>
                     <?php } ?>
             </div>

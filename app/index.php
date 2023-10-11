@@ -1,7 +1,7 @@
 <?php
 require "../functions.php";
 session_start();
-if(!isset($_SESSION['usernamelogin'])) {
+if(!isset($_SESSION['loginId'])) {
     jumpTo("../");
 }
 session_abort();

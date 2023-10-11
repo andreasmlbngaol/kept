@@ -1,10 +1,13 @@
 <?php
 require "../../functions.php";
+if(fetch('id') == NULL) {
+    jumpTo('../../');
+}
+$table = fetch('username').'_keep';
+$query = "SELECT * FROM $table ORDER BY date";
 keepConn();
-session_start();
-$usernamelogin = $_SESSION['usernamelogin'].'_keep';
-$query = "SELECT * FROM $usernamelogin ORDER BY date";
 $result = query($query);
+keptConn();
 ?>
 
 <!DOCTYPE html>

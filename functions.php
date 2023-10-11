@@ -88,6 +88,12 @@ function showTime() {
     echo date('H:i:s');
 }
 
+function totalDay($date1, $date2) {
+    $diff = abs(strtotime($date2) - strtotime($date1));
+    $day = (int) floor($diff / (60 * 60 * 24));
+    return $day;
+}
+
 // function untuk mengecek nomor HP
 function checkHpNum($post) {
     global $conn;
@@ -256,9 +262,10 @@ function register($session) {
     $name = $session['name'];
     $nickname = $session['nickname'];
     $birthday = $session['birthday'];
+    $registerDate = dateNow();
 
     // memasukkan data ke database
-    $query = "INSERT INTO account VALUES(NULL, '$username', '$email', '$password', '$hpnum', '$name', '$nickname', '$birthday', 1, 0)";
+    $query = "INSERT INTO account VALUES(NULL, '$registerDate', '$username', '$email', '$password', '$name', '$nickname', '$birthday', 1, 0, NULL)";
     mysqli_query($conn, $query);
 
     if(mysqli_affected_rows($conn) <= 0) {
@@ -272,9 +279,6 @@ function register($session) {
     <br>
     Email: <br>
     $email <br>
-    <br>
-    Phone Number: <br>
-    $hpnum <br>
     <br>
     Full Name: <br>
     $name <br>
@@ -319,7 +323,7 @@ function login($post) {
     $_SESSION['temp'] = $temp;
     $password = $post['password'];
 
-    $query = "SELECT password, username FROM account WHERE username = '$temp' OR hpnum = '$temp' OR email = '$temp'";
+    $query = "SELECT password, username, id FROM account WHERE username = '$temp' OR email = '$temp'";
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
     session_abort();
     if(!$result) {
@@ -334,7 +338,7 @@ function login($post) {
     }
     session_unset();
     session_start();
-    $_SESSION['usernamelogin'] = $result['username'];
+    $_SESSION['loginId'] = $result['id'];
     $_SESSION['temp'] = NULL;
     return true;
 }
@@ -370,14 +374,14 @@ function forgetPassword($post) {
 }
 
 // function untuk mengambil data dari database
-function fetch($request, $table = 'account', $username = false) {
+function fetch($request, $table = 'account', $id = false) {
     global $conn;
-    if ($username === false) {
+    if ($id === false) {
         session_start();
-        $username = $_SESSION['usernamelogin'];
+        $id = $_SESSION['loginId'];
         session_abort();
     }
-    $query = "SELECT $request FROM $table WHERE username = '$username'";
+    $query = "SELECT $request FROM $table WHERE id = '$id'";
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
     $result = $result["$request"];
     return $result;
@@ -598,5 +602,84 @@ function listItem($identifier, $value, $info) {
         }
     }
     return $tempList;
+}
+
+function changeName($post) {
+    global $conn;
+    $id = fetch('id');
+    $name = $post['name'];
+    $query = "UPDATE account SET name = '$name' WHERE id = $id";
+    mysqli_query($conn, $query);
+    if(mysqli_affected_rows($conn) <= 0) {
+        alert('Failed');
+        return false;
+    }
+    return true;
+}
+
+function changeUsername($post) {
+    global $conn;
+    $id = fetch('id');
+    $oldTable = fetch('username').'_keep';
+    $username = strtolower(stripslashes($post['username']));
+    $query = "UPDATE account SET username = '$username' WHERE id = $id";
+    mysqli_query($conn, $query);
+    if(mysqli_affected_rows($conn) <= 0) {
+        alert('Failed');
+        return false;
+    }
+
+    $newTable = $username.'_keep';
+    $query = "RENAME TABLE $oldTable TO $newTable";
+    keepConn();
+    mysqli_query($conn, $query);
+    if(mysqli_affected_rows($conn) <= 0) {
+        alert('Failed');
+        return false;
+    }
+    return true;
+}
+
+function changeBio($post) {
+    global $conn;
+    $id = fetch('id');
+    $bio = $post['bio'];
+    $query = "UPDATE account SET bio = '$bio' WHERE id = $id";
+    mysqli_query($conn, $query);
+    if(mysqli_affected_rows($conn) <= 0) {
+        return false;
+    }
+    return true;
+}
+
+function insertKeep($post) {
+    global $conn;
+    $date = $post['date'];
+    if($post['input-isincome'] == 'true'){
+        $class = "income";
+    } else {
+        $class = "spending";
+    }
+    $username = $post['input-class'];
+    $query = "SELECT category, name FROM flow WHERE username = '$username'";
+    $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
+    $category = $result['category'];
+    $nominal = (int) $post['nominal'];
+    if($nominal <= 0) {
+        alert('Invalid Nominal');
+        return false;
+    }
+    $name = $result['name'];
+    $desc = $post['desc'];
+    $table = fetch('username').'_keep';
+    $query = "INSERT INTO $table VALUES(NULL, '$date', '$class', '$category', '$username', '$name', '$desc', $nominal)";
+    keepConn();
+    mysqli_query($conn, $query);
+    if(mysqli_affected_rows($conn) <= 0) {
+        alert('Failed');
+        return false;
+    }
+    keptConn();
+    return true;
 }
 ?>

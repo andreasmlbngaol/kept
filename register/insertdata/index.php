@@ -4,17 +4,14 @@ require "../../functions.php";
 $_SESSION['name'] = NULL;
 $_SESSION['nickname'] = NULL;
 $_SESSION['birthday'] = NULL;
-$_SESSION['hpnum'] = NULL;
 if(isset($_POST['submit'])) {
     session_start();
     $_SESSION['name'] = $_POST['name'];
     $_SESSION['nickname'] = $_POST['nickname'];
     $_SESSION['birthday'] = $_POST['birthday'];
-    if(checkHpNum($_POST)) {
-        if(register($_SESSION)) {
-            alert('Done. Your account has been made. The detail is sent to your email. Back to Home.');
-            jumpTo('../../');
-        }
+    if(register($_SESSION)) {
+        alert('Done. Your account has been made. The detail is sent to your email. Back to Home.');
+        jumpTo('../../');
     }
 }
 ?>
@@ -41,9 +38,6 @@ if(isset($_POST['submit'])) {
         </div>
         <div>
             <input type="text" id="nickname" name="nickname" autocomplete="off" value="<?php echo $_SESSION['nickname'] ?>" placeholder="Nickname" required>
-        </div>
-        <div>
-            <input type="text" id="hpnum" name="hpnum" autocomplete="off" value="<?php echo $_SESSION['hpnum'] ?>" placeholder="Phone Number" required>
         </div>
         <div>
             <input type="date" id="birthday" name="birthday" autocomplete="off" value="<?php echo $_SESSION['birthday'] ?>" placeholder="Birthday" required>
