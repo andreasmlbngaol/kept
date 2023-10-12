@@ -5,7 +5,6 @@ $_SESSION['name'] = NULL;
 $_SESSION['nickname'] = NULL;
 $_SESSION['birthday'] = NULL;
 if(isset($_POST['submit'])) {
-    session_start();
     $_SESSION['name'] = $_POST['name'];
     $_SESSION['nickname'] = $_POST['nickname'];
     $_SESSION['birthday'] = $_POST['birthday'];

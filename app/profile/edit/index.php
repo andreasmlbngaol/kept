@@ -1,9 +1,16 @@
 <?php
 require "../../../functions.php";
+if(isset($_POST['submitpicture'])) {
+    if(uploadPicture($_FILES)) {
+        alert('Profile Picture is changed');
+    }
+}
+
 $id = fetch('id');
 $name = fetch('name');
 $username = fetch('username');
 $bio = fetch('bio');
+$picture = fetch('picture');
 
 if(isset($_POST['submitname'])) {
     if($_POST['name'] != $name) {
@@ -13,7 +20,7 @@ if(isset($_POST['submitname'])) {
 }
 
 if(isset($_POST['submitusername'])) {
-    if($_POST['username'] != $name) {
+    if($_POST['username'] != $username) {
         if(checkUsername($_POST)) {
             changeUsername($_POST);
             $username = fetch('username');
@@ -55,10 +62,14 @@ if(isset($_POST['submitbio'])) {
     <a href="../">BACK</a><br><br>
     <div>
         <!-- <img src="https://drive.google.com/uc?id=14qoFeqx54p3mdI-nkMTpMqh_-JIpVIjJ" alt="Profile Picture"> -->
-        <a href="../../../src/img/icon.png" target="_blank"><img src="../../../src/img/icon.png" alt="Profile Picture" id="profile-picture"></a><br>
-        <button id="profile-change">Change Profile Picture</button>
+        <a href="../../../src/img/profilepicture/<?php echo $picture ?>" target="_blank"><img src="../../../src/img/profilepicture/<?php echo $picture ?>" alt="Profile Picture" id="profile-picture"></a><br>
+        <div id="profile-picture">
+            <form action="" method="post" enctype="multipart/form-data">
+                <input type="file" id="profile-picture-input" name="picture"><br>
+                <button type="submit" id="submitpicture" name="submitpicture">Change Profile Picture</button>
+            </form>
+        </div>            
     </div>
-    <br>
     <div>
         <div id="profile-name">
             <label for="name">Name</label><br>

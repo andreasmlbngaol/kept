@@ -36,3 +36,16 @@ inputBio.addEventListener('click', function() {
     ajax.open('GET', 'ajax/changebio.php?bio=' + inputBio.value, true);
     ajax.send();
 })
+
+var inputPicture = document.getElementById('profile-picture-input');
+var profilePicture = document.getElementById('profile-picture');
+inputPicture.addEventListener('click', function() {
+    var ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = function() {
+        if(ajax.readyState == 4 && ajax.status == 200) {
+            profilePicture.innerHTML = ajax.responseText;
+        }
+    }
+    ajax.open('GET', 'ajax/changebio.php?picture=' + inputPicture.value, true);
+    ajax.send();
+})

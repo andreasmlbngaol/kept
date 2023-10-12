@@ -254,18 +254,16 @@ function renewPassword($post) {
 // function untuk menambahkan seluruh data ke database
 function register($session) {
     global $conn;
-    session_start();
     $username = $session['username'];
     $email = $session['email'];
     $password = password_hash($session['password'], PASSWORD_DEFAULT);
-    $hpnum = $session['hpnum'];
     $name = $session['name'];
     $nickname = $session['nickname'];
     $birthday = $session['birthday'];
     $registerDate = dateNow();
 
     // memasukkan data ke database
-    $query = "INSERT INTO account VALUES(NULL, '$registerDate', '$username', '$email', '$password', '$name', '$nickname', '$birthday', 1, 0, NULL)";
+    $query = "INSERT INTO account VALUES(NULL, '$registerDate', '$username', '$email', '$password', '$name', '$nickname', '$birthday', 1, 0, 0, NULL, 'icon.png')";
     mysqli_query($conn, $query);
 
     if(mysqli_affected_rows($conn) <= 0) {
@@ -632,11 +630,12 @@ function changeUsername($post) {
     $newTable = $username.'_keep';
     $query = "RENAME TABLE $oldTable TO $newTable";
     keepConn();
-    mysqli_query($conn, $query);
-    if(mysqli_affected_rows($conn) <= 0) {
+    if(!mysqli_query($conn, $query)){
         alert('Failed');
+        keptConn();
         return false;
     }
+    keptConn();
     return true;
 }
 
@@ -682,4 +681,47 @@ function insertKeep($post) {
     keptConn();
     return true;
 }
+
+function uploadPicture($files) {
+    global $conn;
+    $id = fetch('id');
+    $maxSize = 1572864;
+    $maxSizeMB = $maxSize/(1024 * 1024);
+    $pictureName = $files['picture']['name'];
+    $pictureSize = $files['picture']['size'];
+    $pictureError = $files['picture']['error'];
+    $pictureDir = $files['picture']['tmp_name'];
+    if($pictureError === 4) {
+        alert('Upload image first! :)');
+        return false;
+    }
+
+    $validPictureExt = ['jpg', 'jpeg', 'png'];
+    $pictureExt = explode('.', $pictureName);
+    $pictureExt = strtolower(end($pictureExt));
+
+    if(!in_array($pictureExt, $validPictureExt)) {
+        alert('Only upload jpg, jpeg, or png');
+        return false;
+    }
+
+    if($pictureSize > $maxSize) {
+        alert("Your file is too big. Max size is $maxSizeMB");
+        return false;
+    }
+
+    $pictureName = uniqid().'.'.$pictureExt;
+    if(!move_uploaded_file($pictureDir, '../../../src/img/profilepicture/'.$pictureName)) {
+        alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
+        return false;
+    }
+    $query = "UPDATE account SET picture = '$pictureName' WHERE id = $id";
+    mysqli_query($conn, $query);
+    if(mysqli_affected_rows($conn) <= 0) {
+        alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
+        return false;
+    }
+    return true;
+}
+
 ?>

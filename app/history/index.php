@@ -39,6 +39,7 @@ keptConn();
     </nav>
     <br><br>
     <h1>History</h1>
+    <?php if($result != NULL) { ?>
     <table border="1">
         <tr>
             <th>No</th>
@@ -59,5 +60,7 @@ keptConn();
         </tr>
         <?php $i++; } ?>
     </table>
-    
+    <?php } else {?>
+    <h2>No history yet. Go to KEEP Menu to insert your flow!</h2>
+    <?php } ?>
 </body>

@@ -5,6 +5,7 @@ $registerDate = fetch('date');
 $username = fetch('username');
 $bio = fetch('bio');
 $name = fetch('name');
+$picture = fetch('picture');
 $keptDay = totalDay(dateNow(), $registerDate);
 ?>
 
@@ -55,7 +56,7 @@ $keptDay = totalDay(dateNow(), $registerDate);
     <br><br>
     <div id="info">
         <!-- <img src="https://drive.google.com/uc?id=14qoFeqx54p3mdI-nkMTpMqh_-JIpVIjJ" alt="Profile Picture"> -->
-        <a href="../../src/img/icon.png" target="_blank"><img src="../../src/img/icon.png" alt="Profile Picture" id="profile-picture"></a>
+        <a href="../../src/img/profilepicture/<?php echo $picture ?>" target="_blank"><img src="../../src/img/profilepicture/<?php echo $picture ?>" alt="Profile Picture" id="profile-picture"></a>
         <div class="info-item"  title="This means your registration order is <?php echo $id ?>">
             <h4 class="info-item-value"><?php echo $id ?></h4>
             <p>User ID</p>
