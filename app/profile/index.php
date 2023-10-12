@@ -68,7 +68,7 @@ $keptDay = totalDay(dateNow(), $registerDate);
     </div>
     <div id="account">    
         <h3 id="account-username"><?php echo $username ?></h3>
-        <h4><?php echo $name ?></h4>
+        <h4><?php echo $name ?></h4><br>
         <p id="bio"><?php echo $bio ?></p>
     </div>
     <form action="edit/" method="post">

@@ -139,12 +139,14 @@ function checkUsername($post) {
 // function untuk mengecek ketersediaan email
 function checkEmail($post) {
     global $conn;
+    session_start();
     $email = strtolower($post['email']);
 
     // mengecek ada gak '@' di email
     if(stristr($email, '@') === false) {
         alert("Email invalid");
         $_SESSION['email'] = NULL;
+        session_abort();
         return false;
     }
 
@@ -156,8 +158,10 @@ function checkEmail($post) {
     if($result) {
         alert("Email is already used.");
         $_SESSION['email'] = NULL;
+        session_abort();
         return false;
     }
+    session_abort();
     return true;
 }
 
@@ -216,6 +220,7 @@ function checkCode($post) {
         return false;
     }
     $_SESSION['emailrenew'] = $_SESSION['email'];
+    session_abort();
     return true;
 }
 
@@ -226,7 +231,7 @@ function checkPassword($post) {
     $_SESSION['password'] = $password;
     $confirmPassword = $post['confirmPassword'];
     if($password !== $confirmPassword) {
-        alert('The password doesn\'t match. Try again!');
+        alert('Different Password. Try again!');
         return false;
     }
     return true;
@@ -314,6 +319,14 @@ function register($session) {
     return true;
 }
 
+function verifyPassword($password, $confirmPassword) {
+    if(!password_verify($password, $confirmPassword)) {
+        alert('Incorrect Password :)');
+        return false;
+    }
+    return true;
+}
+
 // function untuk login
 function login($post) {
     global $conn;
@@ -330,8 +343,7 @@ function login($post) {
     }
     
     $confirmPassword = $result['password'];
-    if(!password_verify($password, $confirmPassword)) {
-        alert('Incorrect Password. Forget password if you forget :)');
+    if(!verifyPassword($password, $confirmPassword)) {
         return false;
     }
     session_unset();
@@ -724,4 +736,30 @@ function uploadPicture($files) {
     return true;
 }
 
+function changePassword($newPassword) {
+    global $conn;
+    $newPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+    $id = fetch('id');
+
+    $query = "UPDATE account SET password = '$newPassword' WHERE id = $id";
+    mysqli_query($conn, $query);
+    if(mysqli_affected_rows($conn) <= 0) {
+        alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
+        return false;
+    }
+    return true;
+}
+
+function changeEmail($newEmail) {
+    global $conn;
+    $id = fetch('id');
+
+    $query = "UPDATE account SET email = '$newEmail' WHERE id = $id";
+    mysqli_query($conn, $query);
+    if(mysqli_affected_rows($conn) <= 0) {
+        alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
+        return false;
+    }
+    return true;
+}
 ?>

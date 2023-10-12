@@ -8,6 +8,7 @@ session_abort();
 
 $name = fetch('nickname');
 $db = fetch('username').'_keep';
+$picture = fetch('picture');
 keepConn();
 
 $totalIncome = totalIncome($db);
@@ -28,15 +29,7 @@ $additionalIncomeToday = additionalIncomeToday($db);
 
 $totalSpending = totalSpending($db);
 $today = dateNow();
-$dateMonth = dateMonth($today);
-$dateYear = dateYear($today);
 keptConn();
-$incomeList = listItem('class', 'income', 'category');
-$spendingList = listItem('class', 'spending', 'category');
-$wantsList = listItem('category', 'wants', 'username');
-// var_dump($incomeList);
-// var_dump($spendingList);
-// var_dump($wantsList);
 ?>
 
 <!DOCTYPE html>
@@ -55,23 +48,22 @@ $wantsList = listItem('category', 'wants', 'username');
         <a href="keep/" class="app-header-list">KEEP</a>
         <a href="detail/" class="app-header-list">DETAIL</a>
         <a href="history/" class="app-header-list">HISTORY</a>
-        <a href="profile/" class="app-header-list">PROFILE</a>
+        <a href="profile/" class="app-header-list"><img src="../src/img/profilepicture/<?php echo $picture ?>" alt="Profile Picture" style="height: 50px;"></a>
         <a href="logout.php" class="app-header-list">LOGOUT</a>
     </nav>
     <br><br>
+    <h3><?php showDate($today) ?></h3>
     <h1>Welcome to kept, <?php echo "$name" ?></h1>
     <br>
     <div>
         <div>
             <h2>Total Income:</h2>
-            <p><?php echo $dateMonth.', '.$dateYear ?></p>
             <h2>Rp. <?php echo money($totalIncome) ?></h2>
             <a href="detail/">Show Detail</a>
         </div>
         <br>
         <div>
             <h2>Total Spending:</h2>
-            <p><?php echo $dateMonth.', '.$dateYear ?></p>
             <h2>Rp. <?php echo money($totalSpending) ?></h2>
             <a href="detail/">Show Detail</a>
         </div>

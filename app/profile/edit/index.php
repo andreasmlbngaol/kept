@@ -86,6 +86,11 @@ if(isset($_POST['submitbio'])) {
             <input type="text" value="<?php echo $bio ?>" id="profile-bio-input">
         </div>
     </div>
+    <div>
+        <a href="../private/email/">Change Email</a>
+        <br>
+        <a href="../private/password/">Change Password</a>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
