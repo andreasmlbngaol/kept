@@ -4,9 +4,11 @@ if(fetch('id') == NULL) {
     jumpTo('../../');
 }
 $table = fetch('username').'_keep';
-$query = "SELECT * FROM $table ORDER BY date";
+$query1 = "SELECT * FROM $table WHERE class='income' ORDER BY date";
+$query2 = "SELECT * FROM $table WHERE class='spending' ORDER BY date";
 keepConn();
-$result = query($query);
+$income = query($query1);
+$spending = query($query2);
 keptConn();
 ?>
 
@@ -39,7 +41,8 @@ keptConn();
     </nav>
     <br><br>
     <h1>History</h1>
-    <?php if($result != NULL) { ?>
+    <h2>Income</h2>
+    <?php if($income != NULL) { ?>
     <table border="1">
         <tr>
             <th>No</th>
@@ -49,7 +52,33 @@ keptConn();
             <th>Value (Rp)</th>
             <th>Comment</th>
         </tr>
-        <?php $i = 1; foreach ($result as $transaction) {?>
+        <?php $i = 1; foreach ($income as $transaction) {?>
+        <tr>
+            <td><?php echo $i ?></td>
+            <td><?php showDate($transaction['date']) ?></td>
+            <td><?php echo ucfirst($transaction['class']) ?></td>
+            <td><?php echo $transaction['name'] ?></td>
+            <td id="value"><?php echo money($transaction['value']) ?></td>
+            <td><?php echo $transaction['detail'] ?></td>
+        </tr>
+        <?php $i++; } ?>
+    </table>
+    <?php } else {?>
+    <h2>No history yet. Go to KEEP Menu to insert your flow!</h2>
+    <?php } ?>
+    <br>
+    <h2>Spending</h2>
+    <?php if($spending != NULL) { ?>
+    <table border="1">
+        <tr>
+            <th>No</th>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Category</th>
+            <th>Value (Rp)</th>
+            <th>Comment</th>
+        </tr>
+        <?php $i = 1; foreach ($spending as $transaction) {?>
         <tr>
             <td><?php echo $i ?></td>
             <td><?php showDate($transaction['date']) ?></td>

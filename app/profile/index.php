@@ -6,7 +6,7 @@ $username = fetch('username');
 $bio = fetch('bio');
 $name = fetch('name');
 $picture = fetch('picture');
-$keptDay = totalDay(dateNow(), $registerDate);
+$keptDay = totalDay(dateNow(), $registerDate) + 1;
 ?>
 
 <!DOCTYPE html>

@@ -1,5 +1,6 @@
 <?php
 require "../../functions.php";
+$today = dateNow();
 if(fetch('id') == NULL) {
     jumpTo('../../');
 }
@@ -35,7 +36,7 @@ if(isset($_POST['submit'])) {
     <form action="" method="post">
         <div class="input" id="input-date">
             <label for="date">Date:</label><br>
-            <input type="date" name="date" id="date" value="<?php echo dateNow()?>" required>
+            <input type="date" name="date" id="date" value="<?php echo $today?>" required>
         </div>
 
         <div class="input">

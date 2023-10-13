@@ -76,6 +76,9 @@ function dateNow() {
     return date('Y-m-d');
 }
 
+function dateDate($date) {
+    return $date[8].$date[9];
+}
 
 // function untuk menampilkan tanggal dan waktu
 function showDateTime() {
@@ -86,6 +89,10 @@ function showDateTime() {
 // function untuk menampilkan  waktu
 function showTime() {
     echo date('H:i:s');
+}
+
+function dayName($date) {
+    return date('l', strtotime($date));
 }
 
 function totalDay($date1, $date2) {
@@ -398,9 +405,6 @@ function logout() {
     session_unset();
 }
 
-function dateDate($date) {
-    return $date[8].$date[9];
-}
 
 function dateMonth($date) {
     $month = $date[5].$date[6];
@@ -471,14 +475,13 @@ function dateMonth($date) {
     function totalIncome($db) {
     global $conn;
     $today = dateNow();
-    $dateMonth = dateMonth($today);
-    $query = "SELECT * FROM $db WHERE class='income'";
+    $query = "SELECT * FROM $db WHERE class='income'
+        AND MONTH(date) = MONTH(CURRENT_DATE()) 
+        AND YEAR(date) = YEAR(CURRENT_DATE())";
     $values = query($query);
     $total = 0;
     foreach ($values as $value) {
-        if(dateMonth($value['date']) == $dateMonth) {
-            $total += (int) $value['value'];
-        }
+        $total += (int) $value['value'];
     }
     return $total;
 }
@@ -486,14 +489,13 @@ function dateMonth($date) {
 function totalSpending($db) {
     global $conn;
     $today = dateNow();
-    $dateMonth = dateMonth($today);
-    $query = "SELECT * FROM $db WHERE class='spending'";
+    $query = "SELECT * FROM $db WHERE class='spending'
+        AND MONTH(date) = MONTH(CURRENT_DATE()) 
+        AND YEAR(date) = YEAR(CURRENT_DATE())";
     $values = query($query);
     $total = 0;
     foreach ($values as $value) {
-        if(dateMonth($value['date']) == $dateMonth) {
-            $total += (int) $value['value'];
-        }
+        $total += (int) $value['value'];
     }
     return $total;
 }
@@ -501,14 +503,13 @@ function totalSpending($db) {
 function additionalIncome($db) {
     global $conn;
     $today = dateNow();
-    $dateMonth = dateMonth($today);
-    $query = "SELECT * FROM $db WHERE class='income' AND category='additional' AND username='additional'";
+    $query = "SELECT * FROM $db WHERE class='income' AND category='additional' AND username='additional'
+        AND MONTH(date) = MONTH(CURRENT_DATE()) 
+        AND YEAR(date) = YEAR(CURRENT_DATE())";
     $values = query($query);
     $total = 0;
     foreach ($values as $value) {
-        if(dateMonth($value['date']) == $dateMonth) {
-            $total += (int) $value['value'];
-        }
+        $total += (int) $value['value'];
     }
     return $total;
 }
@@ -516,14 +517,13 @@ function additionalIncome($db) {
 function routineIncome($db) {
     global $conn;
     $today = dateNow();
-    $dateMonth = dateMonth($today);
-    $query = "SELECT * FROM $db WHERE class='income' AND category='routine' AND username='routine'";
+    $query = "SELECT * FROM $db WHERE class='income' AND category='routine' AND username='routine'
+        AND MONTH(date) = MONTH(CURRENT_DATE()) 
+        AND YEAR(date) = YEAR(CURRENT_DATE())";
     $values = query($query);
     $total = 0;
     foreach ($values as $value) {
-        if(dateMonth($value['date']) == $dateMonth) {
-            $total += (int) $value['value'];
-        }
+        $total += (int) $value['value'];
     }
     return $total;
 }
@@ -532,14 +532,13 @@ function additionalIncomeToday($db) {
     global $conn;
     $today = dateNow();
     $dateDate = dateDate($today);
-    $dateMonth = dateMonth($today);
-    $query = "SELECT * FROM $db WHERE class='income' AND category='additional' AND username='additional'";
+    $query = "SELECT * FROM $db WHERE class='income' AND category='additional' AND username='additional'
+        AND MONTH(date) = MONTH(CURRENT_DATE()) 
+        AND YEAR(date) = YEAR(CURRENT_DATE())";
     $values = query($query);
     $total = 0;
     foreach ($values as $value) {
-        if((dateDate($value['date']) == $dateDate) AND (dateMonth($value['date']) == $dateMonth)) {
-            $total += (int) $value['value'];
-        }
+        $total += (int) $value['value'];
     }
     return $total;
 }
@@ -547,14 +546,13 @@ function additionalIncomeToday($db) {
 function needsSpending($db) {
     global $conn;
     $today = dateNow();
-    $dateMonth = dateMonth($today);
-    $query = "SELECT * FROM $db WHERE class='spending' AND category='needs'";
+    $query = "SELECT * FROM $db WHERE class='spending' AND category='needs'
+        AND MONTH(date) = MONTH(CURRENT_DATE()) 
+        AND YEAR(date) = YEAR(CURRENT_DATE())";
     $values = query($query);
     $total = 0;
     foreach ($values as $value) {
-        if(dateMonth($value['date']) == $dateMonth) {
-            $total += (int) $value['value'];
-        }
+        $total += (int) $value['value'];
     }
     return $total;
 }
@@ -581,16 +579,42 @@ function listSpending($list, $db) {
 function wantsSpending($db) {
     global $conn;
     $today = dateNow();
-    $dateMonth = dateMonth($today);
-    $query = "SELECT * FROM $db WHERE class='spending' AND category='wants'";
+    $query = "SELECT * FROM $db WHERE class='spending' AND category='wants'
+        AND MONTH(date) = MONTH(CURRENT_DATE()) 
+        AND YEAR(date) = YEAR(CURRENT_DATE())";
     $values = query($query);
     $total = 0;
     foreach ($values as $value) {
-        if(dateMonth($value['date']) == $dateMonth) {
-            $total += (int) $value['value'];
-        }
+        $total += (int) $value['value'];
     }
     return $total;
+}
+
+function dailySpending($db) {
+    global $conn;
+    $query = "SELECT * FROM $db 
+        WHERE MONTH(date) = MONTH(CURRENT_DATE()) 
+        AND YEAR(date) = YEAR(CURRENT_DATE()) ORDER BY date";
+    $totalDay = query($query);
+    if($totalDay != NULL) {
+        $firstDate = (int) dateDate(reset($totalDay)['date']);
+        $lastDate = (int) dateDate(end($totalDay)['date']);
+    } else {
+        $firstDate = 0;
+        $lastDate = 0;
+    }
+    $totalDay = $lastDate + 1 - $firstDate;
+    $query = "SELECT * FROM $db 
+        WHERE MONTH(date) = MONTH(CURRENT_DATE()) 
+        AND YEAR(date) = YEAR(CURRENT_DATE()) 
+        AND username = 'place' ORDER BY date";
+    $result = query($query);
+    $placeCost = 0;
+    foreach ($result as $place) {
+        $placeCost += (int) $place['value'];
+    }
+    $result = totalSpending($db) - $placeCost / $totalDay;
+    return round($result);
 }
 
 function categoryList($identifier, $value) {
