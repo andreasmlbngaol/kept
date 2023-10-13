@@ -146,7 +146,6 @@ function checkEmail($post) {
     if(stristr($email, '@') === false) {
         alert("Email invalid");
         $_SESSION['email'] = NULL;
-        session_abort();
         return false;
     }
 
@@ -158,10 +157,8 @@ function checkEmail($post) {
     if($result) {
         alert("Email is already used.");
         $_SESSION['email'] = NULL;
-        session_abort();
         return false;
     }
-    session_abort();
     return true;
 }
 
