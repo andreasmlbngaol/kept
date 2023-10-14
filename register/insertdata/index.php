@@ -3,11 +3,9 @@ session_start();
 require "../../functions.php";
 $_SESSION['name'] = NULL;
 $_SESSION['nickname'] = NULL;
-$_SESSION['birthday'] = NULL;
 if(isset($_POST['submit'])) {
     $_SESSION['name'] = $_POST['name'];
     $_SESSION['nickname'] = $_POST['nickname'];
-    $_SESSION['birthday'] = $_POST['birthday'];
     if(register($_SESSION)) {
         alert('Done. Your account has been made. The detail is sent to your email. Back to Home.');
         jumpTo('../../');
@@ -37,9 +35,6 @@ if(isset($_POST['submit'])) {
         </div>
         <div>
             <input type="text" id="nickname" name="nickname" autocomplete="off" value="<?php echo $_SESSION['nickname'] ?>" placeholder="Nickname" required>
-        </div>
-        <div>
-            <input type="date" id="birthday" name="birthday" autocomplete="off" value="<?php echo $_SESSION['birthday'] ?>" placeholder="Birthday" required>
         </div>
         <button type="submit" name="submit" id="submit">NEXT</button>
     </form>

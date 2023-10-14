@@ -268,11 +268,10 @@ function register($session) {
     $password = password_hash($session['password'], PASSWORD_DEFAULT);
     $name = $session['name'];
     $nickname = $session['nickname'];
-    $birthday = $session['birthday'];
     $registerDate = dateNow();
 
     // memasukkan data ke database
-    $query = "INSERT INTO account VALUES(NULL, '$registerDate', '$username', '$email', '$password', '$name', '$nickname', '$birthday', 1, 0, 0, NULL, 'icon.png')";
+    $query = "INSERT INTO account VALUES(NULL, '$registerDate', '$username', '$email', '$password', '$name', '$nickname', 1, 0, 0, NULL, 'icon.png', NULL, NULL, NULL, 0)";
     mysqli_query($conn, $query);
 
     if(mysqli_affected_rows($conn) <= 0) {
@@ -291,10 +290,7 @@ function register($session) {
     $name <br>
     <br>
     Nickname: <br>
-    $nickname <br>
-    <br>
-    Birthday Date: <br>
-    $birthday");
+    $nickname");
 
     keepConn();
 
@@ -557,6 +553,20 @@ function needsSpending($db) {
     return $total;
 }
 
+function prioritySpending($db) {
+    global $conn;
+    $today = dateNow();
+    $query = "SELECT * FROM $db WHERE class='spending' AND category='priority'
+        AND MONTH(date) = MONTH(CURRENT_DATE()) 
+        AND YEAR(date) = YEAR(CURRENT_DATE())";
+    $values = query($query);
+    $total = 0;
+    foreach ($values as $value) {
+        $total += (int) $value['value'];
+    }
+    return $total;
+}
+
 function listSpending($list, $db) {
     global $conn;
     $today = dateNow();
@@ -607,13 +617,13 @@ function dailySpending($db) {
     $query = "SELECT * FROM $db 
         WHERE MONTH(date) = MONTH(CURRENT_DATE()) 
         AND YEAR(date) = YEAR(CURRENT_DATE()) 
-        AND username = 'place' ORDER BY date";
+        AND category = 'priority' ORDER BY date";
     $result = query($query);
-    $placeCost = 0;
+    $priorityCost = 0;
     foreach ($result as $place) {
-        $placeCost += (int) $place['value'];
+        $priorityCost += (int) $place['value'];
     }
-    $result = totalSpending($db) - $placeCost / $totalDay;
+    $result = totalSpending($db) - $priorityCost / $totalDay;
     return round($result);
 }
 
@@ -781,6 +791,41 @@ function changeEmail($newEmail) {
         alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
         return false;
     }
+    return true;
+}
+
+function updatePlan($needs, $wants, $saving) {
+    global $conn;
+    $id = fetch('id');
+    
+    $query = "UPDATE account SET needs = $needs WHERE id = $id";
+    mysqli_query($conn, $query);
+    if(mysqli_affected_rows($conn) <= 0) {
+        alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
+        return false;
+    }
+    
+    $query = "UPDATE account SET wants = $wants WHERE id = $id";
+    mysqli_query($conn, $query);
+    if(mysqli_affected_rows($conn) <= 0) {
+        alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
+        return false;
+    }
+    
+    $query = "UPDATE account SET saving = $saving WHERE id = $id";
+    mysqli_query($conn, $query);
+    if(mysqli_affected_rows($conn) <= 0) {
+        alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
+        return false;
+    }
+    
+    $query = "UPDATE account SET new = 0 WHERE id = $id";
+    mysqli_query($conn, $query);
+    if(mysqli_affected_rows($conn) <= 0) {
+        alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
+        return false;
+    }
+    
     return true;
 }
 ?>

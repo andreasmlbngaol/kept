@@ -6,7 +6,9 @@ if(!isset($_SESSION['loginId'])) {
     jumpTo("../");
 }
 session_abort();
-
+if(fetch('new') == 1) {
+    jumpTo("new/");
+}
 $name = fetch('nickname');
 $db = fetch('username').'_keep';
 $picture = fetch('picture');
@@ -14,14 +16,21 @@ keepConn();
 
 $totalIncome = totalIncome($db);
 $totalSpending = totalSpending($db);
+$prioritySpending = prioritySpending($db);
 $needsSpending = needsSpending($db);
 $wantsSpending = wantsSpending($db);
-$saving = $totalIncome - $totalSpending;
-$needsWallet = 0.7 * $totalIncome - $needsSpending;
-$wantsWallet = 0.2 * $totalIncome - $wantsSpending;
-$savingWallet = 0.1 * $totalIncome;
+$dailySpending = dailySpending($db);
+keptConn();
+$needsPlan = (float) fetch('needs');
+$wantsPlan = (float) fetch('wants');
+$savingPlan = (float) fetch('saving');
+$realIncome = $totalIncome - $prioritySpending;
+$needsWallet = ($needsPlan/100) * $realIncome- $needsSpending;
+$wantsWallet = ($wantsPlan/100) * $realIncome - $wantsSpending;
+$savingWallet = ($savingPlan/100) * $realIncome;
+$saving = $needsWallet + $wantsWallet + $savingWallet;
 if($needsWallet < 0) {
-    $savingWallet += $needsWallet;
+    $wantsWallet += $needsWallet;
     $needsWallet = 0;
 }
 if($wantsWallet < 0) {
@@ -29,35 +38,33 @@ if($wantsWallet < 0) {
     $wantsWallet = 0;
 }
 if($totalIncome > 0) {
-    $needsSpendingPercentage = $needsSpending * 100 / $totalIncome;
-    $wantsSpendingPercentage = $wantsSpending * 100 / $totalIncome;
-    $savingPercentage = $saving * 100 / $totalIncome;
+    $needsSpendingPercentage = $needsSpending * 100 / $realIncome;
+    $wantsSpendingPercentage = $wantsSpending * 100 / $realIncome;
+    $savingPercentage = $saving * 100 / $realIncome;
 } else {
     $needsSpendingPercentage = 0;
     $wantsSpendingPercentage = 0;
     $savingPercentage = 0;
 }
-$dailySpending = dailySpending($db);
-keptConn();
 $keptScore = 100;
-if($needsSpendingPercentage > 70) $keptScore -= 10;
-if($wantsSpendingPercentage > 40) $keptScore -= 20;
-else if($wantsSpendingPercentage > 20) $keptScore -= 10;
+if($needsSpendingPercentage > $needsPlan) $keptScore -= 10;
+if($wantsSpendingPercentage > (($wantsPlan + $needsPlan)/2)) $keptScore -= 20;
+else if($wantsSpendingPercentage > $wantsPlan) $keptScore -= 10;
 if($wantsSpending > $needsSpending) $keptScore -= 10;
 if($totalIncome != 0) {
-    if($savingPercentage < -50) {
+    if($savingPercentage < -$needsPlan) {
         $keptScore -= 70;
-    } else if($savingPercentage < -30) {
+    } else if($savingPercentage < -$wantsPlan) {
         $keptScore -= 60;
-    } else if($savingPercentage < -20) {
+    } else if($savingPercentage < -($savingPlan + $wantsPlan)) {
         $keptScore -= 50;
-    } else if($savingPercentage < -10) {
+    } else if($savingPercentage < -$savingPlan) {
         $keptScore -= 40;
     } else if($savingPercentage < 0) {
         $keptScore -= 30;
-    } else if($savingPercentage < 5) {
+    } else if($savingPercentage < ($savingPlan / 2)) {
         $keptScore -= 20;
-    } else if($savingPercentage < 10) {
+    } else if($savingPercentage < $savingPlan) {
         $keptScore -= 10;
     }
 }
@@ -90,7 +97,7 @@ $dayName = dayName($today);
     <div>
         <div>
             <h2>Your Kept Score:</h2>
-            <h2><?php echo $keptScore ?></h2>
+            <h2><?php echo $keptScore ?><a href="detail/#score"></a></h2>
         </div>
         <br>
         <div>
