@@ -40,7 +40,7 @@ if($wantsWallet < 0) {
 if($totalIncome > 0) {
     $needsSpendingPercentage = $needsSpending * 100 / $realIncome;
     $wantsSpendingPercentage = $wantsSpending * 100 / $realIncome;
-    $savingPercentage = abs($saving) * 100 / $realIncome;
+    $savingPercentage = $saving * 100 / $realIncome;
 } else {
     $needsSpendingPercentage = 0;
     $wantsSpendingPercentage = 0;
@@ -68,6 +68,7 @@ if($totalIncome != 0) {
         $keptScore -= 10;
     }
 }
+
 $dayName = dayName($today);
 $time = date('H');
 if((int) $time >= 6 AND (int) $time < 12) {
