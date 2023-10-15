@@ -4,9 +4,18 @@ if(fetch('id') == NULL) {
     jumpTo('../../');
 }
 $table = fetch('username').'_keep';
+keepConn();
+if(isset($_POST['delete'])) {
+    $transactionId = $_POST['delete'];
+    $query = "DELETE FROM $table WHERE id = $transactionId";
+    mysqli_query($conn, $query);
+    if(mysqli_affected_rows($conn) <= 0) {
+        alert('We\'re sorry, we have some error. We really appreciate it if you are willing to report this bug');
+        die;
+    }
+}
 $query1 = "SELECT * FROM $table WHERE class='income' ORDER BY date";
 $query2 = "SELECT * FROM $table WHERE class='spending' ORDER BY date";
-keepConn();
 $income = query($query1);
 $spending = query($query2);
 keptConn();
@@ -60,6 +69,11 @@ keptConn();
             <td><?php echo $transaction['name'] ?></td>
             <td id="value"><?php echo money($transaction['value']) ?></td>
             <td><?php echo $transaction['detail'] ?></td>
+            <td>
+                <form action="" method="post">
+                    <button type="submit" name="delete" id="delete" value="<?php echo $transaction['id'] ?>">Hapus</button>
+                </form>
+            </td>
         </tr>
         <?php $i++; } ?>
     </table>
@@ -86,6 +100,11 @@ keptConn();
             <td><?php echo $transaction['name'] ?></td>
             <td id="value"><?php echo money($transaction['value']) ?></td>
             <td><?php echo $transaction['detail'] ?></td>
+            <td>
+                <form action="" method="post">
+                    <button type="submit" name="delete" id="delete" value="<?php echo $transaction['id'] ?>">Hapus</button>
+                </form>
+            </td>
         </tr>
         <?php $i++; } ?>
     </table>

@@ -80,7 +80,7 @@ $healthy = true;
     <link rel="stylesheet" href="../../style.css">
     <title>Home</title>
     <style>
-        #container {
+        .container {
             display: flex;
         }
         .item {
@@ -101,118 +101,130 @@ $healthy = true;
     <br><br>
     <h1>DETAIL</h1>
     <br>
-    <div id="container">
+    <div class="container">
         <div class="item">
+            <h1>Pendapatan</h1>
             <div>
-                <h2>Total Income:</h2>
+                <h2>Total Pendapatan:</h2>
                 <h2>Rp. <?php echo money($totalIncome) ?></h2>
             </div>
             <br>
             <div>
-                <h2>Routine Income:</h2>
+                <h2>Pendapatan Rutin:</h2>
                 <h2>Rp. <?php echo money($routineIncome) ?></h2>
-                <p><?php echo '('.percentage($routineIncomePercentage).' % of Income)'?></p>
+                <p><?php echo '('.percentage($routineIncomePercentage).' % dari Total Pendapatan)'?></p>
             </div>
             <br>
             <div>
-                <h2>Additional Income:</h2>
+                <h2>Pendapatan Tambahan:</h2>
                 <h2>Rp. <?php echo money($additionalIncome)?></h2>
-                <p><?php echo '('.percentage($additionalIncomePercentage).' % of Income)'?></p>
+                <p><?php echo '('.percentage($additionalIncomePercentage).' % dari Total Pendapatan)'?></p>
             </div>
             <br>
             <div>
-                <h2>Real Income:</h2>
+                <h2>Pendapatan Nyata:</h2>
                 <h2>Rp. <?php echo money($realIncome)?></h2>
-                <p>Total Income - Priority Spending</p>
+                <p>Pendapatan Rutin - Pengeluaran Prioritas</p>
                 <p>(Rp. <?php echo money($totalIncome) ?> - Rp. <?php echo money($prioritySpending) ?>)</p>
             </div>
         </div>
         <div class="item">
+            <h1>Pengeluaran</h1>
             <div>
-                <h2>Total Spending:</h2>
+                <h2>Total Pengeluaran:</h2>
                 <h2>Rp. <?php echo money($totalSpending) ?></h2>
-                <p><?php echo '('.percentage($spendingPercentage).' % of Total Income)'?></p>
+                <p><?php echo '('.percentage($spendingPercentage).' % of Total Pendapatan)'?></p>
             </div>
             <br>
             <div>
-                <h2>Spending for Priority:</h2>
+                <h2>Pengeluaran Prioritas:</h2>
                 <h2>Rp. <?php echo money($prioritySpending)?></h2>
                 <!-- <p><?php //echo '('.percentage($prioritySpendingPercentage).' % of Spending)'?> or <?php //echo '('.percentage($prioritySpendingPercentage * $spendingPercentage / 100).' % of Income)' ?></p> -->
-                <p><?php echo '('.percentage($prioritySpendingPercentage).' % of Total Income)' ?></p>
+                <p><?php echo '('.percentage($prioritySpendingPercentage).' % of Total Pendapatan)' ?></p>
             </div>
             <br>
             <div>
-                <h2>Spending for Needs:</h2>
+                <h2>Pengeluaran Kebutuhan:</h2>
                 <h2>Rp. <?php echo money($needsSpending)?></h2>
-                <p><?php echo '('.percentage($needsSpendingPercentage).' % of Real Income)'?></p>
+                <p><?php echo '('.percentage($needsSpendingPercentage).' % dari Pendapatan Nyata)'?></p>
                 <!-- <p><?php //echo '('.percentage($needsSpendingPercentage).' % of Spending)'?> or <?php //echo '('.percentage($needsSpendingPercentage * $spendingPercentage / 100).' % of Income)' ?></p> -->
             </div>
             <br>
             <div>
-                <h2>Spending for Wants:</h2>
+                <h2>Pengeluaran Keinginan:</h2>
                 <h2>Rp. <?php echo money($wantsSpending)?></h2>
-                <p><?php echo '('.percentage($wantsSpendingPercentage).' % of Real Income)'?></p>
+                <p><?php echo '('.percentage($wantsSpendingPercentage).' % dari Pendapatan Nyata)'?></p>
                 <!-- <p><?php //echo '('.percentage($wantsSpendingPercentage).' % of Spending'?> or <?php //echo percentage($wantsSpendingPercentage * $spendingPercentage / 100).' % of Income' ?></p> -->
             </div>
         </div>
         <br>
         <div class="item">
             <div>
-                <h2>Your Wallet:</h2>
+                <h2>Dompetmu:</h2>
                 <h2>Rp. <?php echo money($saving)?></h2>
-                <p><?php echo '('.percentage($savingPercentage).' % of Real Income)' ?></p>
+                <p><?php echo '('.percentage($savingPercentage).' % dari Pendapatan Nyata)' ?></p>
+            </div>
+            <br>
+            <div>
                 <h2>Rp. <?php echo money($saving - $invest)?> after saving</h2>
-                <p><?php echo '('.percentage($savingPercentage2).' % of Real Income)' ?></p>
+                <p><?php echo '('.percentage($savingPercentage2).' % dari Pendapatan Nyata)' ?></p>
             </div>
         </div>
+    </div>
+    <div class="container">
         <div class="item">
             <div>
-                <h1>Priority List:</h1>
+                <h1>Daftar Prioritas:</h1>
                 <?php for($i = 0; $i < count($priorityUsername); $i++) { ?>
                     <div>
                         <h2><?php echo $priorityName[$i] ?>:</h2>
                         <?php if($prioritySpending != 0) { ?>
                         <h2>Rp. <?php echo money($priorityDetail[$i]) ?></h2>
-                        <p><?php echo'('.percentage((($priorityDetail[$i]/$prioritySpending) * $prioritySpendingPercentage)).' % of Total Income)' ?></p>
+                        <p><?php echo'('.percentage((($priorityDetail[$i]/$prioritySpending) * $prioritySpendingPercentage)).' % dari Total Pendapatan)' ?></p>
                         <?php } else {?>
-                        <p>Rp. <?php echo money($priorityDetail[$i]).' (0 %)' ?></p>
+                        <p>Rp. <?php echo money($priorityDetail[$i]).' (0 % dari Total Pendapatan)' ?></p>
                         <?php } ?>
                     </div>
+                    <br>
                     <?php } ?>
             </div>
-            <br>
+        </div>
+        <div class="item">
             <div>
-                <h2>Needs List:</h2>
+                <h1>Daftar Kebutuhan:</h1>
                 <?php for($i = 0; $i < count($needsUsername); $i++) { ?>
                     <div>
                         <h2><?php echo $needsName[$i] ?>:</h2>
-                        <?php if($needsSpending != 0) { ?>
                         <h2>Rp. <?php echo money($needsDetail[$i])?></h2>
-                        <p><?php echo '('.percentage((($needsDetail[$i]/$needsSpending) * $needsSpendingPercentage)).' % of Real Income)'?></p>
+                        <?php if($needsSpending != 0) { ?>
+                        <p><?php echo '('.percentage((($needsDetail[$i]/$needsSpending) * $needsSpendingPercentage)).' % dari Pendapatan Nyata)'?></p>
                         <?php } else {?>
-                        <p>Rp. <?php echo money($needsDetail[$i]).' (0 %)' ?></p>
+                        <p><?php echo '(0 % dari Pendapatan Nyata)' ?></p>
                         <?php } ?>
                     </div>
+                    <br>
                     <?php } ?>
             </div>
-            <br>
+        </div>
+        <div class="item">
             <div>
-                <h2>Wants List:</h2>
+                <h1>Daftar Keinginan:</h1>
                 <?php for($i = 0; $i < count($wantsUsername); $i++) { ?>
                     <div>
                         <h2><?php echo $wantsName[$i] ?>:</h2>
-                        <?php if($wantsSpending != 0) { ?>
                         <h2>Rp. <?php echo money($wantsDetail[$i]) ?></h2>
-                        <p><?php echo '('.percentage(($wantsDetail[$i]/$needsSpending) * $needsSpendingPercentage).' % of Real Income)' ?></p>
+                        <?php if($wantsSpending != 0) { ?>
+                        <p><?php echo '('.percentage(($wantsDetail[$i]/$needsSpending) * $needsSpendingPercentage).' % dari Pendapatan Nyata)' ?></p>
                         <?php } else { ?>
-                        <p>Rp. <?php echo money($wantsDetail[$i]).' (0 %)' ?></p>
+                        <p><?php echo '(0 % dari Pendapatan Nyata)' ?></p>
                         <?php } ?>
                     </div>
+                    <br>
                     <?php } ?>
             </div>
         </div>
     </div>
-    <div id="score">
+    <div id="score" style="height: 100vh;">
         <h1>Kept Score</h1>
     <?php 
     if($totalIncome > 0) {
@@ -225,7 +237,33 @@ $healthy = true;
         $savingPercentage = 0;
     }
 
-    if($needsSpendingPercentage > $needsPlan) {?>
+    $keptScore = 100;
+    if($needsSpendingPercentage > $needsPlan) $keptScore -= 10;
+    if($wantsSpendingPercentage > (($wantsPlan + $needsPlan)/2)) $keptScore -= 20;
+    else if($wantsSpendingPercentage > $wantsPlan) $keptScore -= 10;
+    if($wantsSpending > $needsSpending) $keptScore -= 10;
+    if($totalIncome != 0) {
+        if($savingPercentage < -$needsPlan) {
+            $keptScore -= 70;
+        } else if($savingPercentage < -$wantsPlan) {
+            $keptScore -= 60;
+        } else if($savingPercentage < -($savingPlan + $wantsPlan)) {
+            $keptScore -= 50;
+        } else if($savingPercentage < -$savingPlan) {
+            $keptScore -= 40;
+        } else if($savingPercentage < 0) {
+            $keptScore -= 30;
+        } else if($savingPercentage < ($savingPlan / 2)) {
+            $keptScore -= 20;
+        } else if($savingPercentage < $savingPlan) {
+            $keptScore -= 10;
+        }
+    } ?>
+        <h1><?php echo $keptScore ?></h1>
+    <?php if($keptScore === 100) { ?>
+        <h2>Keuanganmu sehat</h2>
+    <?php } ?>
+    <?php if($needsSpendingPercentage > $needsPlan) {?>
         <h2>Kebutuhan lebih besar dari <?php echo $needsPlan ?> % (-10 poin)</h2>
     <?php } ?>
     <?php if($wantsSpendingPercentage > (($wantsPlan + $needsPlan)/2)){ ?>

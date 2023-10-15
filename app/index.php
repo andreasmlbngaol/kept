@@ -97,7 +97,7 @@ $dayName = dayName($today);
     <div>
         <div>
             <h2>Your Kept Score:</h2>
-            <h2><?php echo $keptScore ?><a href="detail/#score"></a></h2>
+            <h2><?php echo $keptScore ?> <a href="detail/#score" style="text-decoration: none">?</a></h2>
         </div>
         <br>
         <div>
