@@ -26,7 +26,11 @@ if($totalIncome != 0) {
 }
 
 keptConn();
-$realIncome = $totalIncome - $prioritySpending;
+if($totalIncome == 0) {
+    $realIncome = 0;;
+} else {
+    $realIncome = $totalIncome - $prioritySpending;
+}
 $needsPlan = (float) fetch('needs');
 $wantsPlan = (float) fetch('wants');
 $savingPlan = (float) fetch('saving');
