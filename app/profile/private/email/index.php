@@ -17,7 +17,7 @@ if(isset($_POST['submit'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,21 +28,26 @@ if(isset($_POST['submit'])) {
 <body>
     <nav id="app-header">
         <a href="../../../" class="app-header-list" id="app-header-logo-container"><img src="../../../../src/img/logo.png" alt="logo.png"  id="app-header-logo"></a>
-        <a href="../../../keep/" class="app-header-list">KEEP</a>
-        <a href="../../" class="app-header-list">PROFILE</a>
-        <a href="../../../logout.php" class="app-header-list">LOGOUT</a>
+        <a href="../../../keep/" class="app-header-list notranslate">KEEP</a>
+        <a href="../../../detail/" class="app-header-list">DETAIL</a>
+        <a href="../../../history/" class="app-header-list">RIWAYAT</a>
+        <a href="../../../profile/" class="app-header-list"><img src="../../../../src/img/profilepicture/<?php echo fetch('picture') ?>" alt="Profile Picture" style="height: 50px;"></a>
+        <a href="../../../logout.php" class="app-header-list">KELUAR</a>
     </nav>
     <br><br>
-    <a href="../../">BACK</a><br><br>
+    <a href="../../">KEMBALI</a><br><br>
+    <h1>Edit Email</h1>
+    <br>
     <div>
-        <h3>Old Email:</h3>
+        <h3>Email lama kamu:</h3>
         <p><?php echo $oldEmail ?></p>
+        <br>
         <form action="" method="post">
             <div>
-                <label for="new-email">New Email:</label><br>
+                <label for="new-email">Email Baru:</label><br>
                 <input type="text" name="email" id="new-email" autocomplete="off" required>
             </div>
-            <button type="submit" name="submit" id="submit">NEXT</button>
+            <button type="submit" name="submit" id="submit">SELANJUTNYA</button>
         </form>
     </div>
     <script src="script.js"></script>

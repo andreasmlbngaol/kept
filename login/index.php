@@ -10,7 +10,7 @@ if(isset($_POST['submit'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,7 +25,7 @@ if(isset($_POST['submit'])) {
         <a href="" class="home-header-list">FAQ'S</a>
         <a href="" class="home-header-list">PRODUCT</a>
     </nav>
-    <h1>SIGN IN</h1>
+    <h1>Masuk</h1>
     <form action="" method="post">
         <div>
             <input type="text" name="username" id="username" autocomplete="off" value="<?php echo $_SESSION['temp'] ?>" placeholder="Email/Username" required>
@@ -33,9 +33,9 @@ if(isset($_POST['submit'])) {
         <div>
             <input type="password" name="password" id="password" autocomplete="off" placeholder="Password" required>
         </div>
-        <p>Are you new here? <a href="../register/">Sign Up</a></p>
-        <p>Can't Remember Your Password? <a href="../forgetpassword/">Forget Password</a></p>
-        <button type="submit" name="submit">SIGN IN</button>
+        <button type="submit" name="submit">MASUK</button>
+        <p>Apakah kamu baru di sini? <a href="../register/">Daftar Sekarang</a></p>
+        <p>Tidak ingat password? <a href="../forgetpassword/">Lupa Password</a></p>
     </form>
 </body>
 </html>

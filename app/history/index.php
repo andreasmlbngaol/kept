@@ -22,7 +22,7 @@ keptConn();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,12 +44,15 @@ keptConn();
 <body>
     <nav id="app-header">
         <a href="../" class="app-header-list" id="app-header-logo-container"><img src="../../src/img/logo.png" alt="logo.png"  id="app-header-logo"></a>
-        <a href="../keep/" class="app-header-list">KEEP</a>
-        <a href="" class="app-header-list">PROFILE</a>
-        <a href="../logout.php" class="app-header-list">LOGOUT</a>
+        <a href="../keep/" class="app-header-list notranslate">KEEP</a>
+        <a href="../detail/" class="app-header-list">DETAIL</a>
+        <a href="../history/" class="app-header-list active">RIWAYAT</a>
+        <a href="../profile/" class="app-header-list"><img src="../../src/img/profilepicture/<?php echo fetch('picture') ?>" alt="Profile Picture" style="height: 50px;"></a>
+        <a href="../logout.php" class="app-header-list">KELUAR</a>
     </nav>
     <br><br>
     <h1>Riwayat</h1>
+    <br>
     <h2>Pendapatan</h2>
     <?php if($income != NULL) { ?>
     <table border="1">

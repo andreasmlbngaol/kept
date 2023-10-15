@@ -8,7 +8,7 @@ if(isset($_POST['submit'])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,12 +23,12 @@ if(isset($_POST['submit'])) {
         <a href="" class="home-header-list">FAQ'S</a>
         <a href="" class="home-header-list">PRODUCT</a>
     </nav>
-    <h1>CODE VERIFICATION</h1>
+    <h1>Kode Verifikasi</h1>
     <form action="" method="post">
         <div>
             <input type="text" name="confirmCode" id="confirmCode" autocomplete="off" placeholder="Insert Code" required>
         </div>
-        <button type="submit" name="submit" id="submit">NEXT</button>
+        <button type="submit" name="submit" id="submit">SELANJUTNYA</button>
     </form>
 </body>
 </html>

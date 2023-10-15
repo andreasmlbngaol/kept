@@ -682,6 +682,19 @@ function changeName($post) {
     return true;
 }
 
+function changeNickname($post) {
+    global $conn;
+    $id = fetch('id');
+    $nickname = $post['nickname'];
+    $query = "UPDATE account SET nickname = '$nickname' WHERE id = $id";
+    mysqli_query($conn, $query);
+    if(mysqli_affected_rows($conn) <= 0) {
+        alert('Failed');
+        return false;
+    }
+    return true;
+}
+
 function changeUsername($post) {
     global $conn;
     $id = fetch('id');

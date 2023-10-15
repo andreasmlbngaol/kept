@@ -7,7 +7,7 @@ if(isset($_SESSION['loginId'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,7 +19,7 @@ if(isset($_SESSION['loginId'])) {
 <body id="home">
     <nav id="home-header">
         <a href="" class="home-header-list" id="home-header-logo-container"><img src="src/img/logo.png" alt=""  id="home-header-logo"></a>
-        <a href="login/" class="home-header-list">SIGN IN</a>
+        <a href="login/" class="home-header-list">MASUK</a>
         <a href="" class="home-header-list">FAQ'S</a>
         <a href="" class="home-header-list">PRODUCT</a>
     </nav>
@@ -34,6 +34,6 @@ if(isset($_SESSION['loginId'])) {
             <img src="src/img/home-mascot.png" alt="Ini Gambar" id="home-img" class="home-menu-item">
         </div>
     </div>
-    <a href="register/" id="home-register"><span id="home-register-text">GET STARTED</span></a>
+    <a href="register/" id="home-register"><span id="home-register-text">MULAI</span></a>
 </body>
 </html>

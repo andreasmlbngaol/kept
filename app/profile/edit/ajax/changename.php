@@ -5,8 +5,8 @@ $value = $_GET['name'];
 
 <div id="profile-name">
     <form action="" method="post">
-        <label for="name">Name</label><br>
+        <label for="name">Nama</label><br>
         <input type="text" value="<?php echo $value ?>" id="profile-name-input" name="name" autocomplete="off">
-        <button type="submit" name="submitname">SAVE</button>
+        <button type="submit" name="submitname">UBAH</button>
     </form>
 </div>

@@ -24,6 +24,19 @@ inputUsername.addEventListener('click', function() {
     ajax.send();
 })
 
+var inputNickname = document.getElementById('profile-nickname-input');
+var profileNickname = document.getElementById('profile-nickname');
+inputNickname.addEventListener('click', function() {
+    var ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = function() {
+        if(ajax.readyState == 4 && ajax.status == 200) {
+            profileNickname.innerHTML = ajax.responseText;
+        }
+    }
+    ajax.open('GET', 'ajax/changenickname.php?nickname=' + inputNickname.value, true);
+    ajax.send();
+})
+
 var inputBio = document.getElementById('profile-bio-input');
 var profileBio = document.getElementById('profile-bio');
 inputBio.addEventListener('click', function() {

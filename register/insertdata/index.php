@@ -13,7 +13,7 @@ if(isset($_POST['submit'])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,7 +28,7 @@ if(isset($_POST['submit'])) {
         <a href="" class="home-header-list">FAQ'S</a>
         <a href="" class="home-header-list">PRODUCT</a>
     </nav>
-    <h1>PERSONAL DATA</h1>
+    <h1>DATA PRIBADI</h1>
     <form action="" method="post">
         <div>
             <input type="text" id="name" name="name" autocomplete="off" value="<?php echo $_SESSION['name'] ?>" placeholder="Full Name" required>
@@ -36,7 +36,7 @@ if(isset($_POST['submit'])) {
         <div>
             <input type="text" id="nickname" name="nickname" autocomplete="off" value="<?php echo $_SESSION['nickname'] ?>" placeholder="Nickname" required>
         </div>
-        <button type="submit" name="submit" id="submit">NEXT</button>
+        <button type="submit" name="submit" id="submit">DAFTAR</button>
     </form>
 </body>
 </html>

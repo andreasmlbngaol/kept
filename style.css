@@ -15,7 +15,7 @@
 
 
 
-  * {
+* {
     margin: 0;
     padding: 0;
     font-family: samsung700;
@@ -150,4 +150,15 @@ p.home-menu-item {
 #app-header-logo {
     background-color: #E5C3A6;
     color: #15253f;
+}
+
+.active {
+    text-decoration: underline;
+    text-decoration-color: #E5C3A6;
+    text-decoration-thickness: 2pt;
+    color: #2c3d5b;
+}
+
+.value {
+    color: #E5C3A6 !important;
 }

@@ -17,7 +17,7 @@ if(isset($_POST['submit'])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,22 +27,29 @@ if(isset($_POST['submit'])) {
     <title>VERIFICATION</title>
 </head>
 <body>
-    <nav id="home-header">
-        <a href="../../" class="home-header-list" id="home-header-logo-container"><img src="../../../../../src/img/logo.png" alt="logo.png"  id="home-header-logo"></a>
-        <a href="" class="home-header-list">FAQ'S</a>
-        <a href="" class="home-header-list">PRODUCT</a>
+    <nav id="app-header">
+        <a href="../../../../" class="app-header-list" id="app-header-logo-container"><img src="../../../../../src/img/logo.png" alt="logo.png"  id="app-header-logo"></a>
+        <a href="../../../../keep/" class="app-header-list notranslate">KEEP</a>
+        <a href="../../../../detail/" class="app-header-list">DETAIL</a>
+        <a href="../../../../history/" class="app-header-list">RIWAYAT</a>
+        <a href="../../../../profile/" class="app-header-list"><img src="../../../../../src/img/profilepicture/<?php echo fetch('picture') ?>" alt="Profile Picture" style="height: 50px;"></a>
+        <a href="../../../../logout.php" class="app-header-list">KELUAR</a>
     </nav>
-    <h1>CODE VERIFICATION</h1>
+    <br><br>
+    <h1>Verifikasi Email</h1>
+    <br>
     <form action="" method="post">
         <div>
-            <label for="confirmCode">Verification Code:</label><br>
+            <label for="confirmCode">Kode verifikasi:</label><br>
             <input type="text" name="confirmCode" id="confirmCode" autocomplete="off" required>
         </div>
+        <br>
         <div>
             <label for="password">Password:</label><br>
             <input type="password" name="password" id="password" required>
         </div>
-        <button type="submit" name="submit" id="submit">NEXT</button>
+        <br>
+        <button type="submit" name="submit" id="submit">UBAH EMAIL</button>
     </form>
 </body>
 </html>

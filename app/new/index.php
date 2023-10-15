@@ -36,7 +36,7 @@ if(isset($_POST['submit'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -46,11 +46,6 @@ if(isset($_POST['submit'])) {
     <title>NEW ACCOUNT</title>
 </head>
 <body>
-    <nav id="home-header">
-        <a href="../../" class="home-header-list" id="home-header-logo-container"><img src="../../src/img/logo.png" alt="logo.png"  id="home-header-logo"></a>
-        <a href="" class="home-header-list">FAQ'S</a>
-        <a href="" class="home-header-list">PRODUCT</a>
-    </nav>
     <h1>NEW ACCOUNT</h1>
     <p>Ini adalah halaman untuk memasukkan rencana finansial kamu. Kamu dapat merubahnya satu bulan sekali.</p>
     <p>Rekomendasi kami:</p>

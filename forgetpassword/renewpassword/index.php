@@ -15,7 +15,7 @@ if(isset($_POST['submit'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,15 +30,15 @@ if(isset($_POST['submit'])) {
         <a href="" class="home-header-list">FAQ'S</a>
         <a href="" class="home-header-list">PRODUCT</a>
     </nav>
-    <h1>RENEW PASSWORD</h1>
+    <h1>Perbarui Password</h1>
     <form action="" method="post">
         <div>
-            <input type="password" name="password" id="password" autocomplete="off" placeholder="Create New Password" required>
+            <input type="password" name="password" id="password" autocomplete="off" placeholder="Buat Password Baru" required>
         </div>
         <div>
-            <input type="password" name="confirmPassword" id="confirmPassword" autocomplete="off" placeholder="Confirm New Password" required>
+            <input type="password" name="confirmPassword" id="confirmPassword" autocomplete="off" placeholder="Konfirmasi Password" required>
         </div>
-        <button type="submit" name="submit" id="submit">RENEW</button>
+        <button type="submit" name="submit" id="submit">UBAH</button>
     </form>
 </body>
 </html>
