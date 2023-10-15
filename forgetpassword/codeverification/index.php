@@ -19,7 +19,7 @@ if(isset($_POST['submit'])) {
 </head>
 <body>
     <nav id="home-header">
-        <a href="../../" class="home-header-list" id="home-header-logo-container"><img src="../src/img/logo.png" alt="logo.png"  id="home-header-logo"></a>
+        <a href="../../" class="home-header-list" id="home-header-logo-container"><img src="../../src/img/logo.png" alt="logo.png"  id="home-header-logo"></a>
         <a href="" class="home-header-list">FAQ'S</a>
         <a href="" class="home-header-list">PRODUCT</a>
     </nav>

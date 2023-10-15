@@ -248,7 +248,6 @@ function checkCode($post) {
         return false;
     }
     $_SESSION['emailrenew'] = $_SESSION['email'];
-    session_abort();
     return true;
 }
 
