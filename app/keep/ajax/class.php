@@ -9,7 +9,7 @@ if($isincome == "true"){
 }
 $result = query($query);
 ?>
-<option value="" selected>Choose</option>
+<option value="" selected>Pilih</option>
 <?php foreach($result as $class) : ?>
 <option value="<?php echo $class['username'] ?>"><?php echo $class['name']; ?></option>
 <?php endforeach; ?>
