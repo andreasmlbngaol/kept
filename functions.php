@@ -92,7 +92,31 @@ function showTime() {
 }
 
 function dayName($date) {
-    return date('l', strtotime($date));
+    $englishDay = date('l', strtotime($date));
+    switch ($englishDay) {
+        case 'Sunday':
+            $indonesiaDay = 'Minggu';
+            break;
+        case 'Monday':
+            $indonesiaDay = 'Senin';
+            break;
+        case 'Tuesday':
+            $indonesiaDay = 'Selasa';
+            break;
+        case 'Wednesday':
+            $indonesiaDay = 'Rabu';
+            break;
+        case 'Thursday':
+            $indonesiaDay = 'Kamis';
+            break;
+        case 'Friday':
+            $indonesiaDay = 'Jumat';
+            break;
+        case 'Saturday':
+            $indonesiaDay = 'Sabtu';
+            break;
+    }
+    return $indonesiaDay;
 }
 
 function totalDay($date1, $date2) {
@@ -407,34 +431,34 @@ function dateMonth($date) {
     $name = NULL;
     switch ($month) {
         case '01':
-            $name = 'January';
+            $name = 'Januari';
             break;
         case '02':
-            $name = 'February';
+            $name = 'Februari';
             break;
         case '03':
-            $name = 'March';
+            $name = 'Maret';
             break;
         case '04':
             $name = 'April';
             break;
         case '05':
-            $name = 'May';
+            $name = 'Mei';
             break;
         case '06':
-            $name = 'June';
+            $name = 'Juni';
             break;
         case '07':
-            $name = 'July';
+            $name = 'Juli';
             break;
         case '08':
-            $name = 'August';
+            $name = 'Agustus';
             break;
         case '09':
             $name = 'September';
             break;
         case '10':
-            $name = 'October';
+            $name = 'Oktober';
             break;
         case '11':
             $name = 'November';

@@ -49,23 +49,21 @@ keptConn();
         <a href="../logout.php" class="app-header-list">LOGOUT</a>
     </nav>
     <br><br>
-    <h1>History</h1>
-    <h2>Income</h2>
+    <h1>Riwayat</h1>
+    <h2>Pendapatan</h2>
     <?php if($income != NULL) { ?>
     <table border="1">
         <tr>
             <th>No</th>
-            <th>Date</th>
-            <th>Type</th>
-            <th>Category</th>
-            <th>Value (Rp)</th>
-            <th>Comment</th>
+            <th>Tanggal</th>
+            <th>Kategori</th>
+            <th>Jumlah (Rp)</th>
+            <th>Detail</th>
         </tr>
         <?php $i = 1; foreach ($income as $transaction) {?>
         <tr>
             <td><?php echo $i ?></td>
-            <td><?php showDate($transaction['date']) ?></td>
-            <td><?php echo ucfirst($transaction['class']) ?></td>
+            <td><?php echo dayName($transaction['date']) ?>, <?php showDate($transaction['date']) ?></td>
             <td><?php echo $transaction['name'] ?></td>
             <td id="value"><?php echo money($transaction['value']) ?></td>
             <td><?php echo $transaction['detail'] ?></td>
@@ -81,22 +79,30 @@ keptConn();
     <h2>No history yet. Go to KEEP Menu to insert your flow!</h2>
     <?php } ?>
     <br>
-    <h2>Spending</h2>
+    <h2>Pengeluaran</h2>
     <?php if($spending != NULL) { ?>
     <table border="1">
         <tr>
             <th>No</th>
-            <th>Date</th>
-            <th>Type</th>
-            <th>Category</th>
-            <th>Value (Rp)</th>
-            <th>Comment</th>
+            <th>Tanggal</th>
+            <th>Tipe</th>
+            <th>Kategori</th>
+            <th>Jumlah (Rp)</th>
+            <th>Detail</th>
         </tr>
         <?php $i = 1; foreach ($spending as $transaction) {?>
         <tr>
             <td><?php echo $i ?></td>
-            <td><?php showDate($transaction['date']) ?></td>
-            <td><?php echo ucfirst($transaction['class']) ?></td>
+            <td><?php echo dayName($transaction['date']) ?>, <?php showDate($transaction['date']) ?></td>
+            <td>
+                <?php if($transaction['category'] === 'priority') {
+                    echo 'Prioritas';
+                } else if($transaction['category'] === 'needs') {
+                    echo 'Kebutuhan';
+                } else {
+                    echo 'Keinginan';
+                }?>
+            </td>
             <td><?php echo $transaction['name'] ?></td>
             <td id="value"><?php echo money($transaction['value']) ?></td>
             <td><?php echo $transaction['detail'] ?></td>

@@ -86,7 +86,7 @@ $dayName = dayName($today);
         <a href="../" class="app-header-list" id="app-header-logo-container"><img src="../src/img/logo.png" alt="logo.png"  id="app-header-logo"></a>
         <a href="keep/" class="app-header-list notranslate">KEEP</a>
         <a href="detail/" class="app-header-list">DETAIL</a>
-        <a href="history/" class="app-header-list">HISTORY</a>
+        <a href="history/" class="app-header-list">RIWAYAT</a>
         <a href="profile/" class="app-header-list"><img src="../src/img/profilepicture/<?php echo $picture ?>" alt="Profile Picture" style="height: 50px;"></a>
         <a href="logout.php" class="app-header-list">LOGOUT</a>
     </nav>
