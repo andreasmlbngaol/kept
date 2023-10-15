@@ -837,28 +837,28 @@ function updatePlan($needs, $wants, $saving) {
     $query = "UPDATE account SET needs = $needs WHERE id = $id";
     mysqli_query($conn, $query);
     if(mysqli_affected_rows($conn) <= 0) {
-        alert('1Sorry, we have some error. We really appreciate it if you are willing to report this bug');
+        alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
         return false;
     }
     
     $query = "UPDATE account SET wants = $wants WHERE id = $id";
     mysqli_query($conn, $query);
     if(mysqli_affected_rows($conn) <= 0) {
-        alert('2Sorry, we have some error. We really appreciate it if you are willing to report this bug');
+        alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
         return false;
     }
     
     $query = "UPDATE account SET saving = $saving WHERE id = $id";
     mysqli_query($conn, $query);
     if(mysqli_affected_rows($conn) <= 0) {
-        alert('3Sorry, we have some error. We really appreciate it if you are willing to report this bug');
+        alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
         return false;
     }
     
     $query = "UPDATE account SET new = 0 WHERE id = $id";
     mysqli_query($conn, $query);
     if(mysqli_affected_rows($conn) <= 0) {
-        alert('4Sorry, we have some error. We really appreciate it if you are willing to report this bug');
+        alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
         return false;
     }
     
