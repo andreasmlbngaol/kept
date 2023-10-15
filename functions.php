@@ -383,7 +383,7 @@ function forgetPassword($post) {
     global $conn;
     $temp = $post['username'];
 
-    $query = "SELECT password, email FROM account WHERE username = '$temp' OR hpnum = '$temp' OR email = '$temp'";
+    $query = "SELECT password, email FROM account WHERE username = '$temp' OR email = '$temp'";
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
     if(!$result) {
         alert("Your username is not in our database. Please sign up first.");
