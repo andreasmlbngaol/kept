@@ -26,16 +26,13 @@ if($totalIncome != 0) {
 }
 
 keptConn();
-if($totalIncome == 0) {
-    $realIncome = 0;;
-} else {
-    $realIncome = $totalIncome - $prioritySpending;
-}
+$realIncome = $totalIncome - $prioritySpending;
+
 $needsPlan = (float) fetch('needs');
 $wantsPlan = (float) fetch('wants');
 $savingPlan = (float) fetch('saving');
 $invest = ((float) fetch('saving')/100) * $realIncome;
-if($totalSpending != 0) {
+if($realIncome != 0) {
     $needsSpendingPercentage = ($needsSpending * 100 / $realIncome);
     $wantsSpendingPercentage = ($wantsSpending * 100 / $realIncome);
     $prioritySpendingPercentage = ($prioritySpending * 100) / $totalIncome;
