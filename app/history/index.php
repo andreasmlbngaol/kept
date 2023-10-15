@@ -14,8 +14,8 @@ if(isset($_POST['delete'])) {
         die;
     }
 }
-$query1 = "SELECT * FROM $table WHERE class='income' AND MONTH(date) = MONTH(CURRENT_DATE()) AND YEAR(date) = YEAR(CURRENT_DATE()) ORDER BY date DESC";
-$query2 = "SELECT * FROM $table WHERE class='spending' AND MONTH(date) = MONTH(CURRENT_DATE()) AND YEAR(date) = YEAR(CURRENT_DATE())  ORDER BY date DESC";
+$query1 = "SELECT * FROM $table WHERE class='income' AND MONTH(date) = MONTH(CURRENT_DATE()) AND YEAR(date) = YEAR(CURRENT_DATE()) ORDER BY date";
+$query2 = "SELECT * FROM $table WHERE class='spending' AND MONTH(date) = MONTH(CURRENT_DATE()) AND YEAR(date) = YEAR(CURRENT_DATE())  ORDER BY date";
 $income = query($query1);
 $spending = query($query2);
 keptConn();
