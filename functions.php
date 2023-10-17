@@ -318,8 +318,8 @@ function register($session) {
     keepConn();
 
     // membuat tabel log untuk user
-    $query = "CREATE TABLE {$username}_keep ( 
-        `id` INT NULL DEFAULT NULL AUTO_INCREMENT , 
+    $query = "CREATE TABLE keepdb.{$username}_keep ( 
+        `id` INT AUTO_INCREMENT, 
         `date` DATE NULL DEFAULT NULL , 
         `class` VARCHAR(31) NULL DEFAULT NULL , 
         `category` VARCHAR(31) NULL DEFAULT NULL , 
@@ -646,9 +646,9 @@ function dailySpending($db) {
     foreach ($result as $place) {
         $priorityCost += (int) $place['value'];
     }
-    $result = totalSpending($db) - $priorityCost / $totalDay;
+    $result = (totalSpending($db) - $priorityCost) / $totalDay;
     return round($result);
-}
+}   
 
 function categoryList($identifier, $value) {
     global $conn;
