@@ -100,7 +100,7 @@ keptConn();
     </style>
     
 </head>
-<body class="ms-3">
+<body class="ms-3 me-3">
     <nav class="navbar sticky-top navbar-expand-lg bg-keptblue mb-0">
         <div class="container-fluid">
             <div class="navbar-item dropdown"> 
@@ -146,12 +146,17 @@ keptConn();
     <?php if($totalIncome != 0) {?>
     <div class="d-flex ms-auto me-auto">
         <?php if($needsSpending != 0) {?>
-            <div class="ms-auto me-auto bg-keptblue" id="needsChart" style="height: 370px; width: <?php echo 100/3 ?>%;"></div>
+            <div class="ms-auto me-auto bg-keptblue border rounded" id="needsChart" style="height: 250px; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
         <?php } ?>
-        <div class="ms-auto me-auto bg-keptblue" id="incomeChart" style="height: 370px; width: <?php echo 100/3 ?>%;"></div>
+        <?php if($prioritySpending != 0) {?>
+            <div class="ms-auto me-auto bg-keptblue border rounded" id="priorityChart" style="height: 250px; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
+        <?php } ?>
         <?php if($wantsSpending != 0) {?>
-        <div class="ms-auto me-auto bg-keptblue" id="wantsChart" style="height: 370px; width: <?php echo 100/3 ?>%;"></div>
+            <div class="ms-auto me-auto bg-keptblue border rounded" id="wantsChart" style="height: 250px; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
         <?php } ?>
+    </div><br>
+    <div>
+        <div class="ms-auto me-auto bg-keptblue border rounded" id="incomeChart" style="height: 250px; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
     </div>
     <?php } ?>
     <h1>Detail</h1>
@@ -349,35 +354,40 @@ keptConn();
     ?>
     <script>
         window.onload = function() {
-            CanvasJS.addColorSet("palette1",
+            CanvasJS.addColorSet("wantsPalette",
                 [//colorSet Array
-                "#2d728f",
-                "#3b8ea5",
-                "#f5ee9e",
-                "#f49e4c",
-                "#ab3428",
+                    "#f4cf4c",
+                    "#f4894c",
+                    "#f5ee9e",
+                    "#f49e4c",
+                    "#ab3428",
                 ]);
-            CanvasJS.addColorSet("palette2",
+            CanvasJS.addColorSet("needsPalette",
                 [//colorSet Array
-                "#447604",
-                "#6cc551",
-                "#9ffcdf",
-                "#52ad9c",
-                "#47624f",
+                    "#447604",
+                    "#6cc551",
+                    "#9ffcdf",
+                    "#52ad9c",
+                    "#47624f",
+                ]);
+            CanvasJS.addColorSet("incomePalette",
+                [//colorSet Array
+                    "#6cc551",
+                    "#f49e4c",
                 ]);
             var incomeChart = new CanvasJS.Chart("incomeChart", {
                 animationEnabled: true,
                 animationDuration: 500,
-                colorSet: "palette2",
+                colorSet: "incomePalette",
                 // zoomEnabled: true,
                 // zoomType: "x",
                 theme: "dark2",
-                backgroundColor: "#15253f",
+                backgroundColor: "#7C81AD",
                 title: {
                     text: "Total Pendapatan"
                 },
                 subtitles: [{
-                    text: "<?php echo dateNow() ?>"
+                    text: "<?php echo dateMonth(dateNow()).', '.dateYear(dateNow()) ?>"
                 }],
                 data: [{
                     type: "pie",
@@ -396,14 +406,15 @@ keptConn();
             var needsChart = new CanvasJS.Chart("needsChart", {
                 animationEnabled: true,
                 animationDuration: 500,
-                colorSet: "palette2",
+                colorSet: "needsPalette",
                 theme: "dark2",
-                backgroundColor: "#15253f",
+                backgroundColor: "#7C81AD",
                 title: {
-                    text: "Kebutuhan"
+                    text: "Kebutuhan",
+                    cornerRadius: 4,
                 },
                 subtitles: [{
-                    text: "<?php echo dateNow() ?>"
+                    text: "<?php echo dateMonth(dateNow()).', '.dateYear(dateNow()) ?>"
                 }],
                 data: [{
                     type: "doughnut",
@@ -422,14 +433,14 @@ keptConn();
             var wantsChart = new CanvasJS.Chart("wantsChart", {
                 animationEnabled: true,
                 animationDuration: 500,
-                colorSet: "palette1",
+                colorSet: "wantsPalette",
                 theme: "dark2",
-                backgroundColor: "#15253f",
+                backgroundColor: "#7C81AD",
                 title: {
                     text: "Keinginan"
                 },
                 subtitles: [{
-                    text: "<?php echo dateNow() ?>"
+                    text: "<?php echo dateMonth(dateNow()).', '.dateYear(dateNow()) ?>"
                 }],
                 data: [{
                     type: "doughnut",
@@ -445,6 +456,32 @@ keptConn();
                     ]
                 }]
             });
+            var priorityChart = new CanvasJS.Chart("priorityChart", {
+                animationEnabled: true,
+                animationDuration: 500,
+                colorSet: "wantsPalette",
+                theme: "dark2",
+                backgroundColor: "#7C81AD",
+                title: {
+                    text: "Prioritas"
+                },
+                subtitles: [{
+                    text: "<?php echo dateMonth(dateNow()).', '.dateYear(dateNow()) ?>"
+                }],
+                data: [{
+                    type: "doughnut",
+                    yValueFormatString: "#,##0.00\"%\"",
+                    indexLabel: "{label} ({y})",
+                    dataPoints: [
+                        <?php for($i = 0; $i < count($priorityUsername); $i++) { 
+                            if($priorityDetail[$i] == 0) {
+                                continue;
+                            }?>
+                            {label: "<?php echo $priorityName[$i] ?>", y: <?php echo ($priorityDetail[$i]/$prioritySpending) * 100?>},
+                        <?php } ?>
+                    ]
+                }]
+            });
             <?php if($totalIncome != 0) {?>
                 incomeChart.render();
             <?php } ?>
@@ -453,6 +490,9 @@ keptConn();
             <?php } ?>
             <?php if($wantsSpending != 0) {?>
                 wantsChart.render();
+            <?php } ?>
+            <?php if($prioritySpending != 0) {?>
+                priorityChart.render();
             <?php } ?>
         }
     </script>

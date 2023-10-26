@@ -190,3 +190,7 @@ p.home-menu-item {
 .navbar {
     margin-bottom: 2vh !important;
 }
+
+.dropdown-item {
+    color:#15253f !important;
+}
