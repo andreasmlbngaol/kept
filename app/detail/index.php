@@ -154,8 +154,8 @@ keptConn();
         <?php if($wantsSpending != 0) {?>
             <div class="ms-auto me-auto bg-keptblue border rounded" id="wantsChart" style="height: 250px; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
         <?php } ?>
-    </div><br>
-    <div>
+    </div>
+    <div class="mt-3">
         <div class="ms-auto me-auto bg-keptblue border rounded" id="incomeChart" style="height: 250px; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
     </div>
     <?php } ?>
