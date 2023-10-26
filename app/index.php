@@ -11,7 +11,6 @@ if(fetch('new') == 1) {
 }
 $name = fetch('nickname');
 $db = fetch('username').'_keep';
-$picture = fetch('picture');
 keepConn();
 
 $totalIncome = totalIncome($db);
@@ -89,19 +88,44 @@ if((int) $time >= 6 AND (int) $time < 12) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../src/img/icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../src/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../src/css/style.css">
     <title>Home</title>
 </head>
-<body>
-    <nav id="app-header">
-        <a href="" class="app-header-list" id="app-header-logo-container"><img src="../src/img/logo.png" alt="logo.png"  id="app-header-logo"></a>
-        <a href="keep/" class="app-header-list notranslate">KEEP</a>
-        <a href="detail/" class="app-header-list">DETAIL</a>
-        <a href="history/" class="app-header-list">RIWAYAT</a>
-        <a href="profile/" class="app-header-list"><img src="../src/img/profilepicture/<?php echo $picture ?>" alt="Profile Picture" style="height: 50px;"></a>
-        <a href="logout.php" class="app-header-list">KELUAR</a>
-    </nav>
-    <br><br>
+<body class="ms-3">
+    <nav class="navbar sticky-top navbar-expand-lg bg-keptblue">
+		<div class="container-fluid">
+			<a class="navbar-brand bg-keptskin" href="">
+                <img src="../src/img/logo.png" alt="Logo Kept" id="navbar-brand">
+			</a>
+			<button class="navbar-toggler bg-keptskin" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<div class="navbar-nav me-auto">
+                    <a class="nav-link color-keptskin" href="keep/">Keep</a>
+					<a class="nav-link color-keptskin" href="detail/">Detail</a>
+					<a class="nav-link color-keptskin" href="history/">Riwayat</a>
+                </div>
+                <div class="navbar-nav d-flex me-4">
+                    <a class="nav-link" href="profile/">
+                        <img src="../src/img/profilepicture/<?php echo fetch('picture'); ?>" alt="Profile Picture" style="height: 50px;">
+                    </a>
+                    <div class="navbar-item dropdown">
+                        <a class="nav-link dropdown-toggle color-keptskin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="sr-only"></span>
+                        </a>
+						<ul class="dropdown-menu dropdown-menu-end bg-keptskin">
+							<li><a class="dropdown-item" href="profile/private/">Pengaturan Privasi</a></li>
+							<!-- <li><a class="dropdown-item" href="">Another action</a></li> -->
+							<li><hr class="dropdown-divider"></li>
+							<li><a href="logout.php" class="dropdown-item color-keptblue">Keluar</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
     <h3><?php echo $dayName.', '; showDate($today) ?></h3>
     <h1><?php echo $greeting ?>, <span class="notranslate"><?php echo "$name" ?></span></h1>
     <br>
@@ -145,7 +169,7 @@ if((int) $time >= 6 AND (int) $time < 12) {
         </div>
     </div>
     <div style="height: 25vh">
-
     </div>
+    <script src="../src/script/bootstrap.bundle.min.js"></script>
 </body>
 </html>
