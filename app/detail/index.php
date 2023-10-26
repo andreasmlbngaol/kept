@@ -146,20 +146,20 @@ keptConn();
     <?php if($totalIncome != 0) {?>
     <div class="d-flex ms-auto me-auto">
         <?php if($needsSpending != 0) {?>
-            <div class="ms-auto me-auto bg-keptblue border rounded" id="needsChart" style="height: 250px; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
+            <div class="ms-auto me-auto bg-keptblue border rounded" id="needsChart" style="height: 41vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
         <?php } ?>
         <?php if($prioritySpending != 0) {?>
-            <div class="ms-auto me-auto bg-keptblue border rounded" id="priorityChart" style="height: 250px; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
+            <div class="ms-auto me-auto bg-keptblue border rounded" id="priorityChart" style="height: 41vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
         <?php } ?>
         <?php if($wantsSpending != 0) {?>
-            <div class="ms-auto me-auto bg-keptblue border rounded" id="wantsChart" style="height: 250px; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
+            <div class="ms-auto me-auto bg-keptblue border rounded" id="wantsChart" style="height: 41vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
         <?php } ?>
     </div>
     <div class="mt-3">
-        <div class="ms-auto me-auto bg-keptblue border rounded" id="incomeChart" style="height: 250px; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
+        <div class="ms-auto me-auto bg-keptblue border rounded" id="incomeChart" style="height: 41vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
     </div>
     <?php } ?>
-    <h1>Detail</h1>
+    <h1 class="mt-6">Detail</h1>
     <br>
     <div class="container">
         <div class="item">
