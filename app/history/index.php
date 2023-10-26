@@ -26,8 +26,9 @@ keptConn();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../style.css">
     <link rel="shortcut icon" href="../../src/img/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../src/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../src/css/style.css">
     <title>HISTORY</title>
     <style>
         table {
@@ -41,16 +42,49 @@ keptConn();
         }
     </style>
 </head>
-<body>
-    <nav id="app-header">
-        <a href="../" class="app-header-list" id="app-header-logo-container"><img src="../../src/img/logo.png" alt="logo.png"  id="app-header-logo"></a>
-        <a href="../keep/" class="app-header-list notranslate">KEEP</a>
-        <a href="../detail/" class="app-header-list">DETAIL</a>
-        <a href="../history/" class="app-header-list active">RIWAYAT</a>
-        <a href="../profile/" class="app-header-list"><img src="../../src/img/profilepicture/<?php echo fetch('picture') ?>" alt="Profile Picture" style="height: 50px;"></a>
-        <a href="../logout.php" class="app-header-list">KELUAR</a>
+<body class="ms-3">
+    <nav class="navbar sticky-top navbar-expand-lg bg-keptblue mb-0">
+        <div class="container-fluid">
+            <div class="navbar-item dropdown">
+                <a class="navbar-brand bg-keptskin nav-link rounded color-keptskin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="../../src/img/logo.png" alt="Logo Kept" id="navbar-brand">
+                </a>
+                <ul class="dropdown-menu dropdown-menu-start bg-keptskin">
+                    <li><a class="dropdown-item" href="../">Home</a></li>
+                    <li><a class="dropdown-item" href="../keep/">Keep</a></li>
+                    <li><a class="dropdown-item" href="../detail/">Detail</a></li>
+                    <li><a class="dropdown-item" href="../history/">Riwayat</a></li>
+                    <!-- <li><a class="dropdown-item" href="">Another action</a></li> -->
+                </ul>
+            </div>
+            <button class="navbar-toggler bg-keptskin" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="navbar-nav me-auto">
+                    <a class="nav-link color-keptskin fw-bold" href="../">FAQ</a>
+					<a class="nav-link color-keptskin fw-bold" href="../">Lapor</a>
+					<!-- <a class="nav-link color-keptskin" href="history/">Riwayat</a> -->
+                    <a class="nav-link color-white fw-light"><?php echo dayName(dateNow()).', '; showDate(dateNow())?></a>
+                </div>
+                <div class="navbar-nav me-4">
+                    <div class="navbar-item dropdown">
+                        <button class="nav-link color-keptskin" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a><?php echo greeting()?></a>
+                            <img src="../../src/img/profilepicture/<?php echo fetch('picture'); ?>" alt="Profile Picture" class="border border-light rounded-circle" style="height: 50px;">
+                        </button>
+						<ul class="dropdown-menu dropdown-menu-end bg-keptskin">
+                            <li><a class="dropdown-item " href="../profile/">Profil</a></li>
+                            <li><a class="dropdown-item" href="../profile/private/">Pengaturan Privasi</a></li>
+							<!-- <li><a class="dropdown-item" href="">Another action</a></li> -->
+							<li><hr class="dropdown-divider"></li>
+							<li><a href="../logout.php" class="dropdown-item color-keptblue">Keluar</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
     </nav>
-    <br><br>
     <h1>Riwayat</h1>
     <br>
     <h2>Pendapatan</h2>
@@ -120,4 +154,5 @@ keptConn();
     <?php } else {?>
     <h2>No history yet. Go to KEEP Menu to insert your flow!</h2>
     <?php } ?>
+    <script src="../../src/script/bootstrap.bundle.min.js"></script>
 </body>

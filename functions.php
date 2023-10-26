@@ -864,4 +864,18 @@ function updatePlan($needs, $wants, $saving) {
     
     return true;
 }
+
+function greeting() {
+    $time = date('H');
+    if((int) $time >= 6 AND (int) $time < 12) {
+        $greeting = 'Pagi';
+    } else if((int) $time >= 12 AND (int) $time < 15) {
+        $greeting = 'Siang';
+    } else if((int) $time >= 15 AND (int) $time < 18) {
+        $greeting = 'Sore';
+    } else {
+        $greeting = 'Malam';
+    }
+    return $greeting.', '.fetch('nickname');
+}
 ?>

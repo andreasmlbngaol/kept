@@ -20,6 +20,11 @@
     font-family: samsung700 !important;
 }
 
+.break {
+    flex-basis: 100%;
+    height: 0;
+}
+
 body {
     background-image: linear-gradient(#15253f, #2c3d5b);
     /* height: 100vh;
@@ -33,12 +38,16 @@ a {
 }
 
 .navbar-brand img {
-    width: 8vw;
+    width: 5vw;
 }
 
 .nav-link {
     margin: 0 5px 0 5px;
     font-size: 16pt;
+}
+
+.color-white {
+    color: white;
 }
 
 #home-header {
