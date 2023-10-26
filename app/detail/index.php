@@ -25,6 +25,11 @@ if($totalIncome != 0) {
     $additionalIncomePercentage = 0;
 }
 
+$incomeDataPoints = array( 
+    array("label"=>"Rutin", "y"=>$routineIncomePercentage),
+    array("label"=>"Tambahan", "y"=>$additionalIncomePercentage),
+);
+
 keptConn();
 $realIncome = $totalIncome - $prioritySpending;
 
@@ -79,6 +84,7 @@ keptConn();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../../src/img/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.com/@adminkit/core@latest/dist/css/app.css">
     <link rel="stylesheet" href="../../src/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../src/css/style.css">
     <title>Detail</title>
@@ -92,11 +98,12 @@ keptConn();
             padding: 10px;
         }
     </style>
+    
 </head>
 <body class="ms-3">
     <nav class="navbar sticky-top navbar-expand-lg bg-keptblue mb-0">
         <div class="container-fluid">
-            <div class="navbar-item dropdown">
+            <div class="navbar-item dropdown"> 
                 <a class="navbar-brand bg-keptskin nav-link rounded color-keptskin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="../../src/img/logo.png" alt="Logo Kept" id="navbar-brand">
                 </a>
@@ -136,6 +143,17 @@ keptConn();
 			</div>
 		</div>
     </nav>
+    <?php if($totalIncome != 0) {?>
+    <div class="d-flex ms-auto me-auto">
+        <?php if($needsSpending != 0) {?>
+            <div class="ms-auto me-auto bg-keptblue" id="needsChart" style="height: 370px; width: <?php echo 100/3 ?>%;"></div>
+        <?php } ?>
+        <div class="ms-auto me-auto bg-keptblue" id="incomeChart" style="height: 370px; width: <?php echo 100/3 ?>%;"></div>
+        <?php if($wantsSpending != 0) {?>
+        <div class="ms-auto me-auto bg-keptblue" id="wantsChart" style="height: 370px; width: <?php echo 100/3 ?>%;"></div>
+        <?php } ?>
+    </div>
+    <?php } ?>
     <h1>Detail</h1>
     <br>
     <div class="container">
@@ -251,7 +269,7 @@ keptConn();
                         <h2><?php echo $wantsName[$i] ?>:</h2>
                         <h2 class="value">Rp. <?php echo money($wantsDetail[$i]) ?></h2>
                         <?php if($wantsSpending != 0) { ?>
-                        <p><?php echo '('.percentage(($wantsDetail[$i]/$needsSpending) * $needsSpendingPercentage).' % dari Pendapatan Nyata)' ?></p>
+                        <p><?php echo '('.percentage(($wantsDetail[$i]/$wantsSpending) * $wantsSpendingPercentage).' % dari Pendapatan Nyata)' ?></p>
                         <?php } else { ?>
                         <p><?php echo '(0 % dari Pendapatan Nyata)' ?></p>
                         <?php } ?>
@@ -329,6 +347,116 @@ keptConn();
         <?php }
     } 
     ?>
+    <script>
+        window.onload = function() {
+            CanvasJS.addColorSet("palette1",
+                [//colorSet Array
+                "#2d728f",
+                "#3b8ea5",
+                "#f5ee9e",
+                "#f49e4c",
+                "#ab3428",
+                ]);
+            CanvasJS.addColorSet("palette2",
+                [//colorSet Array
+                "#447604",
+                "#6cc551",
+                "#9ffcdf",
+                "#52ad9c",
+                "#47624f",
+                ]);
+            var incomeChart = new CanvasJS.Chart("incomeChart", {
+                animationEnabled: true,
+                animationDuration: 500,
+                colorSet: "palette2",
+                // zoomEnabled: true,
+                // zoomType: "x",
+                theme: "dark2",
+                backgroundColor: "#15253f",
+                title: {
+                    text: "Total Pendapatan"
+                },
+                subtitles: [{
+                    text: "<?php echo dateNow() ?>"
+                }],
+                data: [{
+                    type: "pie",
+                    yValueFormatString: "#,##0.0\"%\"",
+                    indexLabel: "{label} ({y})",
+                    dataPoints: [
+                        <?php if($routineIncome != 0) {?>
+                        {label: "Rutin", y: <?php echo $routineIncomePercentage ?>},
+                        <?php } ?>
+                        <?php if($additionalIncome != 0) {?>
+                        {label: "Tambah", y: <?php echo $additionalIncomePercentage ?>},
+                        <?php } ?>
+                    ]
+                }]
+            });
+            var needsChart = new CanvasJS.Chart("needsChart", {
+                animationEnabled: true,
+                animationDuration: 500,
+                colorSet: "palette2",
+                theme: "dark2",
+                backgroundColor: "#15253f",
+                title: {
+                    text: "Kebutuhan"
+                },
+                subtitles: [{
+                    text: "<?php echo dateNow() ?>"
+                }],
+                data: [{
+                    type: "doughnut",
+                    yValueFormatString: "#,##0.00\"%\"",
+                    indexLabel: "{label} ({y})",
+                    dataPoints: [
+                        <?php for($i = 0; $i < count($needsUsername); $i++) { 
+                            if($needsDetail[$i] == 0) {
+                                continue;
+                            }?>
+                            {label: "<?php echo $needsName[$i] ?>", y: <?php echo ($needsDetail[$i]/$needsSpending) * 100 ?>},
+                        <?php } ?>
+                    ]
+                }]
+            });
+            var wantsChart = new CanvasJS.Chart("wantsChart", {
+                animationEnabled: true,
+                animationDuration: 500,
+                colorSet: "palette1",
+                theme: "dark2",
+                backgroundColor: "#15253f",
+                title: {
+                    text: "Keinginan"
+                },
+                subtitles: [{
+                    text: "<?php echo dateNow() ?>"
+                }],
+                data: [{
+                    type: "doughnut",
+                    yValueFormatString: "#,##0.00\"%\"",
+                    indexLabel: "{label} ({y})",
+                    dataPoints: [
+                        <?php for($i = 0; $i < count($wantsUsername); $i++) { 
+                            if($wantsDetail[$i] == 0) {
+                                continue;
+                            }?>
+                            {label: "<?php echo $wantsName[$i] ?>", y: <?php echo ($wantsDetail[$i]/$wantsSpending) * 100?>},
+                        <?php } ?>
+                    ]
+                }]
+            });
+            <?php if($totalIncome != 0) {?>
+                incomeChart.render();
+            <?php } ?>
+            <?php if($needsSpending != 0) {?>
+                needsChart.render();
+            <?php } ?>
+            <?php if($wantsSpending != 0) {?>
+                wantsChart.render();
+            <?php } ?>
+        }
+    </script>
+    <script src="../../src/script/canvasjs.min.js"></script>
     <script src="../../src/script/bootstrap.bundle.min.js"></script>
 </body>
 </html>

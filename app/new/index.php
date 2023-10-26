@@ -42,20 +42,21 @@ if(isset($_POST['submit'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../../src/img/icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="../../style.css">
+    <link rel="shortcut icon" href="../../src/img/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../src/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../src/css/style.css">
     <title>NEW ACCOUNT</title>
 </head>
-<body>
+<body class="ms-3 text-center">
     <h1>NEW ACCOUNT</h1>
     <p>Ini adalah halaman untuk memasukkan rencana finansial kamu. Kamu dapat merubahnya satu bulan sekali.</p>
-    <p>Rekomendasi kami:</p>
-    <ol>
-        <li>Anak kos: <br>Kebutuhan 70%, Keinginan 20%, Tabungan 10%</li>
-        <li>Tinggal Bersama Orang Tua: <br>Kebutuhan 50%, Keinginan 30%, Tabungan 20%</li>
-    </ol><br>
+    <p>Rekomendasi kami:<br> <br>
+        Anak kos: <br>Kebutuhan 70%, Keinginan 20%, Tabungan 10% <br>
+        Tinggal Bersama Orang Tua: <br>Kebutuhan 50%, Keinginan 30%, Tabungan 20%
+    </p>
     <form action="" method="post">
         <div class="new">
-            <label for="new-plan">Rencanamu:</label><br>
+            <label for="new-plan">Rencanamu</label><br>
             <select name="newPlan" id="new-plan" required>
                 <option value="70" selected>70 : 20 : 10</option>
                 <option value="50">50 : 30 : 20</option>
@@ -68,5 +69,6 @@ if(isset($_POST['submit'])) {
         <button type="submit" name="submit" id="submit">ENTER</button>
     </form>
     <script src="script.js"></script>
+    <script src="../../src/script/bootstrap.bundle.min.js"></script>
 </body>
 </html>

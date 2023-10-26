@@ -12,18 +12,30 @@ if(isset($_SESSION['loginId'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=1024">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="src/css/bootstrap.min.css">
+    <link rel="stylesheet" href="src/css/style.css">
     <link rel="shortcut icon" href="src/img/icon.png" type="image/x-icon">
     <title>kept</title>
 </head>
-<body id="home">
-    <nav id="home-header">
-        <a href="" class="home-header-list" id="home-header-logo-container"><img src="src/img/logo.png" alt=""  id="home-header-logo"></a>
-        <a href="login/" class="home-header-list">MASUK</a>
-        <a href="" class="home-header-list">FAQ'S</a>
-        <a href="" class="home-header-list">PRODUCT</a>
+<body class="ms-3">
+    <nav class="navbar sticky-top navbar-expand-lg bg-keptblue mb-0">
+        <div class="container-fluid">
+            <a class="navbar-brand bg-keptskin nav-link rounded color-keptskin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="src/img/logo.png" alt="Logo Kept" id="navbar-brand">
+            </a>
+            <button class="navbar-toggler bg-keptskin" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="navbar-nav me-auto">
+                    <a class="nav-link color-keptskin fw-bold" href="/">FAQ</a>
+					<a class="nav-link color-keptskin fw-bold" href="login/">Masuk</a>
+					<a class="nav-link color-keptskin fw-bold" href="register/">Daftar</a>
+					<a class="nav-link color-keptskin fw-bold" href="/">Tentang</a>
+                </div>
+			</div>
+		</div>
     </nav>
-
     <div id="home-menu-container">
         <div id="home-menu-text">
             <h2 class="home-menu-item"><span id="home-menu-text-motto">Smartly Kept, Wisely Flowed</span></h2>
@@ -35,5 +47,6 @@ if(isset($_SESSION['loginId'])) {
         </div>
     </div>
     <a href="register/" id="home-register"><span id="home-register-text">MULAI</span></a>
+    <script src="src/script/bootstrap.bundle.min.js"></script>
 </body>
 </html>
