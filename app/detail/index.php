@@ -120,7 +120,7 @@ keptConn();
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="navbar-nav me-auto">
-                    <a class="nav-link color-keptskin fw-bold" href="../">FAQ</a>
+                    <a class="nav-link color-keptskin fw-bold" href="../">Bantuan</a>
 					<a class="nav-link color-keptskin fw-bold" href="../">Lapor</a>
 					<!-- <a class="nav-link color-keptskin" href="history/">Riwayat</a> -->
                     <a class="nav-link color-white fw-light"><?php echo dayName(dateNow()).', '; showDate(dateNow())?></a>
@@ -155,8 +155,12 @@ keptConn();
             <div class="ms-auto me-auto bg-keptblue border rounded" id="wantsChart" style="height: 41vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
         <?php } ?>
     </div>
-    <div class="mt-3">
+    <div class="d-flex ms-auto me-auto mt-3">
         <div class="ms-auto me-auto bg-keptblue border rounded" id="incomeChart" style="height: 41vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
+        <div class="ms-auto me-auto bg-keptblue border rounded" id="walletChart" style="height: 41vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
+        <?php if($totalSpending != 0) {?>
+            <div class="ms-auto me-auto bg-keptblue border rounded" id="spendingChart" style="height: 41vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
+        <?php } ?>
     </div>
     <?php } ?>
     <h1 class="mt-6">Detail</h1>
@@ -384,14 +388,14 @@ keptConn();
                 theme: "dark2",
                 backgroundColor: "#7C81AD",
                 title: {
-                    text: "Total Pendapatan"
+                    text: "Pendapatan"
                 },
                 subtitles: [{
                     text: "<?php echo dateMonth(dateNow()).', '.dateYear(dateNow()) ?>"
                 }],
                 data: [{
-                    type: "pie",
-                    yValueFormatString: "#,##0.0\"%\"",
+                    type: "doughnut",
+                    yValueFormatString: "#,##0.00\"%\"",
                     indexLabel: "{label} ({y})",
                     dataPoints: [
                         <?php if($routineIncome != 0) {?>
@@ -399,6 +403,68 @@ keptConn();
                         <?php } ?>
                         <?php if($additionalIncome != 0) {?>
                         {label: "Tambah", y: <?php echo $additionalIncomePercentage ?>},
+                        <?php } ?>
+                    ]
+                }]
+            });
+            var spendingChart = new CanvasJS.Chart("spendingChart", {
+                animationEnabled: true,
+                animationDuration: 500,
+                colorSet: "wantsPalette",
+                // zoomEnabled: true,
+                // zoomType: "x",
+                theme: "dark2",
+                backgroundColor: "#7C81AD",
+                title: {
+                    text: "Pengeluaran"
+                },
+                subtitles: [{
+                    text: "<?php echo dateMonth(dateNow()).', '.dateYear(dateNow()) ?>"
+                }],
+                data: [{
+                    type: "doughnut",
+                    yValueFormatString: "#,##0.00\"%\"",
+                    indexLabel: "{label} ({y})",
+                    dataPoints: [
+                        <?php if($prioritySpending != 0) {?>
+                        {label: "Prioritas", y: <?php echo $prioritySpending * 100 / $totalSpending ?>},
+                        <?php } ?>
+                        <?php if($needsSpending != 0) {?>
+                        {label: "Kebutuhan", y: <?php echo $needsSpending * 100 / $totalSpending ?>},
+                        <?php } ?>
+                        <?php if($wantsSpending != 0) {?>
+                        {label: "Keinginan", y: <?php echo $wantsSpending * 100 / $totalSpending ?>},
+                        <?php } ?>
+                    ]
+                }]
+            });
+            var walletChart = new CanvasJS.Chart("walletChart", {
+                animationEnabled: true,
+                animationDuration: 500,
+                colorSet: "needsPalette",
+                // zoomEnabled: true,
+                // zoomType: "x",
+                theme: "dark2",
+                backgroundColor: "#7C81AD",
+                title: {
+                    text: "Dompetmu"
+                },
+                subtitles: [{
+                    text: "<?php echo dateMonth(dateNow()).', '.dateYear(dateNow()) ?>"
+                }],
+                data: [{
+                    type: "doughnut",
+                    yValueFormatString: "#,##0.00\"%\"",
+                    indexLabel: "{label} ({y})",
+                    dataPoints: [
+                        <?php if($totalIncome != 0) {?>
+                        {label: "Sisa Uang", y: <?php echo $savingPercentage2 ?>},
+                        <?php } ?>
+                        <?php if($needsSpending != 0) {?>
+                        {label: "Tabungan", y: <?php echo $invest * 100 / $realIncome ?>},
+                        <?php } ?>
+                        <?php if($wantsSpending != 0) {?>
+                        {label: "Terpakai", y: 100 - <?php echo $savingPercentage2?>},
                         <?php } ?>
                     ]
                 }]
@@ -482,8 +548,10 @@ keptConn();
                     ]
                 }]
             });
+
             <?php if($totalIncome != 0) {?>
                 incomeChart.render();
+                walletChart.render();
             <?php } ?>
             <?php if($needsSpending != 0) {?>
                 needsChart.render();
@@ -493,6 +561,9 @@ keptConn();
             <?php } ?>
             <?php if($prioritySpending != 0) {?>
                 priorityChart.render();
+            <?php } ?>
+            <?php if($totalSpending != 0) {?>
+                spendingChart.render();
             <?php } ?>
         }
     </script>
