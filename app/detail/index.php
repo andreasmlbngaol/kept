@@ -49,9 +49,9 @@ if($realIncome != 0) {
 
 $saving = $totalIncome - $totalSpending;
 if($totalIncome != 0) {
-    $spendingPercentage = ($totalSpending * 100 /$totalIncome);
+    $spendingPercentage = ($totalSpending * 100 / $totalIncome);
     $savingPercentage = ($saving * 100/$realIncome);
-    $savingPercentage2 = ($saving - $invest) * 100/$realIncome;
+    $savingPercentage2 = ($saving - $invest) * 100/ $totalIncome;
 } else {
     $spendingPercentage = 0;
     $savingPercentage = 0;
@@ -144,26 +144,26 @@ keptConn();
 		</div>
     </nav>
     <?php if($totalIncome != 0) {?>
-    <div class="d-flex ms-auto me-auto">
+    <h1 class="mt-1 ms-3" id="chart">Grafik</h1>
+    <div class="d-flex ms-auto me-auto flex-wrap">
+        <div class="ms-auto me-auto bg-keptblue border rounded mt-2 mb-2" id="incomeChart" style="height: 39vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
+        <div class="ms-auto me-auto bg-keptblue border rounded mt-2 mb-2" id="walletChart" style="height: 39vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
+        <?php if($totalSpending != 0) {?>
+            <div class="ms-auto me-auto bg-keptblue border rounded mt-2 mb-2" id="spendingChart" style="height: 39vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
+        <?php } ?>
         <?php if($needsSpending != 0) {?>
-            <div class="ms-auto me-auto bg-keptblue border rounded" id="needsChart" style="height: 41vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
+            <div class="ms-auto me-auto bg-keptblue border rounded mt-2 mb-2" id="needsChart" style="height: 39vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
         <?php } ?>
         <?php if($prioritySpending != 0) {?>
-            <div class="ms-auto me-auto bg-keptblue border rounded" id="priorityChart" style="height: 41vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
+            <div class="ms-auto me-auto bg-keptblue border rounded mt-2 mb-2" id="priorityChart" style="height: 39vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
         <?php } ?>
         <?php if($wantsSpending != 0) {?>
-            <div class="ms-auto me-auto bg-keptblue border rounded" id="wantsChart" style="height: 41vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
+            <div class="ms-auto me-auto bg-keptblue border rounded mt-2 mb-2" id="wantsChart" style="height: 39vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
         <?php } ?>
-    </div>
-    <div class="d-flex ms-auto me-auto mt-3">
-        <div class="ms-auto me-auto bg-keptblue border rounded" id="incomeChart" style="height: 41vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
-        <div class="ms-auto me-auto bg-keptblue border rounded" id="walletChart" style="height: 41vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
-        <?php if($totalSpending != 0) {?>
-            <div class="ms-auto me-auto bg-keptblue border rounded" id="spendingChart" style="height: 41vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
-        <?php } ?>
+
     </div>
     <?php } ?>
-    <h1 class="mt-6">Detail</h1>
+    <h1 class="mt-5 ms-3" id="more-detail">Rincian Detail</h1>
     <br>
     <div class="container">
         <div class="item">
@@ -460,8 +460,8 @@ keptConn();
                         <?php if($totalIncome != 0) {?>
                         {label: "Sisa Uang", y: <?php echo $savingPercentage2 ?>},
                         <?php } ?>
-                        <?php if($needsSpending != 0) {?>
-                        {label: "Tabungan", y: <?php echo $invest * 100 / $realIncome ?>},
+                        <?php if($totalIncome != 0) {?>
+                        {label: "Tabungan", y: <?php echo $invest * 100 / $totalIncome ?>},
                         <?php } ?>
                         <?php if($wantsSpending != 0) {?>
                         {label: "Terpakai", y: 100 - <?php echo $savingPercentage2?>},

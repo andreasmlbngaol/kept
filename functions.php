@@ -8,11 +8,11 @@ require 'vendor/autoload.php';
 //membuat zona waktu jadi WIB
 date_default_timezone_set('Asia/Jakarta');
 
-$keptPassword = "";
-$keptUsername = "root";
-$keptHost = "localhost";
-$keptdb = "keptdb";
-$keepdb = "keepdb";
+$keptPassword = "aITkeptflow3";
+$keptUsername = "if0_34962067";
+$keptHost = "sql209.infinityfree.com";
+$keptdb = "if0_34962067_keptdb";
+$keepdb = "if0_34962067_keepdb";
 
 // connect dengan sql server
 $conn = mysqli_connect($keptHost, $keptUsername, $keptPassword, $keptdb);
@@ -286,6 +286,7 @@ function renewPassword($post) {
 // function untuk menambahkan seluruh data ke database
 function register($session) {
     global $conn;
+    global $keepdb;
     $username = $session['username'];
     $email = $session['email'];
     $password = password_hash($session['password'], PASSWORD_DEFAULT);
@@ -318,7 +319,7 @@ function register($session) {
     keepConn();
 
     // membuat tabel log untuk user
-    $query = "CREATE TABLE keepdb.{$username}_keep ( 
+    $query = "CREATE TABLE $keepdb.{$username}_keep ( 
         `id` INT AUTO_INCREMENT, 
         `date` DATE NULL DEFAULT NULL , 
         `class` VARCHAR(31) NULL DEFAULT NULL , 
