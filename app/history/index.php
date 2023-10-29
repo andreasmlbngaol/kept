@@ -89,13 +89,13 @@ keptConn();
     <br>
     <h2>Pendapatan</h2>
     <?php if($income != NULL) { ?>
-    <table border="1">
+    <table class="history-table" border="1">
         <tr>
             <th>No</th>
             <th>Tanggal</th>
             <th>Kategori</th>
             <th>Jumlah (Rp)</th>
-            <th>Detail</th>
+            <th colspan="2">Detail</th>
         </tr>
         <?php $i = 1; foreach ($income as $transaction) {?>
         <tr>
@@ -118,14 +118,14 @@ keptConn();
     <br>
     <h2>Pengeluaran</h2>
     <?php if($spending != NULL) { ?>
-    <table border="1">
+    <table class="history-table" border="1">
         <tr>
             <th>No</th>
             <th>Tanggal</th>
             <th>Tipe</th>
             <th>Kategori</th>
             <th>Jumlah (Rp)</th>
-            <th>Detail</th>
+            <th colspan="2">Detail</th>
         </tr>
         <?php $i = 1; foreach ($spending as $transaction) {?>
         <tr>
@@ -155,4 +155,19 @@ keptConn();
     <h2>No history yet. Go to KEEP Menu to insert your flow!</h2>
     <?php } ?>
     <script src="../../src/script/bootstrap.bundle.min.js"></script>
+    <script>
+        const getCellValue = (tr, idx) => tr.children[idx].innerText || tr.children[idx].textContent;
+
+        const comparer = (idx, asc) => (a, b) => ((v1, v2) => 
+            v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
+            )(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx));
+
+        // do the work...
+        document.querySelectorAll('th').forEach(th => th.addEventListener('click', (() => {
+            const table = th.closest('table');
+            Array.from(table.querySelectorAll('tr:nth-child(n+2)'))
+                .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
+                .forEach(tr => table.appendChild(tr) );
+        })));
+    </script>
 </body>

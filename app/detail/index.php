@@ -288,7 +288,7 @@ keptConn();
             </div>
         </div>
     </div>
-    <div id="score" style="height: 100vh;">
+    <div class="ms-auto me-auto text-center pt-6" id="score" style="height: 100vh;">
         <h1>Kept Score</h1>
     <?php 
     if($totalIncome > 0) {

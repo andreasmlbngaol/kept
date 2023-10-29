@@ -13,12 +13,16 @@
     src: url(../font/SamsungOne-700.woff);
 }
 
+@font-face {
+    font-family: once;
+    src: url(../font/once.otf);
+}
+
 
 
 * {
     padding: 0;
-    font-family: samsung700 !important;
-    font-size: 1vw !important;
+    font-family: once !important;
 }
 
 .break {
@@ -194,4 +198,20 @@ p.home-menu-item {
 
 .dropdown-item {
     color:#15253f !important;
+}
+
+.history-table td,
+.history-table th {
+    padding-left: 1vw;
+    padding-right: 1vw;
+}
+
+.history-table tr,
+.history-table th,
+.history-table td {
+    border: 1pt solid #E5C3A6;
+}
+
+#report-text {
+    width: 30% !important;
 }

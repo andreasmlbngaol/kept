@@ -8,11 +8,11 @@ require 'vendor/autoload.php';
 //membuat zona waktu jadi WIB
 date_default_timezone_set('Asia/Jakarta');
 
-$keptPassword = "aITkeptflow3";
-$keptUsername = "if0_34962067";
-$keptHost = "sql209.infinityfree.com";
-$keptdb = "if0_34962067_keptdb";
-$keepdb = "if0_34962067_keepdb";
+$keptPassword = "";
+$keptUsername = "root";
+$keptHost = "localhost";
+$keptdb = "keptdb";
+$keepdb = "keepdb";
 
 // connect dengan sql server
 $conn = mysqli_connect($keptHost, $keptUsername, $keptPassword, $keptdb);
@@ -779,6 +779,7 @@ function uploadPicture($files) {
     $validPictureExt = ['jpg', 'jpeg', 'png'];
     $pictureExt = explode('.', $pictureName);
     $pictureExt = strtolower(end($pictureExt));
+    alert("$pictureExt");
 
     if(!in_array($pictureExt, $validPictureExt)) {
         alert('Only upload jpg, jpeg, or png');
@@ -878,5 +879,18 @@ function greeting() {
         $greeting = 'Malam';
     }
     return $greeting.', '.fetch('nickname');
+}
+
+function sendReport($type, $text) {
+    global $conn;
+    $username = fetch('username');
+    $email = fetch('email');
+    $query = "INSERT INTO report VALUES ('', '$type', '$text', '$username', '$email', NULL, NULL)";
+    mysqli_query($conn, $query);
+    if(mysqli_affected_rows($conn) < 1) {
+        alert('Error. Mohon laporkan bug ini :v');
+        return false;
+    }
+    return true;
 }
 ?>

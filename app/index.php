@@ -112,8 +112,8 @@ if((int) $time >= 6 AND (int) $time < 12) {
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="navbar-nav me-auto">
-                    <a class="nav-link color-keptskin fw-bold" href="/">FAQ</a>
-					<a class="nav-link color-keptskin fw-bold" href="/">Lapor</a>
+                    <a class="nav-link color-keptskin fw-bold" href="help/">Bantuan</a>
+					<a class="nav-link color-keptskin fw-bold" href="report/">Lapor</a>
 					<!-- <a class="nav-link color-keptskin" href="history/">Riwayat</a> -->
                     <a class="nav-link color-white fw-light"><?php echo dayName(dateNow()).', '; showDate(dateNow())?></a>
                 </div>
@@ -138,7 +138,7 @@ if((int) $time >= 6 AND (int) $time < 12) {
     <div>
         <div>
             <h2>Kept Score mu:</h2>
-            <h2><a href="detail/#score" style="text-decoration: none"><?php echo $keptScore ?></a></h2>
+            <h2><?php echo $keptScore ?><a href="detail/#score" style="text-decoration: none"> ?</a></h2>
         </div>
         <br>
         <div>
