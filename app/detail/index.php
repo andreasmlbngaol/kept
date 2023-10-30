@@ -457,7 +457,7 @@ keptConn();
                         {label: "Tabungan", y: <?php echo $invest * 100 / $totalIncome ?>},
                         <?php } ?>
                         <?php if($wantsSpending != 0) {?>
-                        {label: "Terpakai", y: 100 - <?php echo $savingPercentage2?>},
+                        {label: "Terpakai", y: 100 - <?php echo $savingPercentage2?> - <?php echo ($invest * 100 / $totalIncome) ?>},
                         <?php } ?>
                     ]
                 }]
