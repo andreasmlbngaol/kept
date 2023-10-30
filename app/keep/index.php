@@ -69,41 +69,42 @@ if(isset($_POST['submit'])) {
 			</div>
 		</div>
     </nav>
-    <h1>Keep</h1>
-    <br>
-    <form action="" method="post">
-        <div class="input" id="input-date">
-            <label for="date">Tanggal:</label><br>
-            <input type="date" name="date" id="date" value="<?php echo $today?>" required>
-        </div>
+    <div id="keep">
+        <h1 class="w-100">Keep</h1>
+        <form action="" method="post" class="w-100">
+            <div class="input" id="input-date">
+                <label for="date">Tanggal:</label><br>
+                <input type="date" name="date" id="date" value="<?php echo $today?>" required>
+            </div>
 
-        <div class="input">
-            <label for="input-isincome">Tipe:</label><br>
-            <select name="input-isincome" id="input-isincome" required>
-                <option value="" selected>Pilih</option>
-                <option value="true">Pendapatan</option>
-                <option value="false">Pengeluaran</option>
-            </select>
-        </div>
+            <div class="input">
+                <label for="input-isincome">Tipe:</label><br>
+                <select name="input-isincome" id="input-isincome" required>
+                    <option value="" selected>Pilih</option>
+                    <option value="true">Pendapatan</option>
+                    <option value="false">Pengeluaran</option>
+                </select>
+            </div>
 
-        <div class="input">
-            <label for="input-class">Kategori:</label><br>
-            <select name="input-class" id="input-class" required>
-                <option value="" selected>Pilih</option>
-            </select>
-        </div>
+            <div class="input">
+                <label for="input-class">Kategori:</label><br>
+                <select name="input-class" id="input-class" required>
+                    <option value="" selected>Pilih</option>
+                </select>
+            </div>
 
-        <div class="input" id="input-type">
-            <label for="nominal">Jumlah (Rp.):</label><br>
-            <input type="number" name="nominal" id="nominal" required>
-        </div>
-        
-        <div class="input" id="input-desc">
-            <label for="desc">Komentar:</label><br>
-            <input type="text" name="desc" id="desc" autocomplete="off" required>
-        </div>
-        <button type="submit" id="submit" name="submit">KEEP</button>
-    </form>
+            <div class="input" id="input-type">
+                <label for="nominal">Jumlah (Rp.):</label><br>
+                <input type="number" name="nominal" id="nominal" required>
+            </div>
+            
+            <div class="input" id="input-desc">
+                <label for="desc">Komentar:</label><br>
+                <input type="text" name="desc" id="desc" autocomplete="off" required>
+            </div>
+            <button type="submit" id="submit" name="submit">KEEP</button>
+        </form>
+    </div>
     <script src="script.js"></script>
     <script src="../../src/script/bootstrap.bundle.min.js"></script>
 </body>

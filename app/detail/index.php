@@ -88,19 +88,8 @@ keptConn();
     <link rel="stylesheet" href="../../src/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../src/css/style.css">
     <title>Detail</title>
-    <style>
-        .container {
-            display: flex;
-        }
-        .item {
-            margin: 20px;
-            border: 1pt solid #E5C3A6;
-            padding: 10px;
-        }
-    </style>
-    
 </head>
-<body class="ms-3 me-3">
+<body class="ms-3 me-3" id="page-container">
     <nav class="navbar sticky-top navbar-expand-lg bg-keptblue mb-0">
         <div class="container-fluid">
             <div class="navbar-item dropdown"> 
@@ -144,218 +133,222 @@ keptConn();
 		</div>
     </nav>
     <?php if($totalIncome != 0) {?>
-    <h1 class="mt-1 ms-3" id="chart">Grafik</h1>
-    <div class="d-flex ms-auto me-auto flex-wrap">
-        <div class="ms-auto me-auto bg-keptblue border rounded mt-2 mb-2" id="incomeChart" style="height: 39vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
-        <div class="ms-auto me-auto bg-keptblue border rounded mt-2 mb-2" id="walletChart" style="height: 39vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
-        <?php if($totalSpending != 0) {?>
-            <div class="ms-auto me-auto bg-keptblue border rounded mt-2 mb-2" id="spendingChart" style="height: 39vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
-        <?php } ?>
-        <?php if($needsSpending != 0) {?>
-            <div class="ms-auto me-auto bg-keptblue border rounded mt-2 mb-2" id="needsChart" style="height: 39vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
-        <?php } ?>
-        <?php if($prioritySpending != 0) {?>
-            <div class="ms-auto me-auto bg-keptblue border rounded mt-2 mb-2" id="priorityChart" style="height: 39vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
-        <?php } ?>
-        <?php if($wantsSpending != 0) {?>
-            <div class="ms-auto me-auto bg-keptblue border rounded mt-2 mb-2" id="wantsChart" style="height: 39vh; width: <?php echo 96/3 ?>%; overflow:hidden"></div>
-        <?php } ?>
-
+    <div class="page bb-1">
+        <h1 class="mt-0 ms-3 text-center text-decoration-underline" id="chart">Grafik</h1>
+        <div class="d-flex ms-auto me-auto flex-wrap">
+            <div class="chart ms-auto me-auto bg-keptblue border rounded mt-2 mb-2" id="incomeChart"></div>
+            <div class="chart ms-auto me-auto bg-keptblue border rounded mt-2 mb-2" id="walletChart"></div>
+            <?php if($totalSpending != 0) {?>
+                <div class="chart ms-auto me-auto bg-keptblue border rounded mt-2 mb-2" id="spendingChart"></div>
+            <?php } ?>
+            <?php if($needsSpending != 0) {?>
+                <div class="chart ms-auto me-auto bg-keptblue border rounded mt-2 mb-2" id="needsChart"></div>
+            <?php } ?>
+            <?php if($prioritySpending != 0) {?>
+                <div class="chart ms-auto me-auto bg-keptblue border rounded mt-2 mb-2" id="priorityChart"></div>
+            <?php } ?>
+            <?php if($wantsSpending != 0) {?>
+                <div class="chart ms-auto me-auto bg-keptblue border rounded mt-2 mb-2" id="wantsChart"></div>
+            <?php } ?>
+        </div>
     </div>
     <?php } ?>
-    <h1 class="mt-5 ms-3" id="more-detail">Rincian Detail</h1>
-    <br>
-    <div class="container">
-        <div class="item">
-            <h1>Pendapatan</h1>
-            <div>
-                <h2>Total Pendapatan:</h2>
-                <h2 class="value">Rp. <?php echo money($totalIncome) ?></h2>
+    <div class="page mb-0">
+        <h1 class="text-center text-decoration-underline" id="more-detail">Rincian</h1>
+        <div class="container detail-container p-0">
+            <div class="item text-center">
+                <h2 class="color-keptskin">Pendapatan</h2>
+                <hr>
+                <div class="mt-3">
+                    <h3 class="text-decoration-underline mb-0">Total</h3>
+                    <p class="value fw-bolder mb-0">Rp. <?php echo money($totalIncome) ?></p>
+                </div>
+                <div class="mt-3">
+                    <h3 class="text-decoration-underline mb-0">Rutin</h3>
+                    <p class="value fw-bolder mb-0">Rp. <?php echo money($routineIncome) ?></p>
+                    <p><?php echo '('.percentage($routineIncomePercentage).' % dari Total)'?></p>
+                </div>
+                <div class="mt-3">
+                    <h3 class="text-decoration-underline mb-0">Tambahan</h3>
+                    <p class="value fw-bolder mb-0">Rp. <?php echo money($additionalIncome)?></p>
+                    <p><?php echo '('.percentage($additionalIncomePercentage).' % dari Total)'?></p>
+                </div>
+                
             </div>
-            <br>
-            <div>
-                <h2>Pendapatan Rutin:</h2>
-                <h2 class="value">Rp. <?php echo money($routineIncome) ?></h2>
-                <p><?php echo '('.percentage($routineIncomePercentage).' % dari Total Pendapatan)'?></p>
+            <div class="item text-center">
+                <h2 class="color-keptskin">Pengeluaran</h2>
+                    <hr>
+                <div class="mt-3">
+                    <h3 class="text-decoration-underline mb-0">Total</h3>
+                    <p class="value fw-bolder mb-0">Rp. <?php echo money($totalSpending) ?></p>
+                </div>
+                <div class="mt-3">
+                    <h3 class="text-decoration-underline mb-0">Prioritas</h3>
+                    <p class="value fw-bolder mb-0">Rp. <?php echo money($prioritySpending)?></p>
+                    <!-- <p><?php //echo '('.percentage($prioritySpendingPercentage).' % of Spending)'?> or <?php //echo '('.percentage($prioritySpendingPercentage * $spendingPercentage / 100).' % of Income)' ?></p> -->
+                </div>
+                <div class="mt-3">
+                    <h3 class="text-decoration-underline mb-0">Kebutuhan</h3>
+                    <p class="value fw-bolder mb-0">Rp. <?php echo money($needsSpending)?></p>
+                    <!-- <p><?php //echo '('.percentage($needsSpendingPercentage).' % dari Pendapatan Nyata)'?></p> -->
+                    <!-- <p><?php //echo '('.percentage($needsSpendingPercentage).' % of Spending)'?> or <?php //echo '('.percentage($needsSpendingPercentage * $spendingPercentage / 100).' % of Income)' ?></p> -->
+                </div>
+                <div class="mt-3">
+                    <h3 class="text-decoration-underline mb-0">Keinginan</h3>
+                    <p class="value fw-bolder mb-0">Rp. <?php echo money($wantsSpending)?></p>
+                    <!-- <p><?php //echo '('.percentage($wantsSpendingPercentage).' % dari Pendapatan Nyata)'?></p> -->
+                    <!-- <p><?php //echo '('.percentage($wantsSpendingPercentage).' % of Spending'?> or <?php //echo percentage($wantsSpendingPercentage * $spendingPercentage / 100).' % of Income' ?></p> -->
+                </div>
             </div>
-            <br>
-            <div>
-                <h2>Pendapatan Tambahan:</h2>
-                <h2 class="value">Rp. <?php echo money($additionalIncome)?></h2>
-                <p><?php echo '('.percentage($additionalIncomePercentage).' % dari Total Pendapatan)'?></p>
-            </div>
-            <br>
-            <div>
-                <h2>Pendapatan Nyata:</h2>
-                <h2 class="value">Rp. <?php echo money($realIncome)?></h2>
-                <p>Pendapatan Rutin - Pengeluaran Prioritas</p>
-                <p>(Rp. <?php echo money($totalIncome) ?> - Rp. <?php echo money($prioritySpending) ?>)</p>
-            </div>
-        </div>
-        <div class="item">
-            <h1>Pengeluaran</h1>
-            <div>
-                <h2>Total Pengeluaran:</h2>
-                <h2 class="value">Rp. <?php echo money($totalSpending) ?></h2>
-                <p><?php echo '('.percentage($spendingPercentage).' % of Total Pendapatan)'?></p>
-            </div>
-            <br>
-            <div>
-                <h2>Pengeluaran Prioritas:</h2>
-                <h2 class="value">Rp. <?php echo money($prioritySpending)?></h2>
-                <!-- <p><?php //echo '('.percentage($prioritySpendingPercentage).' % of Spending)'?> or <?php //echo '('.percentage($prioritySpendingPercentage * $spendingPercentage / 100).' % of Income)' ?></p> -->
-                <p><?php echo '('.percentage($prioritySpendingPercentage).' % of Total Pendapatan)' ?></p>
-            </div>
-            <br>
-            <div>
-                <h2>Pengeluaran Kebutuhan:</h2>
-                <h2 class="value">Rp. <?php echo money($needsSpending)?></h2>
-                <p><?php echo '('.percentage($needsSpendingPercentage).' % dari Pendapatan Nyata)'?></p>
-                <!-- <p><?php //echo '('.percentage($needsSpendingPercentage).' % of Spending)'?> or <?php //echo '('.percentage($needsSpendingPercentage * $spendingPercentage / 100).' % of Income)' ?></p> -->
-            </div>
-            <br>
-            <div>
-                <h2>Pengeluaran Keinginan:</h2>
-                <h2 class="value">Rp. <?php echo money($wantsSpending)?></h2>
-                <p><?php echo '('.percentage($wantsSpendingPercentage).' % dari Pendapatan Nyata)'?></p>
-                <!-- <p><?php //echo '('.percentage($wantsSpendingPercentage).' % of Spending'?> or <?php //echo percentage($wantsSpendingPercentage * $spendingPercentage / 100).' % of Income' ?></p> -->
-            </div>
-        </div>
-        <br>
-        <div class="item">
-            <div>
-                <h2>Dompetmu:</h2>
-                <h2 class="value">Rp. <?php echo money($saving)?></h2>
-                <p><?php echo '('.percentage($savingPercentage).' % dari Pendapatan Nyata)' ?></p>
-            </div>
-            <br>
-            <div>
-                <h2 class="value">Rp. <?php echo money($saving - $invest)?> setelah menabung</h2>
-                <p><?php echo '('.percentage($savingPercentage2).' % dari Pendapatan Nyata)' ?></p>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="item">
-            <div>
-                <h1>Daftar Prioritas:</h1>
-                <?php for($i = 0; $i < count($priorityUsername); $i++) { ?>
-                    <div>
-                        <h2><?php echo $priorityName[$i] ?>:</h2>
-                        <?php if($prioritySpending != 0) { ?>
-                        <h2 class="value">Rp. <?php echo money($priorityDetail[$i]) ?></h2>
-                        <p><?php echo'('.percentage((($priorityDetail[$i]/$prioritySpending) * $prioritySpendingPercentage)).' % dari Total Pendapatan)' ?></p>
-                        <?php } else {?>
-                        <p class="value">Rp. <?php echo money($priorityDetail[$i]).' (0 % dari Total Pendapatan)' ?></p>
-                        <?php } ?>
-                    </div>
-                    <br>
-                    <?php } ?>
-            </div>
-        </div>
-        <div class="item">
-            <div>
-                <h1>Daftar Kebutuhan:</h1>
-                <?php for($i = 0; $i < count($needsUsername); $i++) { ?>
-                    <div>
-                        <h2><?php echo $needsName[$i] ?>:</h2>
-                        <h2 class="value">Rp. <?php echo money($needsDetail[$i])?></h2>
-                        <?php if($needsSpending != 0) { ?>
-                        <p><?php echo '('.percentage((($needsDetail[$i]/$needsSpending) * $needsSpendingPercentage)).' % dari Pendapatan Nyata)'?></p>
-                        <?php } else {?>
-                        <p><?php echo '(0 % dari Pendapatan Nyata)' ?></p>
-                        <?php } ?>
-                    </div>
-                    <br>
-                    <?php } ?>
-            </div>
-        </div>
-        <div class="item">
-            <div>
-                <h1>Daftar Keinginan:</h1>
-                <?php for($i = 0; $i < count($wantsUsername); $i++) { ?>
-                    <div>
-                        <h2><?php echo $wantsName[$i] ?>:</h2>
-                        <h2 class="value">Rp. <?php echo money($wantsDetail[$i]) ?></h2>
-                        <?php if($wantsSpending != 0) { ?>
-                        <p><?php echo '('.percentage(($wantsDetail[$i]/$wantsSpending) * $wantsSpendingPercentage).' % dari Pendapatan Nyata)' ?></p>
-                        <?php } else { ?>
-                        <p><?php echo '(0 % dari Pendapatan Nyata)' ?></p>
-                        <?php } ?>
-                    </div>
-                    <br>
-                    <?php } ?>
-            </div>
-        </div>
-    </div>
-    <div class="ms-auto me-auto text-center pt-6" id="score" style="height: 100vh;">
-        <h1>Kept Score</h1>
-    <?php 
-    if($totalIncome > 0) {
-        $needsSpendingPercentage = $needsSpending * 100 / $realIncome;
-        $wantsSpendingPercentage = $wantsSpending * 100 / $realIncome;
-        $savingPercentage = $saving * 100 / $realIncome;
-    } else {
-        $needsSpendingPercentage = 0;
-        $wantsSpendingPercentage = 0;
-        $savingPercentage = 0;
-    }
+            <div class="item text-center">
+                <h2 class="color-keptskin">Dompetmu</h2>
+                <hr>
+                <div class="mt-3">
+                    <h3 class="text-decoration-underline mb-0">Pendapatan Nyata</h3>
+                    <p class="value fw-bolder mb-0">Rp. <?php echo money($realIncome)?></p>
+                    <p class="mb-0">Total - Prioritas</p>
+                    <p>(Rp. <?php echo money($totalIncome) ?> - Rp. <?php echo money($prioritySpending) ?>)</p>
+                </div>
+                <div class="mt-3">
+                    <h3 class="text-decoration-underline mb-0">Sisa Uang</h3>
+                    <p class="value fw-bolder mb-0">Rp. <?php echo money($saving) ?></p>
+                    <!-- <h2 class="value fw-bolder">Rp. <?php //echo money($saving)?></h2> -->
+                    <p><?php echo '('.percentage($savingPercentage).' % dari Pendapatan Nyata)' ?></p>
+                </div>
+                <div class="mt-3">
+                    <h3 class="text-decoration-underline mb-0">Setelah Menabung</h3>
+                    <p class="value fw-bolder mb-0">Rp. <?php echo money($saving - $invest)?></p>
+                    <!-- <p><?php //echo '('.percentage(($saving - $invest) * 100 / $realIncome).' % dari Pendapatan Nyata)' ?></p> -->
+                </div>
 
-    $keptScore = 100;
-    if($needsSpendingPercentage > $needsPlan) $keptScore -= 10;
-    if($wantsSpendingPercentage > (($wantsPlan + $needsPlan)/2)) $keptScore -= 20;
-    else if($wantsSpendingPercentage > $wantsPlan) $keptScore -= 10;
-    if($wantsSpending > $needsSpending) $keptScore -= 10;
-    if($totalIncome != 0) {
-        if($savingPercentage < -$needsPlan) {
-            $keptScore -= 70;
-        } else if($savingPercentage < -$wantsPlan) {
-            $keptScore -= 60;
-        } else if($savingPercentage < -($savingPlan + $wantsPlan)) {
-            $keptScore -= 50;
-        } else if($savingPercentage < -$savingPlan) {
-            $keptScore -= 40;
-        } else if($savingPercentage < 0) {
-            $keptScore -= 30;
-        } else if($savingPercentage < ($savingPlan / 2)) {
-            $keptScore -= 20;
-        } else if($savingPercentage < $savingPlan) {
-            $keptScore -= 10;
+            </div>
+        </div>
+    </div>
+    <div class="page bb-1">
+        <div class="container detail-container p-0">
+            <div class="item text-center">
+                <h2 class="color-keptskin">Prioritas</h2>
+                <hr>
+                <div class="mt-3">
+                    <?php for($i = 0; $i < count($priorityUsername); $i++) { ?>
+                        <div>
+                            <h3 class="text-decoration-underline mb-0"><?php echo $priorityName[$i] ?></h3>
+                            <?php if($prioritySpending != 0) { ?>
+                            <p class="value fw-bolder mb-0">Rp. <?php echo money($priorityDetail[$i]) ?></p>
+                            <p><?php echo'('.percentage((($priorityDetail[$i]/$prioritySpending) * $prioritySpendingPercentage)).' % dari Total Pendapatan)' ?></p>
+                            <?php } else {?>
+                            <p class="value fw-bolder mb-0">Rp. <?php echo money($priorityDetail[$i]).' (0 % dari Total Pendapatan)' ?></p>
+                            <?php } ?>
+                        </div>
+                        <?php } ?>
+                </div>
+            </div>
+            <div class="item text-center">
+                <h2 class="color-keptskin">Kebutuhan</h2>
+                <hr>
+                <div>
+                    <?php for($i = 0; $i < count($needsUsername); $i++) { ?>
+                        <div>
+                            <h3 class="text-decoration-underline mb-0"><?php echo $needsName[$i] ?></h3>
+                            <p class="value fw-bolder mb-0">Rp. <?php echo money($needsDetail[$i])?></p>
+                            <?php if($needsSpending != 0) { ?>
+                            <p><?php echo '('.percentage((($needsDetail[$i]/$needsSpending) * $needsSpendingPercentage)).' % dari Pendapatan Nyata)'?></p>
+                            <?php } else {?>
+                            <p><?php echo '(0 % dari Pendapatan Nyata)' ?></p>
+                            <?php } ?>
+                        </div>
+                        <?php } ?>
+                </div>
+            </div>
+            <div class="item text-center">
+                <h2 class="color-keptskin">Keinginan</h2>
+                <hr>
+                <div>
+                    <?php for($i = 0; $i < count($wantsUsername); $i++) { ?>
+                        <div>
+                            <h3 class="text-decoration-underline mb-0"><?php echo $wantsName[$i] ?></h3>
+                            <p class="value fw-bolder mb-0">Rp. <?php echo money($wantsDetail[$i]) ?></p>
+                            <?php if($wantsSpending != 0) { ?>
+                            <p><?php echo '('.percentage(($wantsDetail[$i]/$wantsSpending) * $wantsSpendingPercentage).' % dari Pendapatan Nyata)' ?></p>
+                            <?php } else { ?>
+                            <p><?php echo '(0 % dari Pendapatan Nyata)' ?></p>
+                            <?php } ?>
+                        </div>
+                        <?php } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page text-center align-middle" id="score">
+        <div id="kept-score">
+            <h1 class="text-decoration-underline">Kept Score</h1>
+        <?php 
+        if($totalIncome > 0) {
+            $needsSpendingPercentage = $needsSpending * 100 / $realIncome;
+            $wantsSpendingPercentage = $wantsSpending * 100 / $realIncome;
+            $savingPercentage = $saving * 100 / $realIncome;
+        } else {
+            $needsSpendingPercentage = 0;
+            $wantsSpendingPercentage = 0;
+            $savingPercentage = 0;
         }
-    } ?>
-        <h1 class="value"><?php echo $keptScore ?></h1>
-    <?php if($keptScore === 100) { ?>
-        <h2>Keuanganmu sesuai perencanaan</h2>
-    <?php } ?>
-    <?php if($needsSpendingPercentage > $needsPlan) {?>
-        <h2>Kebutuhan lebih besar dari <?php echo $needsPlan ?> % (-10 poin)</h2>
-    <?php } ?>
-    <?php if($wantsSpendingPercentage > (($wantsPlan + $needsPlan)/2)){ ?>
-        <h2>Keinginan lebih besar dari <?php echo (($wantsPlan + $needsPlan)/2) ?> % (-20 poin) </h2>
-    <?php } else if($wantsSpendingPercentage > $wantsPlan) { ?>
-        <h2>Keinginan lebih besar dari <?php echo $wantsPlan ?> % (-10 poin) </h2>
-    <?php } ?>
-    <?php if($wantsSpending > $needsSpending) { ?>
-        <h2>Keinginan lebih besar dari kebutuhan (-10 poin) </h2>
-    <?php }
-    if($totalIncome != 0) {
-        if($savingPercentage < -$needsPlan) { ?>
-            <h2>Pengeluaran <?php echo (100 + $needsPlan) ?> % dari pemasukan (-70 poin)</h2>
-        <?php } else if($savingPercentage < -$wantsPlan) { ?>
-            <h2>Pengeluaran <?php echo (100 + $wantsPlan) ?> % dari pemasukan (-60 poin)</h2>
-        <?php } else if($savingPercentage < -($savingPlan + $wantsPlan)) { ?>
-            <h2>Pengeluaran <?php echo (100 + ($savingPlan + $wantsPlan)) ?> % dari pemasukan (-50 poin)</h2>
-        <?php } else if($savingPercentage < -$savingPlan) { ?>
-            <h2>Pengeluaran <?php echo (100 + $savingPlan) ?> % dari pemasukan (-40 poin)</h2>
-        <?php } else if($savingPercentage < 0) { ?>
-            <h2>Pengeluaran lebih besar dari pemasukan (-30 poin)</h2>
-        <?php } else if($savingPercentage < ($savingPlan / 2)) { ?>
-            <h2>Tabungan lebih kecil dari <?php echo ($savingPlan / 2) ?> % dari pemasukan (-20 poin)</h2>
-        <?php } else if($savingPercentage < $savingPlan) { ?>
-            <h2>Tabungan lebih kecil dari <?php echo ($savingPlan) ?> % dari pemasukan (-10 poin)</h2>
+
+        $keptScore = 100;
+        if($needsSpendingPercentage > $needsPlan) $keptScore -= 10;
+        if($wantsSpendingPercentage > (($wantsPlan + $needsPlan)/2)) $keptScore -= 20;
+        else if($wantsSpendingPercentage > $wantsPlan) $keptScore -= 10;
+        if($wantsSpending > $needsSpending) $keptScore -= 10;
+        if($totalIncome != 0) {
+            if($savingPercentage < -$needsPlan) {
+                $keptScore -= 70;
+            } else if($savingPercentage < -$wantsPlan) {
+                $keptScore -= 60;
+            } else if($savingPercentage < -($savingPlan + $wantsPlan)) {
+                $keptScore -= 50;
+            } else if($savingPercentage < -$savingPlan) {
+                $keptScore -= 40;
+            } else if($savingPercentage < 0) {
+                $keptScore -= 30;
+            } else if($savingPercentage < ($savingPlan / 2)) {
+                $keptScore -= 20;
+            } else if($savingPercentage < $savingPlan) {
+                $keptScore -= 10;
+            }
+        } ?>
+            <h1 class="kept-score text-decoration-underline mb-5"><?php echo $keptScore ?></h1>
+        <?php if($keptScore === 100) { ?>
+            <h2>Keuanganmu sesuai perencanaan</h2>
+        <?php } ?>
+        <?php if($needsSpendingPercentage > $needsPlan) {?>
+            <h2>Kebutuhan lebih besar dari <?php echo $needsPlan ?> % (-10 poin)</h2>
+        <?php } ?>
+        <?php if($wantsSpendingPercentage > (($wantsPlan + $needsPlan)/2)){ ?>
+            <h2>Keinginan lebih besar dari <?php echo (($wantsPlan + $needsPlan)/2) ?> % (-20 poin) </h2>
+        <?php } else if($wantsSpendingPercentage > $wantsPlan) { ?>
+            <h2>Keinginan lebih besar dari <?php echo $wantsPlan ?> % (-10 poin) </h2>
+        <?php } ?>
+        <?php if($wantsSpending > $needsSpending) { ?>
+            <h2>Keinginan lebih besar dari kebutuhan (-10 poin) </h2>
         <?php }
-    } 
-    ?>
+        if($totalIncome != 0) {
+            if($savingPercentage < -$needsPlan) { ?>
+                <h2>Pengeluaran <?php echo (100 + $needsPlan) ?> % dari pemasukan (-70 poin)</h2>
+            <?php } else if($savingPercentage < -$wantsPlan) { ?>
+                <h2>Pengeluaran <?php echo (100 + $wantsPlan) ?> % dari pemasukan (-60 poin)</h2>
+            <?php } else if($savingPercentage < -($savingPlan + $wantsPlan)) { ?>
+                <h2>Pengeluaran <?php echo (100 + ($savingPlan + $wantsPlan)) ?> % dari pemasukan (-50 poin)</h2>
+            <?php } else if($savingPercentage < -$savingPlan) { ?>
+                <h2>Pengeluaran <?php echo (100 + $savingPlan) ?> % dari pemasukan (-40 poin)</h2>
+            <?php } else if($savingPercentage < 0) { ?>
+                <h2>Pengeluaran lebih besar dari pemasukan (-30 poin)</h2>
+            <?php } else if($savingPercentage < ($savingPlan / 2)) { ?>
+                <h2>Tabungan lebih kecil dari <?php echo ($savingPlan / 2) ?> % dari pemasukan (-20 poin)</h2>
+            <?php } else if($savingPercentage < $savingPlan) { ?>
+                <h2>Tabungan lebih kecil dari <?php echo ($savingPlan) ?> % dari pemasukan (-10 poin)</h2>
+            <?php }
+        } 
+        ?>
+    </div>
     <script>
         window.onload = function() {
             CanvasJS.addColorSet("wantsPalette",

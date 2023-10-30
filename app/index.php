@@ -36,6 +36,10 @@ if($wantsWallet < 0) {
     $savingWallet += $wantsWallet;
     $wantsWallet = 0;
 }
+if($savingWallet < 0) {
+    $needsWallet += $savingWallet;
+    $savingWallet = 0;
+}
 if($totalIncome > 0) {
     $needsSpendingPercentage = $needsSpending * 100 / $realIncome;
     $wantsSpendingPercentage = $wantsSpending * 100 / $realIncome;
