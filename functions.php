@@ -8,16 +8,30 @@ require 'vendor/autoload.php';
 //membuat zona waktu jadi WIB
 date_default_timezone_set('Asia/Jakarta');
 
-$keptPassword = "";
-$keptUsername = "root";
-$keptHost = "localhost";
-$keptdb = "keptdb";
-$keepdb = "keepdb";
-$directoryPath = "C:\\xampp\\htdocs\\kept\\";
+//mengambil path
+$directory = new DirectoryIterator(dirname(__FILE__)); 
+$directoryPath = $directory->getPath();
+if(strtolower($directoryPath[0]) !== '/') { //untuk database lokal
+    $directoryPath = str_replace("\\", "\\\\", $directoryPath);
+    $directoryPath .= "\\\\";
+    $keptPassword = "";
+    $keptUsername = "root";
+    $keptHost = "localhost";
+    $keptdb = "keptdb";
+    $keepdb = "keepdb";
+} else { //untuk database online
+    $directoryPath .= "/";
+    $keptPassword = "aITkeptflow3";
+    $keptUsername = "if0_34962067";
+    $keptHost = "sql209.infinityfree.com";
+    $keptdb = "if0_34962067_keptdb";
+    $keepdb = "if0_34962067_keepdb";
+}
 
-// connect dengan sql server
+//connect dengan database sql server
 $conn = mysqli_connect($keptHost, $keptUsername, $keptPassword, $keptdb);
 
+//fungsi untuk menghubungkan dengan keepdb
 function keepConn() {
     global $conn;
     global $keptPassword;
@@ -28,6 +42,7 @@ function keepConn() {
     $conn = mysqli_connect($keptHost, $keptUsername, $keptPassword, $keepdb);
 }
 
+//fungsi untuk menghubungkan dengan keptdb
 function keptConn() {
     global $conn;
     global $keptPassword;
@@ -61,7 +76,7 @@ function alert($alert) {
 </script>
 ";}
 
-// function mengambil data
+// function mengambil data yang banyak
 function query($query) {
     global $conn;
     $result = mysqli_query($conn, $query);
@@ -92,6 +107,7 @@ function showTime() {
     echo date('H:i:s');
 }
 
+//fungsi untuk mengubah nama hari jadi ke bahasa Indonesia
 function dayName($date) {
     $englishDay = date('l', strtotime($date));
     switch ($englishDay) {
@@ -120,35 +136,11 @@ function dayName($date) {
     return $indonesiaDay;
 }
 
+//funsgi untuk menghitung selisih antarhari
 function totalDay($date1, $date2) {
     $diff = abs(strtotime($date2) - strtotime($date1));
     $day = (int) floor($diff / (60 * 60 * 24));
     return $day;
-}
-
-// function untuk mengecek nomor HP
-function checkHpNum($post) {
-    global $conn;
-    $hpnum = $post['hpnum'];
-    $len = strlen($hpnum);
-    $_SESSION['hpnum'] = $hpnum;
-    
-    if($hpnum[0] != '0' || $len < 10 || $len > 13) {
-        alert("Phone number invalid. Start with \"08\"");
-        $_SESSION['hpnum'] = NULL;
-        return false;
-    }
-    
-    $query = "SELECT username FROM account WHERE hpnum = '$hpnum'";
-    $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
-    
-    if($result) {
-        alert("Phone number is used.");
-        $_SESSION['hpnum'] = NULL;
-        return false;
-    }
-
-    return true;
 }
 
 // function untuk mengecek ketersediaan username
@@ -161,7 +153,7 @@ function checkUsername($post) {
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
 
     if($result) {
-        alert("Username is not available. Be more creative!");
+        alert("Username udah dipake. Buat yang lain ya...");
         $_SESSION['username'] = NULL;
         return false;
     }
@@ -176,7 +168,7 @@ function checkEmail($post) {
 
     // mengecek ada gak '@' di email
     if(stristr($email, '@') === false) {
-        alert("Email invalid");
+        alert("Emailnya gak valid");
         $_SESSION['email'] = NULL;
         return false;
     }
@@ -187,7 +179,7 @@ function checkEmail($post) {
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
     
     if($result) {
-        alert("Email is already used.");
+        alert("Emailnya dah kepake");
         $_SESSION['email'] = NULL;
         return false;
     }
@@ -196,12 +188,12 @@ function checkEmail($post) {
 
 // function template pesan kode verifikasi dalam HTML
 function codeTextHTML($code) {
-    return "Verification Code:<br><b>$code</b><br>Keep it secret from anyone besides you to avoid issues.";
+    return "Kode Verifikasi:<br><b>$code</b><br>Rahasiakan dan jangan kasih tau ke siapapun yang minta";
 }
 
 // function template pesan kode verifikasi non HTML
 function codeTextNotHTML($code) {
-    return "Verification Code: $code . Keep it secret from anyone besides you to avoid issues.";
+    return "Kode Verifikasi: $code . Rahasiakan dan jangan kasih tau ke siapapun yang minta";
 }
 
 // function untuk mengirimkan email
@@ -239,27 +231,27 @@ function sendEmail($to, $subject, $textHTML, $textNotHTML = "") {
     return false;
 }
 
-// function untuk menyamakan code
+// function untuk memverifikasi kode
 function checkCode($post) {
     session_start();
     $code = $_SESSION['code'];
     $confirmCode = $post['confirmCode'];
     if($code != $confirmCode) {
-        alert("The Code is wrong.");
+        alert("Kodenya salah. Padahal tinggal copas :v");
         return false;
     }
     $_SESSION['emailrenew'] = $_SESSION['email'];
     return true;
 }
 
-// function untuk menyamakan password
+// function untuk mengecek kesamaan password
 function checkPassword($post) {
     session_start();
     $password = $post['password'];
     $_SESSION['password'] = $password;
     $confirmPassword = $post['confirmPassword'];
     if($password !== $confirmPassword) {
-        alert('Different Password. Try again!');
+        alert('Passwordnya gak sama.');
         return false;
     }
     return true;
@@ -276,7 +268,7 @@ function renewPassword($post) {
     mysqli_query($conn, $query);
 
     if(mysqli_affected_rows($conn) <= 0) {
-        alert('We\'re sorry, we have some error. We really appreciate it if you are willing to report this bug');
+        alert('Error "k-01". Kami sangat menghargai jika kamu melaporkan bug ini');
         return false;
     }
 
@@ -300,21 +292,21 @@ function register($session) {
     mysqli_query($conn, $query);
 
     if(mysqli_affected_rows($conn) <= 0) {
-        alert('We\'re sorry, we have some error. We really appreciate it if you are willing to report this bug');
+        alert('Error "k-02". Kami sangat menghargai jika kamu melaporkan bug ini');
         return false;
     }
 
     // mengirim data lengkap nya ke email
-    sendEmail($email, "Account Information", "Username: <br>
+    sendEmail($email, "Informasi Akun", "Username: <br>
     $username <br>
     <br>
     Email: <br>
     $email <br>
     <br>
-    Full Name: <br>
+    Nama Lengkap: <br>
     $name <br>
     <br>
-    Nickname: <br>
+    Nama Panggilan: <br>
     $nickname");
 
     keepConn();
@@ -331,7 +323,7 @@ function register($session) {
         `value` INT NULL DEFAULT NULL , 
         PRIMARY KEY (`id`))";
     if(!mysqli_query($conn, $query)) {
-        alert("error cuy");
+        alert('Error "k-03". Kami sangat menghargai jika kamu melaporkan bug ini');
     }
 
     keptConn();
@@ -346,7 +338,7 @@ function register($session) {
 
 function verifyPassword($password, $confirmPassword) {
     if(!password_verify($password, $confirmPassword)) {
-        alert('Incorrect Password :)');
+        alert('Password Salah :(');
         return false;
     }
     return true;
@@ -363,7 +355,7 @@ function login($post) {
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
     session_abort();
     if(!$result) {
-        alert('Your username is not in our database. Please sign up first.');
+        alert('Username/Email mu belum terdaftar. Daftar dulu ya :)');
         return false;
     }
     
@@ -387,7 +379,7 @@ function forgetPassword($post) {
     $query = "SELECT password, email FROM account WHERE username = '$temp' OR email = '$temp'";
     $result = mysqli_fetch_assoc(mysqli_query($conn, $query));
     if(!$result) {
-        alert("Your username is not in our database. Please sign up first.");
+        alert("Username/Email mu belum terdaftar. Daftar dulu ya :)");
         return false;
     }
     $email = $result['email'];
@@ -403,7 +395,7 @@ function forgetPassword($post) {
     }
     $_SESSION['privateEmail'] = $email[0].$email[1].$censoredEmail.stristr($email, '@');
 
-    if(sendEmail($email, "Forget Password Code", "The Code: <b>$code</b>. We suggest you to write your new password somewhere this time.") == true) {
+    if(sendEmail($email, "Kode Lupa Password", "Kodenya: <b>$code</b>. Pakai yang gampang diingat aja kek tanggal lahir kalau emang pikun") == true) {
         return true;
     }
 }
@@ -422,11 +414,12 @@ function fetch($request, $table = 'account', $id = false) {
     return $result;
 }
 
+//function logout menghapus semua session
 function logout() {
     session_unset();
 }
 
-
+//function nama hari dalam bahasa Indonesia
 function dateMonth($date) {
     $month = $date[5].$date[6];
     $name = NULL;
@@ -468,130 +461,36 @@ function dateMonth($date) {
             $name = 'December';
             break;
         }
-        return $name;
-    }
-    
-    function dateYear($date) {
-        return $date[0].$date[1].$date[2].$date[3];
-    }
-
-    function showDate($date) {
-        $dateDate = dateDate($date);
-        $dateMonth = dateMonth($date);
-        $dateYear = dateYear($date);
-        if($dateDate[0] == '0') {
-            $dateDate = $dateDate[1];
-        }
-        echo $dateDate.' '.$dateMonth.' '.$dateYear;
-    }
-
-    function money($money) {
-        return number_format($money, 0, ',', '.');
-    }
-
-    function percentage($percentage) {
-        return number_format($percentage, 2, ',', '.');
-    }
-    
-    function totalIncome($db) {
-    global $conn;
-    $today = dateNow();
-    $query = "SELECT * FROM $db WHERE class='income'
-        AND MONTH(date) = MONTH(CURRENT_DATE()) 
-        AND YEAR(date) = YEAR(CURRENT_DATE())";
-    $values = query($query);
-    $total = 0;
-    foreach ($values as $value) {
-        $total += (int) $value['value'];
-    }
-    return $total;
+    return $name;
 }
 
-function totalSpending($db) {
-    global $conn;
-    $today = dateNow();
-    $query = "SELECT * FROM $db WHERE class='spending'
-        AND MONTH(date) = MONTH(CURRENT_DATE()) 
-        AND YEAR(date) = YEAR(CURRENT_DATE())";
-    $values = query($query);
-    $total = 0;
-    foreach ($values as $value) {
-        $total += (int) $value['value'];
-    }
-    return $total;
+//fungsi mengambil tahun dari suatu tanggal
+function dateYear($date) {
+    return $date[0].$date[1].$date[2].$date[3];
 }
 
-function additionalIncome($db) {
-    global $conn;
-    $today = dateNow();
-    $query = "SELECT * FROM $db WHERE class='income' AND category='additional' AND username='additional'
-        AND MONTH(date) = MONTH(CURRENT_DATE()) 
-        AND YEAR(date) = YEAR(CURRENT_DATE())";
-    $values = query($query);
-    $total = 0;
-    foreach ($values as $value) {
-        $total += (int) $value['value'];
+//fungsi menampilkan tanggal dalam format mm, $b yyyy
+function showDate($date) {
+    $dateDate = dateDate($date);
+    $dateMonth = dateMonth($date);
+    $dateYear = dateYear($date);
+    if($dateDate[0] == '0') {
+        $dateDate = $dateDate[1];
     }
-    return $total;
+    echo $dateDate.' '.$dateMonth.' '.$dateYear;
 }
 
-function routineIncome($db) {
-    global $conn;
-    $today = dateNow();
-    $query = "SELECT * FROM $db WHERE class='income' AND category='routine' AND username='routine'
-        AND MONTH(date) = MONTH(CURRENT_DATE()) 
-        AND YEAR(date) = YEAR(CURRENT_DATE())";
-    $values = query($query);
-    $total = 0;
-    foreach ($values as $value) {
-        $total += (int) $value['value'];
-    }
-    return $total;
+//funcgsi membuat titik setiap ribuan pada uang
+function money($money) {
+    return number_format($money, 0, ',', '.');
 }
 
-function additionalIncomeToday($db) {
-    global $conn;
-    $today = dateNow();
-    $dateDate = dateDate($today);
-    $query = "SELECT * FROM $db WHERE class='income' AND category='additional' AND username='additional'
-        AND MONTH(date) = MONTH(CURRENT_DATE()) 
-        AND YEAR(date) = YEAR(CURRENT_DATE())";
-    $values = query($query);
-    $total = 0;
-    foreach ($values as $value) {
-        $total += (int) $value['value'];
-    }
-    return $total;
+//fungsi membatasi digit di belakang koma
+function percentage($percentage) {
+    return number_format($percentage, 2, ',', '.');
 }
 
-function needsSpending($db) {
-    global $conn;
-    $today = dateNow();
-    $query = "SELECT * FROM $db WHERE class='spending' AND category='needs'
-        AND MONTH(date) = MONTH(CURRENT_DATE()) 
-        AND YEAR(date) = YEAR(CURRENT_DATE())";
-    $values = query($query);
-    $total = 0;
-    foreach ($values as $value) {
-        $total += (int) $value['value'];
-    }
-    return $total;
-}
-
-function prioritySpending($db) {
-    global $conn;
-    $today = dateNow();
-    $query = "SELECT * FROM $db WHERE class='spending' AND category='priority'
-        AND MONTH(date) = MONTH(CURRENT_DATE()) 
-        AND YEAR(date) = YEAR(CURRENT_DATE())";
-    $values = query($query);
-    $total = 0;
-    foreach ($values as $value) {
-        $total += (int) $value['value'];
-    }
-    return $total;
-}
-
+//fungsi untuk menjumlahkan nilai dari suatu class
 function listSpending($list, $db) {
     global $conn;
     $today = dateNow();
@@ -611,6 +510,97 @@ function listSpending($list, $db) {
     return $result;
 }
 
+//fungsi menghitung pendapatan total dengan parameter nama table user
+function totalIncome($db) {
+    global $conn;
+    $today = dateNow();
+    $query = "SELECT * FROM $db WHERE class='income'
+        AND MONTH(date) = MONTH(CURRENT_DATE()) 
+        AND YEAR(date) = YEAR(CURRENT_DATE())";
+    $values = query($query);
+    $total = 0;
+    foreach ($values as $value) {
+        $total += (int) $value['value'];
+    }
+    return $total;
+}
+
+//fungsi menghitung pengeluaran total dengan parameter nama table user
+function totalSpending($db) {
+    global $conn;
+    $today = dateNow();
+    $query = "SELECT * FROM $db WHERE class='spending'
+        AND MONTH(date) = MONTH(CURRENT_DATE()) 
+        AND YEAR(date) = YEAR(CURRENT_DATE())";
+    $values = query($query);
+    $total = 0;
+    foreach ($values as $value) {
+        $total += (int) $value['value'];
+    }
+    return $total;
+}
+
+//fungsi menghitung pendapatan tambahan dengan parameter nama table user
+function additionalIncome($db) {
+    global $conn;
+    $today = dateNow();
+    $query = "SELECT * FROM $db WHERE class='income' AND category='additional' AND username='additional'
+        AND MONTH(date) = MONTH(CURRENT_DATE()) 
+        AND YEAR(date) = YEAR(CURRENT_DATE())";
+    $values = query($query);
+    $total = 0;
+    foreach ($values as $value) {
+        $total += (int) $value['value'];
+    }
+    return $total;
+}
+
+//fungsi menghitung pendapatan rutin dengan parameter nama table user
+function routineIncome($db) {
+    global $conn;
+    $today = dateNow();
+    $query = "SELECT * FROM $db WHERE class='income' AND category='routine' AND username='routine'
+        AND MONTH(date) = MONTH(CURRENT_DATE()) 
+        AND YEAR(date) = YEAR(CURRENT_DATE())";
+    $values = query($query);
+    $total = 0;
+    foreach ($values as $value) {
+        $total += (int) $value['value'];
+    }
+    return $total;
+}
+
+//fungsi menghitung kebutuhan dengan parameter nama table user
+function needsSpending($db) {
+    global $conn;
+    $today = dateNow();
+    $query = "SELECT * FROM $db WHERE class='spending' AND category='needs'
+        AND MONTH(date) = MONTH(CURRENT_DATE()) 
+        AND YEAR(date) = YEAR(CURRENT_DATE())";
+    $values = query($query);
+    $total = 0;
+    foreach ($values as $value) {
+        $total += (int) $value['value'];
+    }
+    return $total;
+}
+
+//fungsi menghitung prioritas dengan parameter nama table user
+function prioritySpending($db) {
+    global $conn;
+    $today = dateNow();
+    $query = "SELECT * FROM $db WHERE class='spending' AND category='priority'
+        AND MONTH(date) = MONTH(CURRENT_DATE()) 
+        AND YEAR(date) = YEAR(CURRENT_DATE())";
+    $values = query($query);
+    $total = 0;
+    foreach ($values as $value) {
+        $total += (int) $value['value'];
+    }
+    return $total;
+}
+
+//fungsi menghitung keinginan dengan parameter nama table user
 function wantsSpending($db) {
     global $conn;
     $today = dateNow();
@@ -625,6 +615,7 @@ function wantsSpending($db) {
     return $total;
 }
 
+//fungsi menghitung pengeluaran harian dengan parameter nama table user
 function dailySpending($db) {
     global $conn;
     $query = "SELECT * FROM $db 
@@ -652,6 +643,7 @@ function dailySpending($db) {
     return round($result);
 }   
 
+//function mengambil tiap kategori
 function categoryList($identifier, $value) {
     global $conn;
     $query = "SELECT * FROM flow WHERE $identifier = '$value'";
@@ -659,6 +651,7 @@ function categoryList($identifier, $value) {
     return $result;
 }
 
+//function untuk mengambil detil
 function listItem($identifier, $value, $info) {
     $tempList = array();
     $tempCategories = categoryList($identifier, $value);
@@ -670,6 +663,7 @@ function listItem($identifier, $value, $info) {
     return $tempList;
 }
 
+//function untuk mengubah nama
 function changeName($post) {
     global $conn;
     $id = fetch('id');
@@ -677,12 +671,13 @@ function changeName($post) {
     $query = "UPDATE account SET name = '$name' WHERE id = $id";
     mysqli_query($conn, $query);
     if(mysqli_affected_rows($conn) <= 0) {
-        alert('Failed');
+        alert('Error "k-04". Kami sangat menghargai jika kamu melaporkan bug ini');
         return false;
     }
     return true;
 }
 
+//function untuk mengubah nama panggilan
 function changeNickname($post) {
     global $conn;
     $id = fetch('id');
@@ -690,12 +685,13 @@ function changeNickname($post) {
     $query = "UPDATE account SET nickname = '$nickname' WHERE id = $id";
     mysqli_query($conn, $query);
     if(mysqli_affected_rows($conn) <= 0) {
-        alert('Failed');
+        alert('Error "k-05". Kami sangat menghargai jika kamu melaporkan bug ini');
         return false;
     }
     return true;
 }
 
+//function untuk mengubah nama panggilan
 function changeUsername($post) {
     global $conn;
     $id = fetch('id');
@@ -704,7 +700,7 @@ function changeUsername($post) {
     $query = "UPDATE account SET username = '$username' WHERE id = $id";
     mysqli_query($conn, $query);
     if(mysqli_affected_rows($conn) <= 0) {
-        alert('Failed');
+        alert('Error "k-06". Kami sangat menghargai jika kamu melaporkan bug ini');
         return false;
     }
 
@@ -712,7 +708,7 @@ function changeUsername($post) {
     $query = "RENAME TABLE $oldTable TO $newTable";
     keepConn();
     if(!mysqli_query($conn, $query)){
-        alert('Failed');
+        alert('Error "k-07". Kami sangat menghargai jika kamu melaporkan bug ini');
         keptConn();
         return false;
     }
@@ -720,6 +716,7 @@ function changeUsername($post) {
     return true;
 }
 
+//function untuk mengubah bio
 function changeBio($post) {
     global $conn;
     $id = fetch('id');
@@ -727,11 +724,42 @@ function changeBio($post) {
     $query = "UPDATE account SET bio = '$bio' WHERE id = $id";
     mysqli_query($conn, $query);
     if(mysqli_affected_rows($conn) <= 0) {
+        alert('Error "k-08". Kami sangat menghargai jika kamu melaporkan bug ini');
         return false;
     }
     return true;
 }
 
+//function untuk mengganti password
+function changePassword($newPassword) {
+    global $conn;
+    $newPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+    $id = fetch('id');
+
+    $query = "UPDATE account SET password = '$newPassword' WHERE id = $id";
+    mysqli_query($conn, $query);
+    if(mysqli_affected_rows($conn) <= 0) {
+        alert('Error "k-09". Kami sangat menghargai jika kamu melaporkan bug ini');
+        return false;
+    }
+    return true;
+}
+
+//function untuk mengganti email
+function changeEmail($newEmail) {
+    global $conn;
+    $id = fetch('id');
+
+    $query = "UPDATE account SET email = '$newEmail' WHERE id = $id";
+    mysqli_query($conn, $query);
+    if(mysqli_affected_rows($conn) <= 0) {
+        alert('Error "k-10". Kami sangat menghargai jika kamu melaporkan bug ini');
+        return false;
+    }
+    return true;
+}
+
+//function untuk memasukkan transaksi
 function insertKeep($post) {
     global $conn;
     $date = $post['date'];
@@ -746,7 +774,7 @@ function insertKeep($post) {
     $category = $result['category'];
     $nominal = (int) $post['nominal'];
     if($nominal <= 0) {
-        alert('Invalid Nominal');
+        alert('Nominalnya gak valid');
         return false;
     }
     $name = $result['name'];
@@ -756,124 +784,46 @@ function insertKeep($post) {
     keepConn();
     mysqli_query($conn, $query);
     if(mysqli_affected_rows($conn) <= 0) {
-        alert('Failed');
+        alert('Error "k-11". Kami sangat menghargai jika kamu melaporkan bug ini');
         return false;
     }
     keptConn();
     return true;
 }
 
-function uploadPicture($files) {
-    global $conn;
-    global $directoryPath;
-    $id = fetch('id');
-    $maxSize = 1572864;
-    $maxSizeMB = $maxSize/(1024 * 1024);
-    $pictureName = $files['picture']['name'];
-    $pictureSize = $files['picture']['size'];
-    $pictureError = $files['picture']['error'];
-    //asal temp gambar
-    $pictureDir = $files['picture']['tmp_name'];
-    if($pictureError === 4) {
-        alert('Upload image first! :)');
-        return false;
-    }
-
-    $validPictureExt = ['jpg', 'jpeg', 'png', 'webp'];
-    $pictureExt = explode('.', $pictureName);
-    $pictureExt = strtolower(end($pictureExt));
-    alert("$pictureExt");
-
-    if(!in_array($pictureExt, $validPictureExt)) {
-        alert('Only upload jpg, jpeg, png, or webp');
-        return false;
-    }
-
-    if($pictureSize > $maxSize) {
-        alert("Your file is too big. Max size is $maxSizeMB");
-        return false;
-    }
-
-    $pictureName = fetch('username').'.'.$pictureExt;
-    //tujuan upload gambar
-    $picturePath = $directoryPath."src/img/profilepicture/".$pictureName;
-    if(file_exists($picturePath)){
-        unlink($picturePath);
-    }
-    if(!move_uploaded_file($pictureDir, $picturePath)) {
-        alert('Error Kept1, we have some error. We really appreciate it if you are willing to report this bug');
-        return false;
-    }
-    $query = "UPDATE account SET picture = '$pictureName' WHERE id = $id";
-    if(!mysqli_query($conn, $query)) {
-        alert('Error Kept2, we have some error. We really appreciate it if you are willing to report this bug');
-        return false;
-    }
-    return true;
-}
-
-function changePassword($newPassword) {
-    global $conn;
-    $newPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-    $id = fetch('id');
-
-    $query = "UPDATE account SET password = '$newPassword' WHERE id = $id";
-    mysqli_query($conn, $query);
-    if(mysqli_affected_rows($conn) <= 0) {
-        alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
-        return false;
-    }
-    return true;
-}
-
-function changeEmail($newEmail) {
-    global $conn;
-    $id = fetch('id');
-
-    $query = "UPDATE account SET email = '$newEmail' WHERE id = $id";
-    mysqli_query($conn, $query);
-    if(mysqli_affected_rows($conn) <= 0) {
-        alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
-        return false;
-    }
-    return true;
-}
-
+//function untuk mengganti rencana cash flow
 function updatePlan($needs, $wants, $saving) {
     global $conn;
     $id = fetch('id');
     
     $query = "UPDATE account SET needs = $needs WHERE id = $id";
-    mysqli_query($conn, $query);
-    if(mysqli_affected_rows($conn) <= 0) {
-        alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
+    if(mysqli_query($conn, $query)) {
+        alert('Error "k-12". Kami sangat menghargai jika kamu melaporkan bug ini');
         return false;
     }
     
     $query = "UPDATE account SET wants = $wants WHERE id = $id";
-    mysqli_query($conn, $query);
-    if(mysqli_affected_rows($conn) <= 0) {
-        alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
+    if(mysqli_query($conn, $query)) {
+        alert('Error "k-13". Kami sangat menghargai jika kamu melaporkan bug ini');
         return false;
     }
     
     $query = "UPDATE account SET saving = $saving WHERE id = $id";
-    mysqli_query($conn, $query);
-    if(mysqli_affected_rows($conn) <= 0) {
-        alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
+    if(mysqli_query($conn, $query)) {
+        alert('Error "k-14". Kami sangat menghargai jika kamu melaporkan bug ini');
         return false;
     }
     
     $query = "UPDATE account SET new = 0 WHERE id = $id";
-    mysqli_query($conn, $query);
-    if(mysqli_affected_rows($conn) <= 0) {
-        alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
+    if(mysqli_query($conn, $query)) {
+        alert('Error "k-15". Kami sangat menghargai jika kamu melaporkan bug ini');
         return false;
     }
     
     return true;
 }
 
+//fungsi menyapa di samping profil
 function greeting() {
     $time = date('H');
     if((int) $time >= 6 AND (int) $time < 12) {
@@ -888,6 +838,7 @@ function greeting() {
     return $greeting.', '.fetch('nickname');
 }
 
+//funsgi mengirim laporan
 function sendReport($type, $text) {
     global $conn;
     $username = fetch('username');

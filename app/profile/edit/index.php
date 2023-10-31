@@ -1,11 +1,5 @@
 <?php
 require "../../../functions.php";
-if(isset($_POST['submitpicture'])) {
-    if(uploadPicture($_FILES)) {
-        alert('Profile Picture is changed');
-    }
-}
-
 $id = fetch('id');
 $name = fetch('name');
 $nickname = fetch('nickname');
@@ -50,9 +44,10 @@ if(isset($_POST['submitbio'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../../src/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../../src/css/style.css">
     <link rel="shortcut icon" href="../../../src/img/icon.png" type="image/x-icon">
+    <link href="../../../src/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../src/css/style.css">
+    <link rel="stylesheet" href="../../../src/css/cropper.min.css">
     <title>EDIT PROFILE</title>
     <style>
         #profile-picture {
@@ -107,14 +102,47 @@ if(isset($_POST['submitbio'])) {
     <br>
     <a href="../">KEMBALI</a><br><br>
     <div>
-        <!-- <img src="https://drive.google.com/uc?id=14qoFeqx54p3mdI-nkMTpMqh_-JIpVIjJ" alt="Profile Picture"> -->
-        <a href="../../../src/img/profilepicture/<?php echo $picture ?>" target="_blank"><img src="../../../src/img/profilepicture/<?php echo $picture ?>" alt="Profile Picture" id="profile-picture"></a><br>
+        <div class="justify-content-start" id="upload-input"></div>
+        <div id="upload-result-container"></div>
+        <div id="uploaded-input"></div>
         <div id="profile-picture-change">
             <form action="" method="post" enctype="multipart/form-data">
-                <input type="file" id="profile-picture-input" name="picture"><br>
-                <button type="submit" id="submitpicture" name="submitpicture">Ubah Foto Profil</button>
+                <img src="../../../src/img/profilepicture/<?php echo fetch('picture'); ?>" alt="Profile Picture" class="border border-light rounded-circle" style="height: 100px;">
+                <br>
+                <label for="upload">Ubah Foto Profil</label><br>
+                <input type="file" id="upload" name="picture" accept=".jpg, .jpeg, .png, .webp"><br>
             </form>
         </div>            
+    </div>
+
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Potong Gambar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="close" class="close-button">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="img-container">
+                        <div class="row">
+                            <div class="col-md-8">  
+                                <!--  default image where we will set the src via jquery-->
+                                <img id="image">
+                            </div>
+                            <!-- <div class="col-md-4">
+                                <div class="preview"></div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close-button" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary" id="crop">Ubah</button>
+                </div>
+            </div>
+        </div>
     </div>
     <br>
     <div>
@@ -144,7 +172,82 @@ if(isset($_POST['submitbio'])) {
         <br>
         <a href="../private/password/">Ubah Password</a>
     </div>
-    <script src="script.js"></script>
     <script src="../../../src/script/bootstrap.bundle.min.js"></script>
+    <script src="../../../src/script/jquery-3.5.1.min.js"></script>  
+    <script src="../../../src/script/cropper.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        var bs_modal = $('#modal');
+        var image = document.getElementById('image');
+        var cropper,reader,file;
+
+
+        $("body").on("change", "#upload", function(e) {
+            var files = e.target.files;
+            // alert(e.target.type);
+            // console.log(files[0].type);
+            var done = function(url) {
+                image.src = url;
+                // console.log(url);
+                bs_modal.modal('show');
+            };
+
+            if (files && files.length > 0) {
+                file = files[0];
+
+                if (URL) {
+                    done(URL.createObjectURL(file));
+                } else if (FileReader) {
+                    reader = new FileReader();
+                    reader.onload = function(e) {
+                        done(reader.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+
+        bs_modal.on('shown.bs.modal', function() {
+            cropper = new Cropper(image, {
+                aspectRatio: 1,
+                viewMode: 1,
+                dragMode: 'none'
+            });
+        }).on('hidden.bs.modal', function() {
+            cropper.destroy();
+            cropper = null;
+        });
+
+        $(".close-button").click(function() {
+            bs_modal.modal('hide');
+        });
+
+        $("#crop").click(function() {
+            canvas = cropper.getCroppedCanvas({
+                width: 200,
+                height: 200,
+            });
+            canvas.toBlob(function(blob) {
+                url = URL.createObjectURL(blob);
+                var reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onloadend = function() {
+                    var base64data = reader.result;
+                    //alert(base64data);
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        url: "ajax/changephoto.php",
+                        data: {image: base64data},
+                        success: function(data) { 
+                            bs_modal.modal('hide');
+                            alert("Ubah Foto Profil Berhasil");
+                            window.location.reload(true);
+                        }
+                    });
+                };
+            });
+        });
+    </script>
 </body>
 </html>
