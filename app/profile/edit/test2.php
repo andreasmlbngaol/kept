@@ -1,10 +1,10 @@
 <?php
 require "../../../functions.php";
-if(isset($_POST['submitpicture'])) {
-    if(uploadPicture($_FILES)) {
-        alert('Profile Picture is changed');
-    }
-}
+// if(isset($_POST['submitpicture'])) {
+//     if(uploadPicture($_FILES)) {
+//         alert('Profile Picture is changed');
+//     }
+// }
 
 $id = fetch('id');
 $name = fetch('name');
