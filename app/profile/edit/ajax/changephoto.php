@@ -1,9 +1,11 @@
 <?php 
 require "../../../functions.php";
-$data = $_POST['image'];
-list($type, $data) = explode(';', $data);
-list(, $data)      = explode(',', $data);
-$data = base64_decode($data);
-$imageName = fetch('username').'.png';
-file_put_contents('upload/'.$imageName, $data);
+$folderPath = "../../../../src/img/profilepicture/";
+$image_parts = explode(";base64,", $_POST['image']);
+$image_type_aux = explode("image/", $image_parts[0]);
+$image_type = $image_type_aux[1];
+$image_base64 = base64_decode($image_parts[1]);
+$file = $folderPath . fetch('username') . '.png';
+file_put_contents($file, $image_base64);
+echo json_encode('Image Upload Successfully');
 ?>

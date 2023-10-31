@@ -13,6 +13,7 @@ $keptUsername = "root";
 $keptHost = "localhost";
 $keptdb = "keptdb";
 $keepdb = "keepdb";
+$directoryPath = "C:\\xampp\\htdocs\\kept\\";
 
 // connect dengan sql server
 $conn = mysqli_connect($keptHost, $keptUsername, $keptPassword, $keptdb);
@@ -764,25 +765,27 @@ function insertKeep($post) {
 
 function uploadPicture($files) {
     global $conn;
+    global $directoryPath;
     $id = fetch('id');
     $maxSize = 1572864;
     $maxSizeMB = $maxSize/(1024 * 1024);
     $pictureName = $files['picture']['name'];
     $pictureSize = $files['picture']['size'];
     $pictureError = $files['picture']['error'];
+    //asal temp gambar
     $pictureDir = $files['picture']['tmp_name'];
     if($pictureError === 4) {
         alert('Upload image first! :)');
         return false;
     }
 
-    $validPictureExt = ['jpg', 'jpeg', 'png'];
+    $validPictureExt = ['jpg', 'jpeg', 'png', 'webp'];
     $pictureExt = explode('.', $pictureName);
     $pictureExt = strtolower(end($pictureExt));
     alert("$pictureExt");
 
     if(!in_array($pictureExt, $validPictureExt)) {
-        alert('Only upload jpg, jpeg, or png');
+        alert('Only upload jpg, jpeg, png, or webp');
         return false;
     }
 
@@ -791,15 +794,19 @@ function uploadPicture($files) {
         return false;
     }
 
-    $pictureName = uniqid().'.'.$pictureExt;
-    if(!move_uploaded_file($pictureDir, '../../../src/img/profilepicture/'.$pictureName)) {
-        alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
+    $pictureName = fetch('username').'.'.$pictureExt;
+    //tujuan upload gambar
+    $picturePath = $directoryPath."src/img/profilepicture/".$pictureName;
+    if(file_exists($picturePath)){
+        unlink($picturePath);
+    }
+    if(!move_uploaded_file($pictureDir, $picturePath)) {
+        alert('Error Kept1, we have some error. We really appreciate it if you are willing to report this bug');
         return false;
     }
     $query = "UPDATE account SET picture = '$pictureName' WHERE id = $id";
-    mysqli_query($conn, $query);
-    if(mysqli_affected_rows($conn) <= 0) {
-        alert('Sorry, we have some error. We really appreciate it if you are willing to report this bug');
+    if(!mysqli_query($conn, $query)) {
+        alert('Error Kept2, we have some error. We really appreciate it if you are willing to report this bug');
         return false;
     }
     return true;
