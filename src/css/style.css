@@ -50,9 +50,10 @@
 
 body {
     /* background-image: linear-gradient(#15253f, #2c3d5b); */
-    background-image: url(../img/logo.png);
+    /* background-image: url(../img/logo.png); */
     background-color: #15253f;
-    background-position:top left;
+    /* background-position: top left; */ 
+    /* background-repeat: no-repeat; */
     /* height: 100vh;
     width: 100vw; */
     /* margin: 0 15px 0 15px !important; */
@@ -124,13 +125,6 @@ a:hover {
     /* border: 1pt solid white; */
     /* margin-bottom: 20pt; */
     /* vertical-align: middle; */
-}
-
-.home {
-    background-image: url(../img/logo.png);
-    background-color: #15253f;
-    background-position:top left;
-    /* background-repeat: no-repeat; */
 }
 
 .home-menu-item {
@@ -267,6 +261,25 @@ p.home-menu-item {
     font-size: 1.5em !important;
 }
 
+.app-value {
+    font-size: 2em !important;
+    line-height: 0.9;
+}
+
+.app-wallet {
+    font-size: 1.5em !important;
+    line-height: 0.9;
+}
+
+.app-a {
+    text-decoration: none;
+}
+
+.app-detail {
+    text-decoration: none;
+    font-size: 50% !important;
+}
+
 .kept-score {
     color: #E5C3A6 !important;
     font-size: 4em !important;
@@ -298,6 +311,15 @@ p.home-menu-item {
     width: 30% !important;
 }
 
+.app-container {
+    display: flex;
+    width: 70%;
+    /* height: 80vh; */
+    overflow: hidden;
+    /* border: #ffffff 1pt solid; */
+    flex-wrap: wrap !important;
+}
+
 .detail-container {
     display: flex;
     width: 70%;
@@ -316,6 +338,33 @@ p.home-menu-item {
     overflow: hidden;
     border: 1pt solid #E5C3A6;
     padding: 10px;
+}
+
+.app-item {
+    background-color: #7C81AD;
+    margin-left: var(--item-ms-me);
+    margin-right: var(--item-ms-me);
+    margin-top: var(--item-mt-mb);
+    margin-bottom: var(--item-mt-mb);
+    width: calc((96% - (var(--item-ms-me) * var(--item-per-line))) / var(--item-per-line));
+    /* overflow: hidden; */
+    /* border: 1pt solid #E5C3A6; */
+    padding: 10px;
+    height: 40vh;
+}
+
+.app-centered {
+    height: 75% ;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* border: 1pt solid black; */
+}
+
+.app-new {
+    font-size: 1.5vw !important;    
 }
 
 .chart {

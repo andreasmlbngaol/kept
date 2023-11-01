@@ -113,7 +113,7 @@ keptConn();
         <?php $i++; } ?>
     </table>
     <?php } else {?>
-    <h2>No history yet. Go to KEEP Menu to insert your flow!</h2>
+    <h2>Belum ada transaksi!</h2>
     <?php } ?>
     <br>
     <h2>Pengeluaran</h2>
@@ -152,7 +152,7 @@ keptConn();
         <?php $i++; } ?>
     </table>
     <?php } else {?>
-    <h2>No history yet. Go to KEEP Menu to insert your flow!</h2>
+    <h2>Belum ada transaksi!</h2>
     <?php } ?>
     <script src="../../src/script/bootstrap.bundle.min.js"></script>
     <script>

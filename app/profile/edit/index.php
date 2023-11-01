@@ -241,7 +241,7 @@ if(isset($_POST['submitbio'])) {
                         data: {image: base64data},
                         success: function(data) { 
                             bs_modal.modal('hide');
-                            alert("Ubah Foto Profil Berhasil");
+                            alert("Ubah Foto Profil Berhasil. Tekan \"Ctrl + F5\" untuk me refresh halaman");
                             window.location.reload(true);
                         }
                     });

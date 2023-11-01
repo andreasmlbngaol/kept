@@ -233,11 +233,11 @@ keptConn();
                     <?php for($i = 0; $i < count($priorityUsername); $i++) { ?>
                         <div>
                             <h3 class="text-decoration-underline mb-0"><?php echo $priorityName[$i] ?></h3>
-                            <?php if($prioritySpending != 0) { ?>
                             <p class="value fw-bolder mb-0">Rp. <?php echo money($priorityDetail[$i]) ?></p>
+                            <?php if($prioritySpending != 0) { ?>
                             <p><?php echo'('.percentage((($priorityDetail[$i]/$prioritySpending) * $prioritySpendingPercentage)).' % dari Total Pendapatan)' ?></p>
                             <?php } else {?>
-                            <p class="value fw-bolder mb-0">Rp. <?php echo money($priorityDetail[$i]).' (0 % dari Total Pendapatan)' ?></p>
+                            <p>Rp. <?php echo money($priorityDetail[$i]).' (0 % dari Total Pendapatan)' ?></p>
                             <?php } ?>
                         </div>
                         <?php } ?>
@@ -315,7 +315,7 @@ keptConn();
                 $keptScore -= 10;
             }
         } ?>
-            <h1 class="kept-score text-decoration-underline mb-5"><?php echo $keptScore ?></h1>
+            <h1 class="kept-score mb-5"><?php echo $keptScore ?></h1>
         <?php if($keptScore === 100) { ?>
             <h2>Keuanganmu sesuai perencanaan</h2>
         <?php } ?>

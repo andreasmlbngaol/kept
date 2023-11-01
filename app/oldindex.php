@@ -71,6 +71,18 @@ if($totalIncome != 0) {
         $keptScore -= 10;
     }
 }
+
+$dayName = dayName($today);
+$time = date('H');
+if((int) $time >= 6 AND (int) $time < 12) {
+    $greeting = 'Selamat Pagi';
+} else if((int) $time >= 12 AND (int) $time < 15) {
+    $greeting = 'Selamat Siang';
+} else if((int) $time >= 15 AND (int) $time < 18) {
+    $greeting = 'Selamat Sore';
+} else {
+    $greeting = 'Selamat Malam';
+}
 ?>
 
 <!DOCTYPE html>
@@ -127,70 +139,47 @@ if($totalIncome != 0) {
 			</div>
 		</div>
     </nav>
-    <?php if ($totalIncome != 0) { ?>
-    <div class="page mb-0">
-        <div class="container app-container p-0">
-            <div class="app-item border rounded text-center">
-                <h2 class="color-keptskin">Kept Score</h2>
-                <hr>
-                <div class="app-centered">
-                    <p class="app-value"><?= $keptScore ?><a class="app-a" href="detail/#kept-score">?</a></p>
-                </div>
-            </div>
-            <div class="app-item border rounded text-center">
-                <h2 class="color-keptskin">Pendapatan</h2>
-                <hr>
-                <div class="app-centered">
-                    <p class="app-value">Rp. <?php echo money($totalIncome) ?> <a href="detail/" class="app-detail">Detail</a></p>
-                    
-                </div>
-            </div>
-            <div class="app-item border rounded text-center">
-                <h2 class="color-keptskin">Pengeluaran</h2>
-                <hr>
-                <div class="app-centered">
-                    <p class="app-value">Rp. <?php echo money($totalSpending) ?> <a href="detail/" class="app-detail">Detail</a></p>
-                    
-                </div>
-            </div>
+    <div>
+        <div>
+            <h2>Kept Score mu:</h2>
+            <h2><?php echo $keptScore ?><a href="detail/#score" style="text-decoration: none"> ?</a></h2>
         </div>
-        <div class="container app-container p-0">
-            <div class="app-item border rounded text-center">
-                <h2 class="color-keptskin">Keep</h2>
-                <hr>
-                <div class="app-centered">
-                    <p class="app-value"><a href="keep/" class="app-a">Masukkan Transaksi</a></p>
-                </div>
-            </div>
-            <div class="app-item border rounded text-center">
-                <h2 class="color-keptskin">Dompetmu</h2>
-                <hr>
-                <div class="app-centered">
-                <p class="app-wallet">Kebutuhan:</p>
-                <p class="app-wallet">Rp. <?php echo money($needsWallet) ?></p>
-                <p class="app-wallet">Keinginan:</p>
-                <p class="app-wallet">Rp. <?php echo money($wantsWallet) ?></p>
-                <p class="app-wallet">Tabungan:</p>
-                <p class="app-wallet">Rp. <?php echo money($savingWallet) ?></p>
-                <!-- <p class="app-value">Rp.100.000 <a href="detail/" class="app-detail">Detail</a></p> -->
-            </div>
-            </div>
-            <div class="app-item border rounded text-center">
-                <h2 class="color-keptskin">Riwayat</h2>
-                <hr>
-                <div class="app-centered">
-                    <p class="app-value"><a href="history/" class="app-a">Lihat Transaksi</a></p>
-                    
-                </div>
-            </div>
+        <br>
+        <div>
+            <h2>Total Pendapatan:</h2>
+            <h2>Rp. <?php echo money($totalIncome) ?></h2>
+            <a href="detail/">Lihat Detail</a>
+        </div>
+        <br>
+        <div>
+            <h2>Total Pengeluaran:</h2>
+            <h2>Rp. <?php echo money($totalSpending) ?></h2>
+            <a href="detail/">Lihat Detail</a>
+        </div>
+        <br>
+        <div>
+            <h2>Rata-rata Pengeluaran Harian:</h2>
+            <h2>Rp. <?php echo money($dailySpending) ?></h2>
+            <a href="detail/">Lihat Detail</a>
+        </div>
+        <br>
+        <div>
+            <h2>Dompetmu:</h2>
+            <h2>Rp. <?php echo money($saving) ?></h2>
+            <a href="detail/">Lihat Detail</a><br>
+            <br>
+            <h3>Sisa Uang untuk Kebutuhan:</h3>
+            <h3>Rp <?php echo money($needsWallet) ?></h3>
+            <br>
+            <h3>Sisa Uang untuk Keinginan:</h3>
+            <h3>Rp <?php echo money($wantsWallet) ?></h3>
+            <br>
+            <h3>Sisa Uang untuk Tabungan:</h3>
+            <h3>Rp <?php echo money($savingWallet) ?></h3>
         </div>
     </div>
-<?php }  else {?>
-    <div class="d-flex justify-content-center align-items-center" style="height: 80vh; font-size: 5em; flex-direction: column;">
-        <h1>Selamat Datang di Kept!</h1>
-        <a href="keep/" class="app-new">Masukkan Transaksi Pertamamu</a>
+    <div style="height: 25vh">
     </div>
-<?php } ?>
-    <script src="../src/script/bootstrap.bundle.min.js"></script> 
+    <script src="../src/script/bootstrap.bundle.min.js"></script>
 </body>
-</html>   
+</html>

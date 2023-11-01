@@ -27,7 +27,6 @@ if(strtolower($directoryPath[0]) !== '/') { //untuk database lokal
     $keptdb = "if0_34962067_keptdb";
     $keepdb = "if0_34962067_keepdb";
 }
-
 //connect dengan database sql server
 $conn = mysqli_connect($keptHost, $keptUsername, $keptPassword, $keptdb);
 
@@ -235,6 +234,8 @@ function sendEmail($to, $subject, $textHTML, $textNotHTML = "") {
 function checkCode($post) {
     session_start();
     $code = $_SESSION['code'];
+    alert($code);
+    session_abort();
     $confirmCode = $post['confirmCode'];
     if($code != $confirmCode) {
         alert("Kodenya salah. Padahal tinggal copas :v");

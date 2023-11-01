@@ -1,39 +1,13 @@
 <?php
 require "functions.php";
-session_start();
-if(isset($_SESSION['loginId'])) {
-    jumpTo("app/");
-}
+if(isset($_POST['recordSize'])) {
+    $height = $_POST['height'];
+    $width = $_POST['width'];
+    if($width <= $height) {
+        echo ("Miringkan HP anda dan Reload halaman");
+        die;
+    } else {
 ?>
-
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=1024">
-    <link rel="stylesheet" href="src/css/bootstrap.min.css">
-    <link rel="stylesheet" href="src/css/style.css">
-    <link rel="shortcut icon" href="src/img/icon.png" type="image/x-icon">
-    <title>kept</title>
-    <script src="<?php $directoryPath?>src/script/jquery-3.5.1.min.js"></script>
-    <script>
-        $(document).ready( function() {
-            var height = $(window).height();
-            var width = $(window).width();
-            $.ajax({
-                url: 'body.php',
-                type: 'post',
-                data: { 'width' : width, 'height' : height, 'recordSize' : 'true' },
-                success: function(response) {
-                    $("body").html(response);
-                }
-            });
-        });
-    </script>
-</head>
-</head>
-<body class="ms-3 home">
     <nav class="navbar sticky-top navbar-expand-lg bg-keptblue mb-0">
         <div class="container-fluid">
             <a class="navbar-brand bg-keptskin nav-link rounded color-keptskin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -69,5 +43,5 @@ if(isset($_SESSION['loginId'])) {
         </div>
     </div>
     <script src="src/script/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<?php }
+} ?>

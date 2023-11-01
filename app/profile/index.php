@@ -95,7 +95,7 @@ $keptDay = totalDay(dateNow(), $registerDate) + 1;
     <br>
     <div id="info">
         <!-- <img src="https://drive.google.com/uc?id=14qoFeqx54p3mdI-nkMTpMqh_-JIpVIjJ" alt="Profile Picture"> -->
-        <a href="../../src/img/profilepicture/<?php echo $picture ?>" target="_blank"><img src="../../src/img/profilepicture/<?php echo $picture ?>" alt="Profile Picture" id="profile-picture"></a>
+        <a href="../../src/img/profilepicture/<?php echo $picture ?>" target="_blank"><img class="border rounded-circle" src="../../src/img/profilepicture/<?php echo $picture ?>" alt="Profile Picture" id="profile-picture"></a>
         <div class="info-item"  title="Urutan Pendaftaran kamu adalah <?php echo $id ?>">
             <h4 class="info-item-value"><?php echo $id ?></h4>
             <p>User ID</p>
