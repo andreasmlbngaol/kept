@@ -7,10 +7,10 @@ if(isset($_POST['submit'])) {
     $confirmPassword = $_POST['confirmPassword'];
     if(verifyPassword($oldPassword, $truePassword)) {
         if($newPassword !== $confirmPassword){
-            alert('Password is not matching');
+            alert('Password nggak sama');
         } else {
             if(changePassword($newPassword)) {
-                alert('Password is changed');
+                alert('Password berhasil diubah');
                 jumpTo('../../edit/');
             }
         }
@@ -27,7 +27,7 @@ if(isset($_POST['submit'])) {
     <link rel="stylesheet" href="../../../../src/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../../src/css/style.css">
     <link rel="shortcut icon" href="../../../../src/img/icon.png" type="image/x-icon">
-    <title>CHANGE PASSWORD</title>
+    <title>UBAH PASSWORD</title>
 </head>
 <body class="ms-3">
     <nav class="navbar sticky-top navbar-expand-lg bg-keptblue mb-0">
@@ -49,7 +49,7 @@ if(isset($_POST['submit'])) {
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="navbar-nav me-auto">
-                    <a class="nav-link color-keptskin fw-bold" href="../../../help/">FAQ</a>
+                    <a class="nav-link color-keptskin fw-bold" href="../../../help/">Bantuan</a>
 					<a class="nav-link color-keptskin fw-bold" href="../../../report/">Lapor</a>
 					<!-- <a class="nav-link color-keptskin" href="history/">Riwayat</a> -->
                     <a class="nav-link color-white fw-light"><?php echo dayName(dateNow()).', '; showDate(dateNow())?></a>
@@ -62,7 +62,7 @@ if(isset($_POST['submit'])) {
                         </button>
 						<ul class="dropdown-menu dropdown-menu-end bg-keptskin">
                             <li><a class="dropdown-item " href="../../../profile/">Profil</a></li>
-                            <li><a class="dropdown-item" href="../../../profile/private/">Pengaturan Privasi</a></li>
+                            <li><a class="dropdown-item" href="../../../plan/">Ubah Rencana</a></li>
 							<!-- <li><a class="dropdown-item" href="">Another action</a></li> -->
 							<li><hr class="dropdown-divider"></li>
 							<li><a href="../../../logout.php" class="dropdown-item color-keptblue">Keluar</a></li>

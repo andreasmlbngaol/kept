@@ -82,9 +82,9 @@ if($totalIncome != 0) {
     <link rel="shortcut icon" href="../src/img/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="../src/css/bootstrap.min.css">
     <link rel="stylesheet" href="../src/css/style.css">
-    <title>Home</title>
+    <title>KEPT</title>
 </head>
-<body class="ms-3">
+<body class="ms-3 me-3">
     <nav class="navbar sticky-top navbar-expand-lg bg-keptblue mb-0">
         <div class="container-fluid">
             <div class="navbar-item dropdown">
@@ -117,7 +117,7 @@ if($totalIncome != 0) {
                         </button>
 						<ul class="dropdown-menu dropdown-menu-end bg-keptskin">
                             <li><a class="dropdown-item " href="profile/">Profil</a></li>
-                            <li><a class="dropdown-item" href="profile/private/">Pengaturan Privasi</a></li>
+                            <li><a class="dropdown-item" href="plan/">Ubah Rencana</a></li>
 							<!-- <li><a class="dropdown-item" href="">Another action</a></li> -->
 							<li><hr class="dropdown-divider"></li>
 							<li><a href="logout.php" class="dropdown-item color-keptblue">Keluar</a></li>

@@ -8,7 +8,6 @@ if(isset($_POST['submit'])) {
         $_SESSION['email'] = $email;
         $code = strval(rand(10000, 99999));
         $_SESSION['code'] = $code;
-        alert($_SESSION['email']);
         session_abort();
         if(sendEmail($email, "Kode Verifikasi", codeTextHTML($code))) {
             jumpTo("codeverification/");
@@ -26,7 +25,7 @@ if(isset($_POST['submit'])) {
     <link rel="stylesheet" href="../../../../src/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../../src/css/style.css">
     <link rel="shortcut icon" href="../../../../src/img/icon.png" type="image/x-icon">
-    <title>CHANGE EMAIL</title>
+    <title>UBAH EMAIL</title>
 </head>
 <body class="ms-3">
     <nav class="navbar sticky-top navbar-expand-lg bg-keptblue mb-0">
@@ -48,7 +47,7 @@ if(isset($_POST['submit'])) {
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="navbar-nav me-auto">
-                    <a class="nav-link color-keptskin fw-bold" href="../../../help/">FAQ</a>
+                    <a class="nav-link color-keptskin fw-bold" href="../../../help/">Bantuan</a>
 					<a class="nav-link color-keptskin fw-bold" href="../../../report/">Lapor</a>
 					<!-- <a class="nav-link color-keptskin" href="history/">Riwayat</a> -->
                     <a class="nav-link color-white fw-light"><?php echo dayName(dateNow()).', '; showDate(dateNow())?></a>
@@ -61,7 +60,7 @@ if(isset($_POST['submit'])) {
                         </button>
 						<ul class="dropdown-menu dropdown-menu-end bg-keptskin">
                             <li><a class="dropdown-item " href="../../../profile/">Profil</a></li>
-                            <li><a class="dropdown-item" href="../../../profile/private/">Pengaturan Privasi</a></li>
+                            <li><a class="dropdown-item" href="../../../plan/">Ubah Rencana</a></li>
 							<!-- <li><a class="dropdown-item" href="">Another action</a></li> -->
 							<li><hr class="dropdown-divider"></li>
 							<li><a href="../../../logout.php" class="dropdown-item color-keptblue">Keluar</a></li>

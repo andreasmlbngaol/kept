@@ -33,7 +33,7 @@ if(isset($_SESSION['loginId'])) {
     </script>
 </head>
 </head>
-<body class="ms-3 home">
+<body class="ms-3" id="home">
     <nav class="navbar sticky-top navbar-expand-lg bg-keptblue mb-0">
         <div class="container-fluid">
             <a class="navbar-brand bg-keptskin nav-link rounded color-keptskin" role="button" data-bs-toggle="dropdown" aria-expanded="false">

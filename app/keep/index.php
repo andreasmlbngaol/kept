@@ -6,7 +6,7 @@ if(fetch('id') == NULL) {
 }
 if(isset($_POST['submit'])) {
     if(insertKeep($_POST)) {
-        alert('Success');
+        alert('Berhasil');
     }
 }
 ?>
@@ -26,7 +26,7 @@ if(isset($_POST['submit'])) {
         }
     </style>
 </head>
-<body class="ms-3">
+<body class="ms-3 me-3 text-center">
     <nav class="navbar sticky-top navbar-expand-lg bg-keptblue mb-0">
         <div class="container-fluid">
             <div class="navbar-item dropdown">
@@ -46,8 +46,8 @@ if(isset($_POST['submit'])) {
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="navbar-nav me-auto">
-                    <a class="nav-link color-keptskin fw-bold" href="../">FAQ</a>
-					<a class="nav-link color-keptskin fw-bold" href="../">Lapor</a>
+                    <a class="nav-link color-keptskin fw-bold" href="../help/">Bantuan</a>
+					<a class="nav-link color-keptskin fw-bold" href="../report/">Lapor</a>
 					<!-- <a class="nav-link color-keptskin" href="history/">Riwayat</a> -->
                     <a class="nav-link color-white fw-light"><?php echo dayName(dateNow()).', '; showDate(dateNow())?></a>
                 </div>
@@ -59,7 +59,7 @@ if(isset($_POST['submit'])) {
                         </button>
 						<ul class="dropdown-menu dropdown-menu-end bg-keptskin">
                             <li><a class="dropdown-item " href="../profile/">Profil</a></li>
-                            <li><a class="dropdown-item" href="../profile/private/">Pengaturan Privasi</a></li>
+                            <li><a class="dropdown-item" href="../plan/">Ubah Rencana</a></li>
 							<!-- <li><a class="dropdown-item" href="">Another action</a></li> -->
 							<li><hr class="dropdown-divider"></li>
 							<li><a href="../logout.php" class="dropdown-item color-keptblue">Keluar</a></li>
@@ -69,41 +69,45 @@ if(isset($_POST['submit'])) {
 			</div>
 		</div>
     </nav>
-    <div id="keep">
-        <h1 class="w-100">Keep</h1>
-        <form action="" method="post" class="w-100">
-            <div class="input" id="input-date">
-                <label for="date">Tanggal:</label><br>
-                <input type="date" name="date" id="date" value="<?php echo $today?>" required>
-            </div>
+    <div id="keep" class="mt-4 d-flex flex-wrap justify-content-center align-items-center">
+        <div class="d-flex justify-content-center flex-wrap">
+            <h1 class="text-decoration-underline w-100">Keep</h1>
+            <div>
+                <form action="" method="post">
+                    <div class="input" id="input-date">
+                        <label for="date">Tanggal:</label><br>
+                        <input type="date" name="date" id="date" class="text-center keep-input" value="<?php echo $today?>" required>
+                    </div>
 
-            <div class="input">
-                <label for="input-isincome">Tipe:</label><br>
-                <select name="input-isincome" id="input-isincome" required>
-                    <option value="" selected>Pilih</option>
-                    <option value="true">Pendapatan</option>
-                    <option value="false">Pengeluaran</option>
-                </select>
-            </div>
+                    <div class="input">
+                        <label for="input-isincome">Tipe:</label><br>
+                        <select name="input-isincome" id="input-isincome" class="text-center keep-input" required>
+                            <option value="" selected>Pilih</option>
+                            <option value="true">Pendapatan</option>
+                            <option value="false">Pengeluaran</option>
+                        </select>
+                    </div>
 
-            <div class="input">
-                <label for="input-class">Kategori:</label><br>
-                <select name="input-class" id="input-class" required>
-                    <option value="" selected>Pilih</option>
-                </select>
-            </div>
+                    <div class="input">
+                        <label for="input-class">Kategori:</label><br>
+                        <select name="input-class" id="input-class" class="text-center keep-input" required>
+                            <option value="" selected>Pilih</option>
+                        </select>
+                    </div>
 
-            <div class="input" id="input-type">
-                <label for="nominal">Jumlah (Rp.):</label><br>
-                <input type="number" name="nominal" id="nominal" required>
+                    <div class="input" id="input-type">
+                        <label for="nominal">Jumlah (Rp.):</label><br>
+                        <input type="number" name="nominal" id="nominal" class="text-center keep-input" required>
+                    </div>
+                    
+                    <div class="input mb-3" id="input-desc">
+                        <label for="desc">Komentar:</label><br>
+                        <input type="text" name="desc" id="desc" autocomplete="off" class="text-center keep-input" required>
+                    </div>
+                    <button class="keep-submit rounded-pill p-2" type="submit" id="submit" name="submit">KEEP</button>
+                </form>
             </div>
-            
-            <div class="input" id="input-desc">
-                <label for="desc">Komentar:</label><br>
-                <input type="text" name="desc" id="desc" autocomplete="off" required>
-            </div>
-            <button type="submit" id="submit" name="submit">KEEP</button>
-        </form>
+        </div>
     </div>
     <script src="script.js"></script>
     <script src="../../src/script/bootstrap.bundle.min.js"></script>

@@ -62,8 +62,8 @@ keptConn();
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="navbar-nav me-auto">
-                    <a class="nav-link color-keptskin fw-bold" href="../">FAQ</a>
-					<a class="nav-link color-keptskin fw-bold" href="../">Lapor</a>
+                    <a class="nav-link color-keptskin fw-bold" href="../help/">Bantuan</a>
+					<a class="nav-link color-keptskin fw-bold" href="../report/">Lapor</a>
 					<!-- <a class="nav-link color-keptskin" href="history/">Riwayat</a> -->
                     <a class="nav-link color-white fw-light"><?php echo dayName(dateNow()).', '; showDate(dateNow())?></a>
                 </div>
@@ -75,7 +75,7 @@ keptConn();
                         </button>
 						<ul class="dropdown-menu dropdown-menu-end bg-keptskin">
                             <li><a class="dropdown-item " href="../profile/">Profil</a></li>
-                            <li><a class="dropdown-item" href="../profile/private/">Pengaturan Privasi</a></li>
+                            <li><a class="dropdown-item" href="../plan/">Ubah Rencana</a></li>
 							<!-- <li><a class="dropdown-item" href="">Another action</a></li> -->
 							<li><hr class="dropdown-divider"></li>
 							<li><a href="../logout.php" class="dropdown-item color-keptblue">Keluar</a></li>
@@ -85,7 +85,7 @@ keptConn();
 			</div>
 		</div>
     </nav>
-    <h1>Riwayat</h1>
+    <h1 class="text-center text-decoration-underline">Riwayat</h1>
     <br>
     <h2>Pendapatan</h2>
     <?php if($income != NULL) { ?>

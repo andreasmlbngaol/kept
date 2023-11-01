@@ -48,7 +48,7 @@ if(isset($_POST['submitbio'])) {
     <link href="../../../src/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../../src/css/style.css">
     <link rel="stylesheet" href="../../../src/css/cropper.min.css">
-    <title>EDIT PROFILE</title>
+    <title>SUNTING PROFIL</title>
     <style>
         #profile-picture {
             height: 100px;
@@ -75,8 +75,8 @@ if(isset($_POST['submitbio'])) {
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="navbar-nav me-auto">
-                    <a class="nav-link color-keptskin fw-bold" href="../../">FAQ</a>
-					<a class="nav-link color-keptskin fw-bold" href="../../">Lapor</a>
+                    <a class="nav-link color-keptskin fw-bold" href="../../help/">Bantuan</a>
+					<a class="nav-link color-keptskin fw-bold" href="../../report/">Lapor</a>
 					<!-- <a class="nav-link color-keptskin" href="history/">Riwayat</a> -->
                     <a class="nav-link color-white fw-light"><?php echo dayName(dateNow()).', '; showDate(dateNow())?></a>
                 </div>
@@ -88,7 +88,7 @@ if(isset($_POST['submitbio'])) {
                         </button>
 						<ul class="dropdown-menu dropdown-menu-end bg-keptskin">
                             <li><a class="dropdown-item " href="../../profile/">Profil</a></li>
-                            <li><a class="dropdown-item" href="../../profile/private/">Pengaturan Privasi</a></li>
+                            <li><a class="dropdown-item" href="../../plan/">Ubah Rencana</a></li>
 							<!-- <li><a class="dropdown-item" href="">Another action</a></li> -->
 							<li><hr class="dropdown-divider"></li>
 							<li><a href="../../logout.php" class="dropdown-item color-keptblue">Keluar</a></li>
@@ -109,7 +109,7 @@ if(isset($_POST['submitbio'])) {
             <form action="" method="post" enctype="multipart/form-data">
                 <img src="../../../src/img/profilepicture/<?php echo fetch('picture'); ?>" alt="Profile Picture" class="border border-light rounded-circle" style="height: 100px;">
                 <br>
-                <label for="upload">Ubah Foto Profil</label><br>
+                <label for="upload" role="button" id="upload-button">Ubah Foto Profil</label><br>
                 <input type="file" id="upload" name="picture" accept=".jpg, .jpeg, .png, .webp"><br>
             </form>
         </div>            
@@ -224,8 +224,8 @@ if(isset($_POST['submitbio'])) {
 
         $("#crop").click(function() {
             canvas = cropper.getCroppedCanvas({
-                width: 200,
-                height: 200,
+                width: 300,
+                height: 300,
             });
             canvas.toBlob(function(blob) {
                 url = URL.createObjectURL(blob);

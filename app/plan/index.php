@@ -1,6 +1,47 @@
 <?php
 require "../../functions.php";
-$reports = getAnsweredReport();
+$changed = fetch('changed');
+
+if($changed != 0) {
+    alert('Rencanamu gak bisa diubah sekarang. Ubah bulan depan ya :P');
+    jumpTo('../');
+}
+
+if(isset($_POST['submit'])) {
+    if($_POST['newPlan'] == "70") {
+        $needs = 70;
+        $wants = 20;
+        $saving = 10;
+    } else if($_POST['newPlan'] == "50") {
+        $needs = 50;
+        $wants = 30;
+        $saving = 20;
+    } else {
+        $needs = $_POST['needs'];
+        $wants = $_POST['wants'];
+        $saving = $_POST['saving'];
+    }
+    if(($needs + $wants + $saving) !== 100){
+        alert('Jumlahnya harus 100%. Jangan sampai ada dana ghoib');
+    } else if($needs < 45) {
+        alert('Batas minimum untuk kebutuhan adalah 45%');
+    } else if($needs > 85) {
+        alert('Batas maksimum untuk kebutuhan adalah 85%');
+    } else if($wants < 10) {
+        alert('Batas minimum untuk keinginan adalah 10%. Jangan lupa healing');
+    } else if($wants > 45) {
+        alert('Batas maksimum untuk keinginan adalah 45%. Kurangi healingnya');
+    } else if($saving < 5) {
+        alert('Batas minimum untuk tabungan adalah 5%');
+    } else {
+        if(updatePlan($needs, $wants, $saving)){
+            if(changedPlan()) {
+                alert('Rencanamu sudah dibuat. Kamu bisa mengubah rencanamu lagi bulan depan!');
+                jumpTo('../');
+            }
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -10,9 +51,9 @@ $reports = getAnsweredReport();
     <link rel="shortcut icon" href="../../src/img/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="../../src/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../src/css/style.css">
-    <title>BANTUAN</title>
+    <title>RENCANA</title>
 </head>
-<body class="ms-3 me-3">
+<body class="ms-3 me-3 text-center">
     <nav class="navbar sticky-top navbar-expand-lg bg-keptblue mb-0">
         <div class="container-fluid">
             <div class="navbar-item dropdown">
@@ -31,7 +72,7 @@ $reports = getAnsweredReport();
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="navbar-nav me-auto">
-                    <a class="nav-link color-keptskin fw-bold active" href="">Bantuan</a>
+                    <a class="nav-link color-keptskin fw-bold" href="">Bantuan</a>
 					<a class="nav-link color-keptskin fw-bold" href="../report/">Lapor</a>
                     <a class="nav-link color-white fw-light"><?php echo dayName(dateNow()).', '; showDate(dateNow())?></a>
                 </div>
@@ -53,15 +94,21 @@ $reports = getAnsweredReport();
 			</div>
 		</div>
     </nav>
-    <div class="help-body ms-auto me-auto">
-        <h1 class="text-center text-decoration-underline">Bantuan</h1>
-        <?php foreach($reports as $report) { ?>
-            <div class="border mb-3">
-                <p class="m-0">dari: <b class="text-warning text-decoration-underline"><?php echo $report['username'] ?></b></p>
-                <p class="m-0"><b class="text-<?php echo reportColor($report['type']) ?>"><?php echo "(".reportType($report['type']).")" ?></b> <?php echo $report['text'] ?></p>
-                <p class="m-0"><b class="color-keptskin"><?php echo "(Jawab)" ?></b> <?php echo $report['answer'] ?> </p>
-            </div>
-        <?php } ?>
-    </div>
+    <h1 class="text-center text-decoration-underline">Ubah Rencana</h1>
+    <form action="" method="post">
+        <div class="new">
+            <label for="new-plan">Rencanamu</label><br>
+            <select name="newPlan" id="new-plan" required>
+                <option value="70" selected>70 : 20 : 10</option>
+                <option value="50">50 : 30 : 20</option>
+                <option value="custom">Custom</option>
+            </select>
+        </div><br>
+        <div id="new-plan-custom">
+            
+        </div>
+        <button type="submit" name="submit" id="submit">ENTER</button>
+    </form>
+    <script src="script.js"></script>
     <script src="../../src/script/bootstrap.bundle.min.js"></script>
 </body>

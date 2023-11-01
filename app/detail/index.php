@@ -87,7 +87,7 @@ keptConn();
     <link rel="stylesheet" href="https://unpkg.com/@adminkit/core@latest/dist/css/app.css">
     <link rel="stylesheet" href="../../src/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../src/css/style.css">
-    <title>Detail</title>
+    <title>DETAIL</title>
 </head>
 <body class="ms-3 me-3" id="page-container">
     <nav class="navbar sticky-top navbar-expand-lg bg-keptblue mb-0">
@@ -109,8 +109,8 @@ keptConn();
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="navbar-nav me-auto">
-                    <a class="nav-link color-keptskin fw-bold" href="../">Bantuan</a>
-					<a class="nav-link color-keptskin fw-bold" href="../">Lapor</a>
+                    <a class="nav-link color-keptskin fw-bold" href="../help/">Bantuan</a>
+					<a class="nav-link color-keptskin fw-bold" href="../report/">Lapor</a>
 					<!-- <a class="nav-link color-keptskin" href="history/">Riwayat</a> -->
                     <a class="nav-link color-white fw-light"><?php echo dayName(dateNow()).', '; showDate(dateNow())?></a>
                 </div>
@@ -122,7 +122,7 @@ keptConn();
                         </button>
 						<ul class="dropdown-menu dropdown-menu-end bg-keptskin">
                             <li><a class="dropdown-item " href="../profile/">Profil</a></li>
-                            <li><a class="dropdown-item" href="../profile/private/">Pengaturan Privasi</a></li>
+                            <li><a class="dropdown-item" href="../plan/">Ubah Rencana</a></li>
 							<!-- <li><a class="dropdown-item" href="">Another action</a></li> -->
 							<li><hr class="dropdown-divider"></li>
 							<li><a href="../logout.php" class="dropdown-item color-keptblue">Keluar</a></li>

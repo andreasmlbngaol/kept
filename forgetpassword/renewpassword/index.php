@@ -23,9 +23,9 @@ if(isset($_POST['submit'])) {
     <link rel="shortcut icon" href="../../src/img/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="../../src/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../src/css/style.css">
-    <title>RENEW PASSWORD</title>
+    <title>PERBARUI PASSWORD</title>
 </head>
-<body class="ms-3">
+<body class="ms-3 me-3 text-center">
     <nav class="navbar sticky-top navbar-expand-lg bg-keptblue mb-0">
         <div class="container-fluid">
             <a class="navbar-brand bg-keptskin nav-link rounded color-keptskin" href="../../">
@@ -36,7 +36,6 @@ if(isset($_POST['submit'])) {
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="navbar-nav me-auto">
-                    <a class="nav-link color-keptskin fw-bold" href="../../faq/">FAQ</a>
 					<a class="nav-link color-keptskin fw-bold active" href="../../login/">Masuk</a>
 					<a class="nav-link color-keptskin fw-bold" href="../../register/">Daftar</a>
 					<a class="nav-link color-keptskin fw-bold" href="../../about/">Tentang</a>
@@ -44,16 +43,18 @@ if(isset($_POST['submit'])) {
 			</div>
 		</div>
     </nav>
-    <h1>Perbarui Password</h1>
-    <form action="" method="post">
-        <div>
-            <input type="password" name="password" id="password" autocomplete="off" placeholder="Buat Password Baru" required>
-        </div>
-        <div>
-            <input type="password" name="confirmPassword" id="confirmPassword" autocomplete="off" placeholder="Konfirmasi Password" required>
-        </div>
-        <button type="submit" name="submit" id="submit">UBAH</button>
-    </form>
+    <div class="d-flex justify-content-center align-items-center login-container">
+        <div class="login-form-container">
+            <h1 class="login-header text-decoration-underline mb-3">Perbarui Password</h1>
+            <form action="" method="post">
+                <div>
+                    <input class="login-input text-center" type="password" name="password" id="password" autocomplete="off" placeholder="Buat Password Baru" required>
+                </div>
+                <div>
+                    <input class="login-input text-center mb-3" type="password" name="confirmPassword" id="confirmPassword" autocomplete="off" placeholder="Konfirmasi Password" required>
+                </div>
+                <button class="login-submit rounded-pill p-2" type="submit" name="submit" id="submit">UBAH</button>
+            </form>
     <script src="../../src/script/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -234,11 +234,10 @@ function sendEmail($to, $subject, $textHTML, $textNotHTML = "") {
 function checkCode($post) {
     session_start();
     $code = $_SESSION['code'];
-    alert($code);
-    session_abort();
     $confirmCode = $post['confirmCode'];
     if($code != $confirmCode) {
         alert("Kodenya salah. Padahal tinggal copas :v");
+        session_abort();
         return false;
     }
     $_SESSION['emailrenew'] = $_SESSION['email'];
@@ -696,7 +695,8 @@ function changeNickname($post) {
 function changeUsername($post) {
     global $conn;
     $id = fetch('id');
-    $oldTable = fetch('username').'_keep';
+    $oldUsername = fetch('username');
+    $oldTable = $oldUsername.'_keep';
     $username = strtolower(stripslashes($post['username']));
     $query = "UPDATE account SET username = '$username' WHERE id = $id";
     mysqli_query($conn, $query);
@@ -714,6 +714,11 @@ function changeUsername($post) {
         return false;
     }
     keptConn();
+    $query = "UPDATE report SET username = '$username' WHERE username = '$oldUsername'";
+    if(!mysqli_query($conn, $query)) {
+        alert('Error "k-17". Kami sangat menghargai jika kamu melaporkan bug ini');
+        return false;
+    }
     return true;
 }
 
@@ -798,25 +803,25 @@ function updatePlan($needs, $wants, $saving) {
     $id = fetch('id');
     
     $query = "UPDATE account SET needs = $needs WHERE id = $id";
-    if(mysqli_query($conn, $query)) {
+    if(!mysqli_query($conn, $query)) {
         alert('Error "k-12". Kami sangat menghargai jika kamu melaporkan bug ini');
         return false;
     }
     
     $query = "UPDATE account SET wants = $wants WHERE id = $id";
-    if(mysqli_query($conn, $query)) {
+    if(!mysqli_query($conn, $query)) {
         alert('Error "k-13". Kami sangat menghargai jika kamu melaporkan bug ini');
         return false;
     }
     
     $query = "UPDATE account SET saving = $saving WHERE id = $id";
-    if(mysqli_query($conn, $query)) {
+    if(!mysqli_query($conn, $query)) {
         alert('Error "k-14". Kami sangat menghargai jika kamu melaporkan bug ini');
         return false;
     }
     
     $query = "UPDATE account SET new = 0 WHERE id = $id";
-    if(mysqli_query($conn, $query)) {
+    if(!mysqli_query($conn, $query)) {
         alert('Error "k-15". Kami sangat menghargai jika kamu melaporkan bug ini');
         return false;
     }
@@ -844,7 +849,7 @@ function sendReport($type, $text) {
     global $conn;
     $username = fetch('username');
     $email = fetch('email');
-    $query = "INSERT INTO report VALUES ('', '$type', '$text', '$username', '$email', NULL, NULL)";
+    $query = "INSERT INTO report VALUES ('', '$type', '$text', '$username', '$email', NULL)";
     mysqli_query($conn, $query);
     if(mysqli_affected_rows($conn) < 1) {
         alert('Error. Mohon laporkan bug ini :v');
@@ -852,4 +857,45 @@ function sendReport($type, $text) {
     }
     return true;
 }
+
+//function mengambil report terjawab
+function getAnsweredReport() {
+    global $conn;
+    $query = "SELECT * FROM report WHERE answer IS NOT NULL ORDER BY type DESC, username";
+    return query($query);
+}
+
+//function untuk mentranslate jenis laporan
+function reportType($type) {
+    if($type == 'question') {
+        return 'Pertanyaan';
+    } else if($type == 'bug') {
+        return 'Bug';
+    }
+    return 'Kritik/Saran';
+}
+
+//function untuk menentukan warna bantuan
+function reportColor($type) {
+    if($type == 'question') {
+        return 'info';
+    } else if($type == 'bug') {
+        return 'danger';
+    }
+    return 'success';
+}
+
+//function mengubah status changed
+function changedPlan() {
+    global $conn;
+    $id = fetch('id');
+    $query = "UPDATE account SET changed = 1 WHERE id = $id";
+    mysqli_query($conn, $query);
+    if(mysqli_affected_rows($conn) < 1) {
+        alert('Error "k-15". Kami sangat menghargai jika kamu melaporkan bug ini');
+        return false;
+    }
+    return true;
+}
+
 ?>

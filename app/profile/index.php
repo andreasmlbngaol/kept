@@ -18,7 +18,7 @@ $keptDay = totalDay(dateNow(), $registerDate) + 1;
     <link rel="stylesheet" href="../../src/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../src/css/style.css">
     <link rel="shortcut icon" href="../../src/img/icon.png" type="image/x-icon">
-    <title>PROFILE</title>
+    <title>PROFIL</title>
     <style>
         #info {
             display: flex;
@@ -68,8 +68,8 @@ $keptDay = totalDay(dateNow(), $registerDate) + 1;
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <div class="navbar-nav me-auto">
-                    <a class="nav-link color-keptskin fw-bold" href="../">FAQ</a>
-					<a class="nav-link color-keptskin fw-bold" href="../">Lapor</a>
+                    <a class="nav-link color-keptskin fw-bold" href="../help/">Bantuan</a>
+					<a class="nav-link color-keptskin fw-bold" href="../report/">Lapor</a>
 					<!-- <a class="nav-link color-keptskin" href="history/">Riwayat</a> -->
                     <a class="nav-link color-white fw-light"><?php echo dayName(dateNow()).', '; showDate(dateNow())?></a>
                 </div>
@@ -81,7 +81,7 @@ $keptDay = totalDay(dateNow(), $registerDate) + 1;
                         </button>
 						<ul class="dropdown-menu dropdown-menu-end bg-keptskin">
                             <li><a class="dropdown-item " href="../profile/">Profil</a></li>
-                            <li><a class="dropdown-item" href="../profile/private/">Pengaturan Privasi</a></li>
+                            <li><a class="dropdown-item" href="../plan/">Ubah Rencana</a></li>
 							<!-- <li><a class="dropdown-item" href="">Another action</a></li> -->
 							<li><hr class="dropdown-divider"></li>
 							<li><a href="../logout.php" class="dropdown-item color-keptblue">Keluar</a></li>
