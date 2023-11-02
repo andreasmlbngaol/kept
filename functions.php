@@ -146,6 +146,10 @@ function totalDay($date1, $date2) {
 function checkUsername($post) {
     global $conn;
     $username = strtolower(stripslashes($post['username']));
+    if(!ctype_alnum($username)) {
+        alert('Username hanya bisa huruf dan angka');
+        return false;
+    }
     $_SESSION['username'] = $username;
     
     $query = "SELECT username FROM account WHERE username = '$username'";
