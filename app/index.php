@@ -113,7 +113,7 @@ if($totalIncome != 0) {
                     <div class="navbar-item dropdown">
                         <button class="nav-link color-keptskin" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <a><?php echo greeting()?></a>
-                            <img src="../src/img/profilepicture/<?php echo fetch('picture'); ?>" alt="Profile Picture" class="border border-light rounded-circle" style="height: 50px;">
+                            <img src="../src/img/profilepicture/<?php echo fetch('picture'); ?>" alt="Profile Picture" class="border border-light rounded-circle navbar-picture">
                         </button>
 						<ul class="dropdown-menu dropdown-menu-end bg-keptskin">
                             <li><a class="dropdown-item " href="profile/">Profil</a></li>
@@ -131,14 +131,14 @@ if($totalIncome != 0) {
     <div class="page mb-0">
         <div class="container app-container p-0">
             <div class="app-item border rounded text-center">
-                <h2 class="color-keptskin">Kept Score</h2>
+                <h2 class="color-keptskin app-h2">Kept Score</h2>
                 <hr>
                 <div class="app-centered">
                     <p class="app-value"><?= $keptScore ?><a class="app-a" href="detail/#kept-score">?</a></p>
                 </div>
             </div>
             <div class="app-item border rounded text-center">
-                <h2 class="color-keptskin">Pendapatan</h2>
+                <h2 class="color-keptskin app-h2">Pendapatan</h2>
                 <hr>
                 <div class="app-centered">
                     <p class="app-value">Rp. <?php echo money($totalIncome) ?> <a href="detail/" class="app-detail">Detail</a></p>
@@ -146,7 +146,7 @@ if($totalIncome != 0) {
                 </div>
             </div>
             <div class="app-item border rounded text-center">
-                <h2 class="color-keptskin">Pengeluaran</h2>
+                <h2 class="color-keptskin app-h2">Pengeluaran</h2>
                 <hr>
                 <div class="app-centered">
                     <p class="app-value">Rp. <?php echo money($totalSpending) ?> <a href="detail/" class="app-detail">Detail</a></p>
@@ -156,14 +156,14 @@ if($totalIncome != 0) {
         </div>
         <div class="container app-container p-0">
             <div class="app-item border rounded text-center">
-                <h2 class="color-keptskin">Keep</h2>
+                <h2 class="color-keptskin app-h2">Keep</h2>
                 <hr>
                 <div class="app-centered">
                     <p class="app-value"><a href="keep/" class="app-a">Masukkan Transaksi</a></p>
                 </div>
             </div>
             <div class="app-item border rounded text-center">
-                <h2 class="color-keptskin">Dompetmu</h2>
+                <h2 class="color-keptskin app-h2">Dompetmu</h2>
                 <hr>
                 <div class="app-centered">
                 <p class="app-wallet">Kebutuhan:</p>
@@ -176,7 +176,7 @@ if($totalIncome != 0) {
             </div>
             </div>
             <div class="app-item border rounded text-center">
-                <h2 class="color-keptskin">Riwayat</h2>
+                <h2 class="color-keptskin app-h2">Riwayat</h2>
                 <hr>
                 <div class="app-centered">
                     <p class="app-value"><a href="history/" class="app-a">Lihat Transaksi</a></p>

@@ -58,7 +58,7 @@ if(isset($_POST['submit'])) {
                     <div class="navbar-item dropdown">
                         <button class="nav-link color-keptskin" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <a><?php echo greeting()?></a>
-                            <img src="../../../../src/img/profilepicture/<?php echo fetch('picture'); ?>" alt="Profile Picture" class="border border-light rounded-circle" style="height: 50px;">
+                            <img src="../../../../src/img/profilepicture/<?php echo fetch('picture'); ?>" alt="Profile Picture" class="border border-light rounded-circle navbar-picture">
                         </button>
 						<ul class="dropdown-menu dropdown-menu-end bg-keptskin">
                             <li><a class="dropdown-item " href="../../../profile/">Profil</a></li>
