@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2023 at 10:19 AM
+-- Generation Time: Nov 24, 2023 at 06:12 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -85,9 +85,9 @@ CREATE TABLE `arrowonskin_keep` (
 INSERT INTO `arrowonskin_keep` (`id`, `date`, `class`, `category`, `username`, `name`, `detail`, `value`) VALUES
 (6, '2023-10-26', 'income', 'additional', 'additional', 'Pendapatan Tambahan', 'Ngepet', 1000000),
 (10, '2023-10-26', 'spending', 'needs', 'transportation', 'Transportasi', 'Roket', 5000),
-(11, '2023-11-02', 'income', 'routine', 'routine', 'Pendapatan Rutin', 'Tes', 1000000),
 (12, '2023-11-02', 'spending', 'needs', 'daily', 'Kebutuhan Rumah Tangga', 'Sabun', 20000),
-(13, '2023-11-19', 'income', 'additional', 'additional', 'Pendapatan Tambahan', 'ya', 50000);
+(13, '2023-11-19', 'income', 'additional', 'additional', 'Pendapatan Tambahan', 'ya', 50000),
+(14, '2023-11-23', 'spending', 'needs', 'transportation', 'Transportasi', 'transport', 15000);
 
 --
 -- Indexes for dumped tables
@@ -119,7 +119,7 @@ ALTER TABLE `andreasmlbngaol_keep`
 -- AUTO_INCREMENT for table `arrowonskin_keep`
 --
 ALTER TABLE `arrowonskin_keep`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
