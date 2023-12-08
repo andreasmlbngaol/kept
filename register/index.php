@@ -62,7 +62,7 @@ if(isset($_POST['submit'])) {
                     <input class="login-input text-center mb-3" type="password" name="confirmPassword" id="confirmPassword" autocomplete="off" placeholder="Ulangi Password" required>
                 </div>
                 <button class="login-submit rounded-pill p-2" type="submit" name="submit" id="submit">SELANJUTNYA</button>
-                <p class="m-0">Sudah Punya Akun? <a href="../login/">Masuk</a></p>
+                <p class=" sudahpunyaakun m-0 pt-2">Sudah Punya Akun? <a href="../login/">Masuk</a></p>
             </form>
         </div>
     </div>

@@ -48,7 +48,7 @@ if(isset($_POST['submit'])) {
     <title>NEW ACCOUNT</title>
 </head>
 <body class="ms-3 text-center">
-    <h1>NEW ACCOUNT</h1>
+    <h1 class="jdlstartplan">NEW ACCOUNT</h1>
     <p>Ini adalah halaman untuk memasukkan rencana finansial kamu. Kamu dapat merubahnya satu bulan sekali.</p>
     <p>Rekomendasi kami:<br> <br>
         Anak kos: <br>Kebutuhan 70%, Keinginan 20%, Tabungan 10% <br>

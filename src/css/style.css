@@ -540,7 +540,7 @@
 
 @media (max-height: 899px) {
     * {
-        padding: 0;
+        paddin: 0;
         font-family: playpen !important;
     }
 
@@ -581,6 +581,9 @@
     .nav-link:hover {
         color: #4B527E !important;
         transition-duration: var(--transition-duration);
+        background-color: #E5C3A6;
+        border-radius:6.3px;
+
     }
     .color-white {
         color: white;
@@ -614,7 +617,8 @@
     }
 
     #home-container {
-        width: 70%;
+        width: 85%;
+        height: 80%;
         border-width: calc(3pt * 2 / 3) !important;
         border-color:#E5C3A6 !important;
     }
@@ -635,16 +639,15 @@
 
 
     #home-menu-text-motto {
-        font-size: calc(1vw * 2 / 3);
+        font-size: 40px;
         background-color: #E5C3A6;
         border-radius: calc(20px * 2 / 3);
         color: #15253f;
-        padding: calc(5pt * 2 / 3);
         text-align: center;
     }
 
     h1.home-menu-item {
-        font-size: calc(2.5vw * 2 / 3);
+        font-size: 20px;
     }
 
     .app-h2 {
@@ -655,7 +658,8 @@
         font-size: 3vh;
     }
     p.home-menu-item {
-        font-size: calc(0.75vw * 2 / 3);
+        font-size: 15px;
+        color: #E5C3A6;
     }
 
     #home-img {
@@ -678,18 +682,6 @@
     }
 
     #home-register-text {
-        background-color: #E5C3A6;
-        border-radius: calc(20px * 2 / 3);
-        text-decoration: none;
-        color: #15253f;
-        width: 70%;
-        padding: calc(10pt * 2 / 3);
-        text-align: center;
-        font-weight: bold;
-        font-size: calc(1vw * 2 / 3);
-    }
-
-    #home-register-text:hover {
         border: calc(1pt * 2 / 3) solid #E5C3A6;
         background-color: #15253f;
         border-radius: calc(20px * 2 / 3);
@@ -699,7 +691,19 @@
         padding: calc(10pt * 2 / 3);
         text-align: center;
         font-weight: bold;
-        font-size: calc(1vw * 2 / 3);
+        font-size: 15px;
+    }
+
+    #home-register-text:hover {
+        background-color: #E5C3A6;
+        border-radius: calc(20px * 2 / 3);
+        text-decoration: none;
+        color: #15253f;
+        width: 70%;
+        padding: calc(10pt * 2 / 3);
+        text-align: center;
+        font-weight: bold;
+        font-size: 17px;
         transition-duration: var(--transition-duration);
     }
 
@@ -713,7 +717,7 @@
         padding: calc(10pt * 2 / 3);
         text-align: center;
         font-weight: bold;
-        font-size: calc(1vw * 2 / 3);
+        font-size: 15px;
     }
 
     #home-login-text:hover {
@@ -725,7 +729,7 @@
         padding: calc(10pt * 2 / 3);
         text-align: center;
         font-weight: bold;
-        font-size: calc(1vw * 2 / 3);
+        font-size: 17px;
         transition-duration: var(--transition-duration);
     }
 
@@ -949,7 +953,7 @@
     }
 
     .founder-name {
-        font-size: calc(1.3em * 2 / 3);
+        font-size: 20px;
     }
 
     .login-container {
@@ -963,7 +967,7 @@
 
     .login-header {
         width: 100%; 
-        font-size: calc(2.5vw * 2 / 3);
+        font-size: 35px;
     }
 
     .login-input {
@@ -972,9 +976,12 @@
 
     .login-submit {
         background-color: #E5C3A6;
+        border-radius: 13px;
+        width: 100px;
         font-weight: bolder;
         border-color: transparent;
         color:#15253f !important;
+        font-size: 10px;
     }
 
     .login-submit:hover {
@@ -1005,7 +1012,11 @@
 
     input {
         background-color: #E5C3A6 !important;
+        border-radius: 5px;
+        height: 30px;
         color: #15253f !important;
+        font-size: 16.5px;
+        width: fit-content;
     }
 
     textarea {
@@ -1043,3 +1054,19 @@
     }
 }
 
+.apakahkamubarudisini{
+    font-size: 13px;
+}
+
+.tidakingatpassword{
+    font-size: 13px;
+}
+
+.sudahpunyaakun{
+    font-size: 13px;
+}
+
+.jdlstartplan{
+    margin-top: 35px;
+    background-color: #E5C3A6;
+}

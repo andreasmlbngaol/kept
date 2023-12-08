@@ -1,10 +1,3 @@
-<?php
-require "functions.php";
-session_start();
-if(isset($_SESSION['loginId'])) {
-    jumpTo("app/");
-}
-?>
 
 <!DOCTYPE html>
 <html lang="id">
@@ -16,7 +9,7 @@ if(isset($_SESSION['loginId'])) {
     <link rel="stylesheet" href="src/css/style.css">
     <link rel="shortcut icon" href="src/img/icon.png" type="image/x-icon">
     <title>kept</title>
-    <script src="<?php $directoryPath?>src/script/jquery-3.5.1.min.js"></script>
+    <script src="src/script/jquery-3.5.1.min.js"></script>
     <script>
         $(document).ready( function() {
             var height = $(window).height();
@@ -56,8 +49,7 @@ if(isset($_SESSION['loginId'])) {
         <div id="home-menu-container" class="container text-center justify-content-center mb-4">
             <div id="home-menu-text">
                 <h2 class="home-menu-item"><span id="home-menu-text-motto">Smartly Kept, Wisely Flowed</span></h2>
-                <h1 class="home-menu-item">LET'S TAKE YOUR <br>FLOW TO THE<br> NEXT LEVEL</h1>
-                <p class="home-menu-item">You will have the best experience with thousands of smart individuals worldwide in managing their finances</p>
+                <h1 class="home-menu-item">LET'S TAKE YOUR FLOW TO THE NEXT LEVEL</h1>
             </div>
             <!-- <div id="home-menu-img">
                 <img src="src/img/home-mascot.png" alt="Ini Gambar" id="home-img" class="home-menu-item">
@@ -66,6 +58,7 @@ if(isset($_SESSION['loginId'])) {
         <div class="container text-center pb-5">
             <a href="register/" class="home-menu"><span id="home-register-text">MULAI</span></a>
             <a href="login/" class="home-menu"><span id="home-login-text">MASUK</span></a>
+            <p class="home-menu-item">You will have the best experience with thousands of smart individuals worldwide in managing their finances</p>
         </div>
     </div>
     <script src="src/script/bootstrap.bundle.min.js"></script>
