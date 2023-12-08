@@ -11,6 +11,8 @@ $reports = getAnsweredReport();
     <link rel="stylesheet" href="../../src/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../src/css/style.css">
     <title>BANTUAN</title>
+    <link rel="shortcut icon" href="../../src/img/icon.png" type="image/x-icon">
+
 </head>
 <body class="ms-3 me-3">
     <nav class="navbar sticky-top navbar-expand-lg bg-keptblue mb-0">

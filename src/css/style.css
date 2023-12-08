@@ -46,7 +46,7 @@
 @media (min-height: 900px) {
     * {
         padding: 0;
-        font-family: playpen !important;
+        /* font-family: playpen !important; */
     }
 
     .break {
@@ -80,7 +80,7 @@
 
     .nav-link {
         margin: 0 5px 0 5px;
-        font-size: 16pt;
+        /* font-size: 16pt; */
     }
 
     .nav-link:hover {
@@ -110,7 +110,7 @@
         padding-right: 1vw;
         color: #E5C3A6;
         text-decoration: none;
-        font-size: 1vw;
+        /* font-size: 1vw; */
     }
 
     #home-header-logo {
@@ -140,7 +140,7 @@
 
 
     #home-menu-text-motto {
-        font-size: 1vw;
+        /* font-size: 1vw; */
         background-color: #E5C3A6;
         border-radius: 20px;
         color: #15253f;
@@ -149,11 +149,11 @@
     }
 
     h1.home-menu-item {
-        font-size: 2.5vw;
+        /* font-size: 2.5vw; */
     }
 
     p.home-menu-item {
-        font-size: 0.75vw;
+        /* font-size: 0.75vw; */
     }
 
     #home-img {
@@ -184,7 +184,7 @@
         padding: 10pt;
         text-align: center;
         font-weight: bold;
-        font-size: 1vw;
+        /* font-size: 1vw; */
     }
 
     #home-register-text:hover {
@@ -197,7 +197,7 @@
         padding: 10pt;
         text-align: center;
         font-weight: bold;
-        font-size: 1vw;
+        /* font-size: 1vw; */
         transition-duration: var(--transition-duration);
     }
 
@@ -211,7 +211,7 @@
         padding: 10pt;
         text-align: center;
         font-weight: bold;
-        font-size: 1vw;
+        /* font-size: 1vw; */
     }
 
     #home-login-text:hover {
@@ -223,7 +223,7 @@
         padding: 10pt;
         text-align: center;
         font-weight: bold;
-        font-size: 1vw;
+        /* font-size: 1vw; */
         transition-duration: var(--transition-duration);
     }
 
@@ -251,7 +251,7 @@
         padding-right: 1vw;
         color: #E5C3A6;
         text-decoration: none;
-        font-size: 1vw;
+        /* font-size: 1vw; */
     }
 
     #app-header-logo {
@@ -274,16 +274,16 @@
 
     .value {
         color: #E5C3A6 !important;
-        font-size: 1.5em !important;
+        /* font-size: 1.5em !important; */
     }
 
     .app-value {
-        font-size: 2em !important;
+        /* font-size: 2em !important; */
         line-height: 0.9;
     }
 
     .app-wallet {
-        font-size: 1.5em !important;
+        /* font-size: 1.5em !important; */
         line-height: 0.9;
     }
 
@@ -293,12 +293,12 @@
 
     .app-detail {
         text-decoration: none;
-        font-size: 50% !important;
+        /* font-size: 50% !important; */
     }
 
     .kept-score {
         color: #E5C3A6 !important;
-        font-size: 4em !important;
+        /* font-size: 4em !important; */
     }
 
     .navbar {
@@ -389,7 +389,7 @@
     }
 
     .app-new {
-        font-size: 1.5vw !important;    
+        /* font-size: 1.5vw !important;     */
     }
 
     .chart {
@@ -540,7 +540,7 @@
 
 @media (max-height: 899px) {
     * {
-        paddin: 0;
+        padding: 0;
         font-family: playpen !important;
     }
 
@@ -784,7 +784,7 @@
     }
 
     .detail-p {
-        font-size: 1vw !important;
+        /* font-size: 1vw !important; */
     }
 
     .app-value {
@@ -803,7 +803,7 @@
 
     .app-detail {
         text-decoration: none;
-        font-size: 50% !important;
+        /* font-size: 50% !important; */
     }
 
     .kept-score {

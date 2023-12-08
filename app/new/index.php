@@ -45,6 +45,8 @@ if(isset($_POST['submit'])) {
     <link rel="shortcut icon" href="../../src/img/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="../../src/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../src/css/style.css">
+    <link rel="shortcut icon" href="../../src/img/icon.png" type="image/x-icon">
+
     <title>NEW ACCOUNT</title>
 </head>
 <body class="ms-3 text-center">
